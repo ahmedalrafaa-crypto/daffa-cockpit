@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0B1220">
+<title>دفّة — فيزياء أ. أحمد رافع</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" href="assets/logo-ar.png">
+<link rel="apple-touch-icon" href="assets/icon-192.png">
+<link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+<header id="topbar">
+  <div class="brand" id="brandHome" role="button" tabindex="0">
+    <img src="assets/logo-ar.png" alt="شعار أ. أحمد رافع">
+    <div class="brand-txt">
+      <b>أ. أحمد رافع</b>
+      <span>فيزياء تُفهَم لا تُحفَظ</span>
+    </div>
+  </div>
+  <div class="topbar-actions">
+    <button id="btnPresent" class="tbtn" title="وضع العرض للطلاب">🎓 <span>وضع العرض</span></button>
+    <button id="btnSettings" class="tbtn ghost" title="الإعدادات">⚙️</button>
+  </div>
+</header>
+
+<main id="app" aria-live="polite"></main>
+
+<!-- شريط المؤقّت — يظهر في شاشة الدرس -->
+<div id="timerbar" class="hidden">
+  <div class="t-phase">
+    <span id="tPhaseName">تمهيد</span>
+    <span id="tPhaseNext"></span>
+  </div>
+  <div class="t-clock" id="tClock" role="button" tabindex="0" title="ابدأ / أوقف">00:00</div>
+  <div class="t-track" id="tTrack"></div>
+  <div class="t-ctrl">
+    <button id="tStart" class="tbtn">▶ ابدأ</button>
+    <button id="tSkip" class="tbtn ghost">⏭ المرحلة التالية</button>
+    <button id="tReset" class="tbtn ghost">↺</button>
+  </div>
+</div>
+
+<script src="content/bundle.js"></script>
+<script src="js/store.js"></script>
+<script src="js/engine.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/views.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

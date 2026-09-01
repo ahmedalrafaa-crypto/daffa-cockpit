@@ -1,0 +1,176 @@
+{
+ "id": "g12-ch2-l3",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "المولّدات والمحرّكات الكهربائية",
+ "subtitle": "المولّد يحوّل الحركة إلى كهرباء، والمحرّك يحوّل الكهرباء إلى حركة — آلتان بالأجزاء نفسها لكن بعملٍ معكوس. من قانون فاراداي نشتقّ قلبهما: ε = NBAω sin(ωt).",
+ "hook": {
+  "html": "<p>كل كيلوواط كهرباء يصل بيتك وُلد في <b>مولّد</b>: توربين يدور (بالماء أو البخار أو الرياح) فيُدير ملفاً داخل مجال مغناطيسي. وكل مروحة وغسّالة وسيارة كهربائية تعمل بـ<b>محرّك</b>: يأخذ الكهرباء فيصنع منها حركة. المدهش أن الآلتين <span class=\"hl\">متطابقتان في التركيب</span> — الفرق فقط في اتجاه تحويل الطاقة.</p><p>وكلتاهما تقومان على قانون فاراداي الذي أتقنّاه: <b>ملفٌ يدور فيتغيّر الفيض المخترق له</b>، فتتولّد قوة دافعة. لنشتقّها بدقة، ونرَ كيف تصير جيبية.</p>"
+ },
+ "sections": [
+  {
+   "title": "المولّد المتناوب: كيف يصير الجهد جيبياً؟",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "في <span class=\"term\">مولّد التيار المتناوب</span> (ac) يدور ملف نواةٍ عدد لفّاته <span class=\"im\">N</span> بسرعة زاوية منتظمة <span class=\"im\">ω</span> داخل مجال منتظم <span class=\"im\">B</span>. يُربط طرفاه بـ<span class=\"term\">حلقتَي الزلق</span> المعدنيتين، وتتصل الدائرة الخارجية بهما عبر <span class=\"term\">فرشتين</span> من الكاربون. وبدوران الملف تتغيّر الزاوية <span class=\"im\">θ = ωt</span> فيتغيّر الفيض جيبياً:"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"640\" height=\"210\" viewBox=\"0 0 640 210\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12\">\n  <!-- المغناطيس -->\n  <rect x=\"20\" y=\"55\" width=\"34\" height=\"90\" fill=\"#DC2626\"/><text x=\"37\" y=\"105\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\">N</text>\n  <rect x=\"250\" y=\"55\" width=\"34\" height=\"90\" fill=\"#1E3A8A\"/><text x=\"267\" y=\"105\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\">S</text>\n  <!-- الملف الدوار -->\n  <ellipse cx=\"152\" cy=\"100\" rx=\"30\" ry=\"60\" fill=\"none\" stroke=\"#B45309\" stroke-width=\"3\" transform=\"rotate(20 152 100)\"/>\n  <!-- حلقتا الزلق والفرش -->\n  <circle cx=\"152\" cy=\"178\" r=\"9\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"152\" y=\"200\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"10\">حلقتا زلق + فرشتان</text>\n  <path d=\"M152 160 V169\" stroke=\"#0B3B5E\" stroke-width=\"1.6\"/>\n  <!-- منحنى جيبي -->\n  <g transform=\"translate(330,20)\">\n    <line x1=\"0\" y1=\"80\" x2=\"280\" y2=\"80\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"10\" y1=\"15\" x2=\"10\" y2=\"150\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <path d=\"M10 80 Q45 5 80 80 T150 80 T220 80 T290 80\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.6\"/>\n    <text x=\"-2\" y=\"30\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"11\">ε</text>\n    <text x=\"270\" y=\"98\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"11\">t</text>\n    <text x=\"55\" y=\"150\" fill=\"#334155\" font-size=\"10\">قوة دافعة متناوبة (جيبية)</text>\n    <line x1=\"10\" y1=\"18\" x2=\"290\" y2=\"18\" stroke=\"#E2E8F0\" stroke-dasharray=\"3 2\"/>\n    <text x=\"20\" y=\"15\" fill=\"#059669\" font-weight=\"700\" font-size=\"10\">+ε_max</text>\n  </g>\n</svg>",
+     "caption": "الملف يدور فيتولّد جهد يتغيّر جيبياً، تنعكس قطبيته مرتين في الدورة الواحدة"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">الاشتقاق</span>\n    <span class=\"q\">كيف نصل من الفيض الجيبي إلى قانون قوة المولّد الدافعة؟</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">الفيض جيبي:</span> <span class=\"im\">Φ_B = BA cos(ωt)</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">معدّل تغيّره:</span> <span class=\"im\">ΔΦ_B/Δt = −BAω sin(ωt)</span> &nbsp;(لأن <span class=\"im\">Δ[cos ωt]/Δt = −ω sin ωt</span>)</div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">بقانون فاراداي:</span> <span class=\"im\">ε = −N ΔΦ/Δt</span> ⟹ <span class=\"ans\">ε<sub>ind</sub> = N B A ω sin(ωt)</span>\n      <span class=\"why\">القوة الدافعة جيبية: تبدأ صفراً، تبلغ ذروتها بعد ربع دورة، ثم تنعكس — تماماً كتيار الكهرباء في بيتك.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">القوة الدافعة اللحظية للمولّد · <span class=\"im\">ω = 2πf</span></span>\n  <span class=\"eq\">ε = ε<sub>max</sub> sin(ωt) &nbsp;،&nbsp; ε<sub>max</sub> = N B A ω</span>"
+    }
+   ]
+  },
+  {
+   "title": "الذروة والتيار: أعظم مقدار",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "يُسمّى المقدار الأعظم <span class=\"im\">ε_max</span> <span class=\"term\">ذروة الفولطية المحتثة</span>، ويحدث حين <span class=\"im\">ωt = 90°</span> (بعد ربع دورة) لأن <span class=\"im\">sin 90° = 1</span>. وإذا رُبط المولّد بدائرة مقاومتها <span class=\"im\">R</span>، فالتيار الخارج متناوب جيبي أيضاً:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\">\n    <span class=\"fname\">أعظم قوة دافعة</span>\n    <span class=\"eq\">ε<sub>max</sub> = N B A ω</span>\n  </div>\n  <div class=\"formula small\" style=\"margin:0\">\n    <span class=\"fname\">أعظم تيار محتث</span>\n    <span class=\"eq\">I<sub>max</sub> = <span class=\"frac\"><span>N B A ω</span><span class=\"den\">R</span></span></span>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "والتيار اللحظي: <span class=\"im\">I = I_max sin(ωt)</span>. لاحظ أن <span class=\"im\">ε_max</span> يزداد بزيادة أيٍّ من: عدد اللفّات <span class=\"im\">N</span>، كثافة الفيض <span class=\"im\">B</span>، مساحة اللفة <span class=\"im\">A</span>، والسرعة الزاوية <span class=\"im\">ω</span> (أي التردد <span class=\"im\">f</span>)."
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div>تذكّر <span class=\"im\">A = πr²</span> — فتغيير <b>قطر</b> الملف يغيّر <span class=\"im\">ε_max</span> بمربّع النسبة (تناسب مربّعي)، بينما <span class=\"im\">N</span> و<span class=\"im\">ω</span> تناسبٌ طردي بسيط.</div>",
+     "a": ""
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثاني 2021</span></span>\n  <p>أثبت أن القوة الدافعة الكهربائية المحتثة على طرفي ملف — مساحة اللفة الواحدة فيه <span class=\"im\">(A)</span> وعدد لفّاته <span class=\"im\">(N)</span> — يدور بسرعة زاوية <span class=\"im\">(ω)</span> داخل مجال مغناطيسي منتظم كثافة فيضه <span class=\"im\">(B)</span> تُعطى بشكل دالة جيبية <span class=\"im\">[ε = NBAω sin(ωt)]</span>.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل (البرهان)</span>\n    <p>الفيض المخترق للملف عند الزاوية <span class=\"im\">θ = ωt</span>: &nbsp; <span class=\"im\">Φ = BA cos(ωt)</span></p>\n    <p>معدّل التغيّر الزمني للفيض: &nbsp; <span class=\"im\">ΔΦ/Δt = BA × [−ω sin(ωt)] = −BAω sin(ωt)</span></p>\n    <p>وبقانون فاراداي لملف عدد لفّاته <span class=\"im\">N</span>: &nbsp; <span class=\"im\">ε = −N ΔΦ/Δt = −N[−BAω sin(ωt)]</span></p>\n    <p><span class=\"ans\">ε = N B A ω sin(ωt)</span> &nbsp;— وهي دالة جيبية، وهو المطلوب إثباته. ∎</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "المولّد ثلاثي الطور",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "بدل ملف واحد، يُلفّ حول النواة <span class=\"hl\">ثلاثة ملفات</span> تفصل بينها زوايا متساوية قياس كلٍّ منها <span class=\"im\">120°</span>، وتُربط أطرافها بسلكٍ يُسمّى <span class=\"term\">السلك المتعادل</span> (أو الخط الصفري). فينقل هذا المولّد التيار بثلاثة خطوط، ويجهّز تياراً أكبر مقداراً من مولّد الطور الواحد — لذا يُستعمل في نقل الكهرباء وتشغيل المحرّكات الصناعية الكبيرة."
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"300\" height=\"170\" viewBox=\"0 0 300 170\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <circle cx=\"150\" cy=\"90\" r=\"4\" fill=\"#0B3B5E\"/>\n  <!-- ثلاثة أسهم بزوايا 120 -->\n  <path d=\"M150 90 L150 25\" stroke=\"#DC2626\" stroke-width=\"3\" marker-end=\"url(#p1)\"/>\n  <path d=\"M150 90 L206 122\" stroke=\"#0284C7\" stroke-width=\"3\" marker-end=\"url(#p2)\"/>\n  <path d=\"M150 90 L94 122\" stroke=\"#059669\" stroke-width=\"3\" marker-end=\"url(#p3)\"/>\n  <text x=\"150\" y=\"18\" text-anchor=\"middle\" fill=\"#DC2626\" font-weight=\"800\">الملف ١</text>\n  <text x=\"232\" y=\"132\" text-anchor=\"middle\" fill=\"#0284C7\" font-weight=\"800\">الملف ٢</text>\n  <text x=\"66\" y=\"132\" text-anchor=\"middle\" fill=\"#059669\" font-weight=\"800\">الملف ٣</text>\n  <text x=\"176\" y=\"80\" fill=\"#7C3AED\" font-size=\"10\">120°</text>\n  <text x=\"120\" y=\"118\" fill=\"#7C3AED\" font-size=\"10\">120°</text>\n  <text x=\"150\" y=\"150\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"10\">السلك المتعادل في المركز</text>\n  <defs>\n    <marker id=\"p1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#DC2626\"/></marker>\n    <marker id=\"p2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0284C7\"/></marker>\n    <marker id=\"p3\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#059669\"/></marker>\n  </defs>\n</svg>",
+     "caption": "ثلاثة ملفّات تفصلها 120°، تجهّز تياراً أكبر — أساس شبكة الكهرباء"
+    }
+   ]
+  },
+  {
+   "title": "مولّد التيار المستمر: حيلة المبادل",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "لجعل التيار الخارج <b>باتجاه واحد ثابت</b>، نستبدل حلقتَي الزلق بـ<span class=\"term\">حلقة مبادل</span> واحدة من نصفين معزولين كهربائياً. فكلما همّت القطبية بالانعكاس، يعكس المبادل التوصيل فيبقى الاتجاه واحداً. الناتج <span class=\"hl\">تيار نبضي</span> (باتجاه واحد لكن متذبذب المقدار):"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"560\" height=\"150\" viewBox=\"0 0 560 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- AC -->\n  <g transform=\"translate(10,10)\">\n    <line x1=\"10\" y1=\"60\" x2=\"250\" y2=\"60\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"10\" x2=\"15\" y2=\"110\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <path d=\"M15 60 Q45 10 75 60 T135 60 Q165 110 195 60 T255 60\" fill=\"none\" stroke=\"#0284C7\" stroke-width=\"2.4\"/>\n    <text x=\"120\" y=\"128\" text-anchor=\"middle\" fill=\"#0284C7\" font-weight=\"800\" font-size=\"11\">مولّد AC · متناوب</text>\n  </g>\n  <line x1=\"285\" y1=\"15\" x2=\"285\" y2=\"115\" stroke=\"#E2E8F0\"/>\n  <!-- DC pulsating -->\n  <g transform=\"translate(300,10)\">\n    <line x1=\"10\" y1=\"60\" x2=\"250\" y2=\"60\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"10\" x2=\"15\" y2=\"110\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <path d=\"M15 60 Q45 10 75 60 Q105 10 135 60 Q165 10 195 60 Q225 10 255 60\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.4\"/>\n    <line x1=\"15\" y1=\"30\" x2=\"255\" y2=\"30\" stroke=\"#059669\" stroke-dasharray=\"4 3\" stroke-width=\"1.4\"/>\n    <text x=\"120\" y=\"128\" text-anchor=\"middle\" fill=\"#B91C1C\" font-weight=\"800\" font-size=\"11\">مولّد DC · نبضي (اتجاه واحد)</text>\n    <text x=\"235\" y=\"26\" fill=\"#059669\" font-size=\"9\">I_avg</text>\n  </g>\n</svg>",
+     "caption": "المبادل يطوي الأنصاف السالبة للأعلى، فيصير التيار نبضياً باتجاه واحد بدل التناوب"
+    },
+    {
+     "type": "html",
+     "html": "ويُعطى <span class=\"hl\">المقدار المتوسط</span> لهذا التيار النبضي بالعلاقة:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">متوسط تيار المولّد المستمر</span>\n  <span class=\"eq\">I<sub>average</sub> = 0.636 × I<sub>max</sub></span>"
+    },
+    {
+     "type": "html",
+     "html": "ولجعل الخرج أقرب إلى تيار <b>النضيدة</b> (ثابت المقدار تقريباً)، نزيد عدد الملفّات حول النواة تحصر بينها زوايا متساوية، فتتراكب نبضاتها وتنعّم الخرج."
+    }
+   ]
+  },
+  {
+   "title": "المحرّك الكهربائي والقوة الدافعة المضادّة",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "المحرّك <span class=\"hl\">عكس المولّد</span>: يحوّل الطاقة الكهربائية إلى ميكانيكية. نزوّد ملفاً في مجال مغناطيسي بتيار من مصدر فولطية، فتؤثّر القوى المغناطيسية عليه بـ<span class=\"term\">عزم المزدوج</span> الذي يُديره."
+    },
+    {
+     "type": "html",
+     "html": "لكن ما إن يبدأ الملف بالدوران حتى يعمل <b>كمولّد</b> في الوقت نفسه! فدورانه يغيّر الفيض المخترق له، فيتولّد على طرفيه قوة دافعة محتثة تعاكس المصدر (بقانون لنز) تُسمّى <span class=\"term\">القوة الدافعة المضادّة</span> <span class=\"im\">ε_back</span>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">القوة الدافعة المضادّة · والتيار في المحرّك</span>\n  <span class=\"eq\">ε<sub>back</sub> = −N <span class=\"frac\"><span>ΔΦ<sub>B</sub></span><span class=\"den\">Δt</span></span> &nbsp;،&nbsp; I = <span class=\"frac\"><span>V<sub>applied</sub> − ε<sub>back</sub></span><span class=\"den\">R</span></span></span>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثالث 2019</span></span>\n  <p>عندما يدور ملف دائري حول محور شاقولي داخل مجال مغناطيسي منتظم <span class=\"im\">(B)</span> يولّد أعظم مقدار للقوة الدافعة المحتثة <span class=\"im\">(ε_max)</span>. فعند زيادة عدد لفّات الملف إلى <b>ثلاثة أمثال</b> ما كان عليه، وتقليل قطر الملف إلى <b>ثلث</b> ما كان عليه، ومضاعفة التردد الدوراني، فإن المقدار الأعظم للقوة الدافعة سيكون: <span class=\"im\">(⅔ ε_max ، ¼ ε_max ، 3/2 ε_max ، 3 ε_max)</span>.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>نبدأ من <span class=\"im\">ε_max = N B A ω = N B (πr²)(2πf)</span>. التغييرات: <span class=\"im\">N → 3N</span>، القطر إلى الثلث فـ <span class=\"im\">r → r/3</span> أي <span class=\"im\">A → A/9</span>، والتردد <span class=\"im\">f → 2f</span> أي <span class=\"im\">ω → 2ω</span>.</p>\n    <p><span class=\"im\">ε_max(جديد) = (3N) × B × (A/9) × (2ω) = (3 × ⅑ × 2) × NBAω = </span> <span class=\"ans\">⅔ ε_max</span></p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>① مولّد ملفه <span class=\"im\">200</span> لفة، مساحة اللفة <span class=\"im\">0.01 m²</span>، كثافة الفيض <span class=\"im\">0.5T</span>، يدور بسرعة زاوية <span class=\"im\">100 rad/s</span>. جد ذروة القوة الدافعة <span class=\"im\">ε_max</span>.</p>\n  <p>② مولّد تيار مستمر أعظم تياره <span class=\"im\">I_max = 3A</span>. جد مقداره المتوسط. <span class=\"tnum\">(الأجوبة آخر الدرس)</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<svg width=\"720\" height=\"285\" viewBox=\"0 0 720 285\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12.5\">\n  <rect x=\"285\" y=\"15\" width=\"160\" height=\"46\" rx=\"12\" fill=\"#0B3B5E\"/>\n  <text x=\"365\" y=\"36\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\" font-size=\"13\">المولّدات</text>\n  <text x=\"365\" y=\"52\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-weight=\"700\" font-size=\"11\">والمحرّكات</text>\n  <g stroke=\"#38BDF8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M300 50 C190 60 150 80 125 100\"/>\n    <path d=\"M365 61 V100\"/>\n    <path d=\"M430 50 C540 60 580 80 600 100\"/>\n    <path d=\"M320 61 C220 130 175 175 150 205\"/>\n    <path d=\"M410 61 C510 130 555 175 585 205\"/>\n  </g>\n  <rect x=\"45\" y=\"100\" width=\"165\" height=\"60\" rx=\"10\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"127\" y=\"122\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"800\">مولّد AC</text>\n  <text x=\"127\" y=\"142\" text-anchor=\"middle\" fill=\"#0369A1\" font-family=\"Reem Kufi\" font-size=\"11\">ε = NBAω sin ωt</text>\n  <rect x=\"283\" y=\"100\" width=\"164\" height=\"60\" rx=\"10\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.6\"/>\n  <text x=\"365\" y=\"122\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">الذروة</text>\n  <text x=\"365\" y=\"142\" text-anchor=\"middle\" fill=\"#92400E\" font-family=\"Reem Kufi\" font-size=\"11\">ε_max = NBAω</text>\n  <rect x=\"515\" y=\"100\" width=\"170\" height=\"60\" rx=\"10\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"1.6\"/>\n  <text x=\"600\" y=\"122\" text-anchor=\"middle\" fill=\"#065F46\" font-weight=\"800\">مولّد DC</text>\n  <text x=\"600\" y=\"142\" text-anchor=\"middle\" fill=\"#047857\" font-size=\"11\">مبادل · I_avg=0.636 I_max</text>\n  <rect x=\"65\" y=\"205\" width=\"175\" height=\"60\" rx=\"10\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"1.6\"/>\n  <text x=\"152\" y=\"227\" text-anchor=\"middle\" fill=\"#5B21B6\" font-weight=\"800\">ثلاثي الطور</text>\n  <text x=\"152\" y=\"247\" text-anchor=\"middle\" fill=\"#6D28D9\" font-size=\"11\">3 ملفات · 120°</text>\n  <rect x=\"500\" y=\"205\" width=\"185\" height=\"60\" rx=\"10\" fill=\"#FEF6E7\" stroke=\"#D97706\" stroke-width=\"1.6\"/>\n  <text x=\"592\" y=\"227\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">المحرّك</text>\n  <text x=\"592\" y=\"247\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"11\">I=(V−ε_back)/R</text>\n</svg>"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📐",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>القانون</th><th>الصيغة</th><th>يُستعمل لـ</th><th>الوحدة</th></tr>\n  <tr><td class=\"right\">فيض الملف الدوّار</td><td class=\"ltr\">Φ = BA cos(ωt)</td><td class=\"right\">الفيض اللحظي في المولّد</td><td class=\"ltr\">Wb</td></tr>\n  <tr><td class=\"right\">القوة الدافعة اللحظية</td><td class=\"ltr\">ε = NBAω sin(ωt)</td><td class=\"right\">جهد المولّد المتناوب</td><td class=\"ltr\">V</td></tr>\n  <tr><td class=\"right\">ذروة الفولطية</td><td class=\"ltr\">ε_max = NBAω</td><td class=\"right\">أعظم قوة دافعة</td><td class=\"ltr\">V</td></tr>\n  <tr><td class=\"right\">أعظم تيار</td><td class=\"ltr\">I_max = NBAω/R</td><td class=\"right\">ذروة تيار المولّد</td><td class=\"ltr\">A</td></tr>\n  <tr><td class=\"right\">السرعة الزاوية</td><td class=\"ltr\">ω = 2πf</td><td class=\"right\">الربط بالتردد</td><td class=\"ltr\">rad/s</td></tr>\n  <tr><td class=\"right\">متوسط التيار المستمر</td><td class=\"ltr\">I_avg = 0.636 I_max</td><td class=\"right\">مولّد DC النبضي</td><td class=\"ltr\">A</td></tr>\n  <tr><td class=\"right\">تيار المحرّك</td><td class=\"ltr\">I = (V_applied − ε_back)/R</td><td class=\"right\">التيار المنساب في المحرّك</td><td class=\"ltr\">A</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — المولّدات والمحرّكات (2017–2024)",
+   "icon": "🏛",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">إثبات <span class=\"im\">ε = NBAω sin(ωt)</span></td><td class=\"right\">برهان</td><td class=\"right\">الدور الثاني 2021</td></tr>\n  <tr><td class=\"right\">تحجيم الذروة <span class=\"im\">ε_max = NBAω</span></td><td class=\"right\">اختيار (نسبة التغيير)</td><td class=\"right\">الدور الثالث 2019</td></tr>\n  <tr><td class=\"right\">القوة الدافعة بقانون فاراداي (زاوية مع المستوي)</td><td class=\"right\">مسألة</td><td class=\"right\">الدور الثاني 2021</td></tr>\n  <tr><td class=\"right\">مقارنة مولّد المتناوب بالمستمر</td><td class=\"right\">مفاهيمي</td><td class=\"right\">ضمن أهداف الفصل</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✔",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div><span class=\"im\">ε_max = NBAω = 200 × 0.5 × 0.01 × 100 = 100 V</span>.</div></div>\n  <div class=\"a\"><div><span class=\"im\">I_avg = 0.636 × I_max = 0.636 × 3 = 1.908 A</span>.</div></div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ٣ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>عن سيارةٍ تشحن نفسها وهي تكبح، ومعركةِ التيارين التي غيّرت العالم</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">📜 قصة صراع: معركة التيارين (AC ضد DC)</span>\n    <p>أواخر القرن التاسع عشر اشتعلت «حرب التيارات»: <b>إديسون</b> يدافع عن التيار المستمر (DC)، و<b>تسلا</b> و<b>وستنغهاوس</b> يراهنان على المتناوب (AC). انتصر AC لسببٍ فيزيائي بحت: المولّد المتناوب يعطي فولطية عالية تُنقل لمسافات بعيدة بخسارة قليلة (عبر المحوّلات — التي تعمل فقط مع AC!). لهذا كل شبكات الكهرباء اليوم متناوبة، ومقابس بيتك تعطي تياراً جيبياً تردده 50 مرة في الثانية.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>السيارة الكهربائية تشحن بطاريتها وهي <b>تكبح</b>! عند الكبح يعمل محرّكها <b>كمولّد</b> (الحركة تُدير الملف)، فيحوّل طاقة السيارة الحركية إلى كهرباء تُخزَّن بدل أن تُهدر حرارةً في الفرامل — يُسمّى «الكبح المُستَرِدّ».</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>القوة الدافعة المضادّة تحمي محرّكك! لو مُنع الملف من الدوران (انحشر)، تصبح <span class=\"im\">ε_back = 0</span> فيرتفع التيار فجأة ويحترق الملف. لهذا «شواطة» المحرّك المحشور رائحة احتراق — التيار بلا كابح.</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>دينامو الدراجة يُضيء مصباحاً واحداً بسهولة. فإذا أضفت مصباحاً ثانياً على التوازي، هل تشعر أن الدوّاسة صارت <b>أثقل</b> أم بقيت كما هي؟ ولماذا؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">أثقل! مصباحان يسحبان تياراً محتثاً أكبر، وبقانون لنز يخلق هذا التيار قوة أكبر تعاكس دوران الدينامو. فتبذل ساقاك شغلاً أكبر — الطاقة الكهربائية الإضافية للمصباح الثاني جاءت من عضلاتك، بمبدأ حفظ الطاقة. المولّد لا يعطي طاقة مجانية أبداً.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-2-3.html",
+ "compiledAt": "2026-09-01"
+}

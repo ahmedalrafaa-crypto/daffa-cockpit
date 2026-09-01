@@ -1,0 +1,31 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="شعار الأستاذ أحمد رافع — فيزياء">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#6c5ce7"/>
+      <stop offset="1" stop-color="#4834d4"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.5">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect x="0" y="0" width="512" height="512" rx="115" fill="url(#bg)"/>
+  <circle cx="256" cy="256" r="150" fill="url(#glow)"/>
+
+  <!-- مدارات الذرّة -->
+  <g fill="none" stroke="#ffffff" stroke-width="13">
+    <ellipse cx="256" cy="256" rx="176" ry="72" opacity="0.9"/>
+    <ellipse cx="256" cy="256" rx="176" ry="72" opacity="0.55" transform="rotate(60 256 256)"/>
+    <ellipse cx="256" cy="256" rx="176" ry="72" opacity="0.55" transform="rotate(120 256 256)"/>
+  </g>
+
+  <!-- إلكترونات ملوّنة -->
+  <circle cx="410" cy="226" r="17" fill="#ffc93c"/>
+  <g transform="rotate(60 256 256)"><circle cx="118" cy="292" r="17" fill="#ff6b6b"/></g>
+  <g transform="rotate(120 256 256)"><circle cx="399" cy="290" r="17" fill="#00c2cb"/></g>
+
+  <!-- برق الطاقة في النواة -->
+  <path d="M 280 150 L 200 268 h 50 l -26 94 84 -122 h -52 l 44 -90 z"
+        fill="#ffc93c" stroke="#ffffff" stroke-width="7" stroke-linejoin="round"/>
+</svg>

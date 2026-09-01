@@ -1,0 +1,159 @@
+{
+ "id": "g12-ch3-l3",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "الاهتزاز الكهرومغناطيسي والرنين وعامل النوعية",
+ "subtitle": "ضع محثاً ومتسعة معاً فتتأرجح الطاقة بينهما كبندولٍ لا يتعب — هذا الاهتزاز الكهرومغناطيسي. وحين يوافق تردّد المصدر تردّد هذه الأرجوحة يحدث الرنين: قلب الراديو والتلفاز وكل جهاز استقبال.",
+ "hook": {
+  "html": "<p>كيف يلتقط راديوك <b>محطةً واحدة</b> من بين مئات الموجات التي تملأ الهواء حولك الآن؟ السرّ في دائرة محثٍ ومتسعة تُدوزَن حتى يصير تردّدها الطبيعي مساوياً لتردّد المحطة المطلوبة — فتُضخَّم تلك وحدها وتُهمَل البقية. هذه هي <span class=\"hl\">ظاهرة الرنين</span>، وهي ثمرة تأرجح الطاقة بين المجال المغناطيسي للمحث والمجال الكهربائي للمتسعة.</p>"
+ },
+ "sections": [
+  {
+   "title": "الاهتزاز الكهرومغناطيسي: أرجوحة الطاقة",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "اشحن متسعةً ثم صِلها بمحثٍ صرف. تبدأ المتسعة بالتفريغ خلال المحث فيتولّد مجال مغناطيسي يختزن الطاقة، ثم يتلاشى المجال فيعيد شحن المتسعة بقطبيةٍ معاكسة، وهكذا. تتأرجح الطاقة ذهاباً وإياباً بين <span class=\"term\">مجال المتسعة الكهربائي</span> و<span class=\"term\">مجال المحث المغناطيسي</span> بترددٍ جيبيّ — تماماً كتأرجح البندول بين طاقتي الوضع والحركة."
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">طاقة المتسعة</span><span class=\"eq\">PE<sub>elec</sub> = <span class=\"frac\"><span>1</span><span class=\"den\">2</span></span> <span class=\"frac\"><span>Q²</span><span class=\"den\">C</span></span></span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">طاقة المحث</span><span class=\"eq\">PE<sub>mag</sub> = <span class=\"frac\"><span>1</span><span class=\"den\">2</span></span> L I²</span></div>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"560\" height=\"120\" viewBox=\"0 0 560 120\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- four mini states -->\n  <g text-anchor=\"middle\">\n    <rect x=\"20\" y=\"30\" width=\"90\" height=\"50\" rx=\"8\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.4\"/>\n    <text x=\"65\" y=\"52\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"10\">المتسعة ممتلئة</text>\n    <text x=\"65\" y=\"68\" fill=\"#0369A1\" font-size=\"9\">كل الطاقة كهربائية</text>\n    <text x=\"128\" y=\"60\" fill=\"#94A3B8\">→</text>\n    <rect x=\"145\" y=\"30\" width=\"90\" height=\"50\" rx=\"8\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.4\"/>\n    <text x=\"190\" y=\"52\" fill=\"#7C2D12\" font-weight=\"800\" font-size=\"10\">المحث ذروة I</text>\n    <text x=\"190\" y=\"68\" fill=\"#92400E\" font-size=\"9\">كل الطاقة مغناطيسية</text>\n    <text x=\"253\" y=\"60\" fill=\"#94A3B8\">→</text>\n    <rect x=\"270\" y=\"30\" width=\"90\" height=\"50\" rx=\"8\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.4\"/>\n    <text x=\"315\" y=\"52\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"10\">شحن معاكس</text>\n    <text x=\"315\" y=\"68\" fill=\"#0369A1\" font-size=\"9\">كهربائية ثانيةً</text>\n    <text x=\"378\" y=\"60\" fill=\"#94A3B8\">→</text>\n    <rect x=\"395\" y=\"30\" width=\"90\" height=\"50\" rx=\"8\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.4\"/>\n    <text x=\"440\" y=\"52\" fill=\"#7C2D12\" font-weight=\"800\" font-size=\"10\">المحث ذروة I</text>\n    <text x=\"440\" y=\"68\" fill=\"#92400E\" font-size=\"9\">مغناطيسية</text>\n    <text x=\"505\" y=\"60\" fill=\"#059669\" font-size=\"16\">↻</text>\n  </g>\n</svg>",
+     "caption": "دورة الاهتزاز الكهرومغناطيسي: الطاقة تتأرجح بين المتسعة والمحث بلا توقّف (لو أُهملت المقاومة)"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div>لو كانت الدائرة خاليةً من المقاومة لاستمر الاهتزاز إلى الأبد. لكن أي مقاومةٍ حقيقية تبدّد الطاقة تدريجياً حرارةً، فتتناقص سعة الاهتزاز مع الزمن (اهتزاز مُخمَد).</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "الرنين: توافق الترددين",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "إذا وصلنا دائرة <span dir=\"ltr\">R–L–C</span> متوالية بمصدرٍ متناوب، وجعلنا تردّده مساوياً للتردد الطبيعي للدائرة، حدث <span class=\"term\">الرنين</span>. وشرطه أن تتساوى الرادتان:"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · شرط الرنين</span>\n  <p>عند الرنين تكون <span class=\"im\">X<sub>L</sub> = X<sub>C</sub></span>، فتُلغي إحداهما الأخرى وتصبح الممانعة <b>أصغر ما يمكن</b> <span class=\"im\">(Z = R)</span>، فيبلغ التيار <b>أعظم مقدار له</b>، وتكون <span class=\"im\">Φ = 0</span> وعامل القدرة <span class=\"im\">= 1</span>.</p>"
+    },
+    {
+     "type": "html",
+     "html": "ومن شرط الرنين <span class=\"im\">ωL = 1/ωC</span> نستخرج التردد الرنيني:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">التردد الزاوي الرنيني والتردد الرنيني</span>\n  <span class=\"eq\">ω<sub>r</sub> = <span class=\"frac\"><span>1</span><span class=\"den\">√(LC)</span></span> &nbsp;،&nbsp; f<sub>r</sub> = <span class=\"frac\"><span>1</span><span class=\"den\">2π√(LC)</span></span></span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"360\" height=\"180\" viewBox=\"0 0 360 180\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <line x1=\"45\" y1=\"150\" x2=\"330\" y2=\"150\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <line x1=\"45\" y1=\"20\" x2=\"45\" y2=\"150\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <text x=\"30\" y=\"30\" fill=\"#0B3B5E\" font-weight=\"800\">I</text>\n  <text x=\"322\" y=\"168\" fill=\"#0B3B5E\" font-weight=\"800\">f</text>\n  <path d=\"M45 148 C150 140 175 35 190 30 C205 35 240 140 330 147\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.8\"/>\n  <line x1=\"190\" y1=\"30\" x2=\"190\" y2=\"150\" stroke=\"#059669\" stroke-dasharray=\"4 3\" stroke-width=\"1.4\"/>\n  <text x=\"190\" y=\"166\" text-anchor=\"middle\" fill=\"#059669\" font-size=\"10\">f_r</text>\n  <text x=\"205\" y=\"45\" fill=\"#B91C1C\" font-size=\"10\">التيار أعظم عند الرنين</text>\n</svg>",
+     "caption": "منحني الرنين: يبلغ التيار ذروته عند التردد الرنيني fr حيث Z = R"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثاني 2020</span></span>\n  <p>علّل: يمكن أن تكون زاوية فرق الطور <span class=\"im\">Φ = 0</span> (والتيار بطور الفولطية) في دائرة تيار متناوب متوالية الربط تحتوي مقاومة ومحثاً ومتسعة.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>يحدث ذلك في <b>حالة الرنين</b>، عندما يساوي تردّد المصدر التردّد الرنيني للدائرة، فتتساوى الرادتان <span class=\"im\">X_L = X_C</span> ويُلغي أحدهما الآخر، فتصبح الممانعة <span class=\"im\">Z = R</span> (مقاومة صرف فعلياً). وعندها <span class=\"im\">tan Φ = (X_L−X_C)/R = 0</span> ⟹ <span class=\"im\">Φ = 0</span>.</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "عامل النوعية: حِدّة الرنين",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "ما مدى «حِدّة» قمة الرنين؟ نقيسها بـ<span class=\"term\">عامل النوعية</span> <span class=\"im\">Q_f</span>: نسبة التردد الزاوي الرنيني <span class=\"im\">ω_r</span> إلى نطاق التردد الزاوي <span class=\"im\">Δω</span> (عرض القمة عند نصف القدرة العظمى)، حيث <span class=\"im\">Δω = R/L</span>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">عامل النوعية</span>\n  <span class=\"eq\">Q<sub>f</sub> = <span class=\"frac\"><span>ω<sub>r</sub></span><span class=\"den\">Δω</span></span> = <span class=\"frac\"><span>1</span><span class=\"den\">R</span></span> √<span class=\"frac\"><span>L</span><span class=\"den\">C</span></span></span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"360\" height=\"170\" viewBox=\"0 0 360 170\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <line x1=\"45\" y1=\"140\" x2=\"330\" y2=\"140\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <line x1=\"45\" y1=\"15\" x2=\"45\" y2=\"140\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <text x=\"30\" y=\"28\" fill=\"#0B3B5E\" font-weight=\"800\">P</text>\n  <text x=\"322\" y=\"158\" fill=\"#0B3B5E\" font-weight=\"800\">ω</text>\n  <!-- sharp high Q -->\n  <path d=\"M120 140 C175 135 182 25 190 22 C198 25 205 135 260 140\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.6\"/>\n  <text x=\"235\" y=\"40\" fill=\"#B91C1C\" font-size=\"10\">مقاومة صغيرة · Q عالٍ (حادّ)</text>\n  <!-- broad low Q -->\n  <path d=\"M60 140 C130 120 165 70 190 68 C215 70 250 120 320 140\" fill=\"none\" stroke=\"#0284C7\" stroke-width=\"2.2\" stroke-dasharray=\"5 3\"/>\n  <text x=\"60\" y=\"95\" fill=\"#0284C7\" font-size=\"10\">مقاومة كبيرة · Q واطئ (عريض)</text>\n  <line x1=\"190\" y1=\"22\" x2=\"190\" y2=\"140\" stroke=\"#059669\" stroke-dasharray=\"3 2\" stroke-width=\"1.2\"/>\n  <text x=\"190\" y=\"156\" text-anchor=\"middle\" fill=\"#059669\" font-size=\"10\">ω_r</text>\n</svg>",
+     "caption": "كلّما صغُرت المقاومة زاد عامل النوعية وصارت قمة الرنين أحدّ وأدقّ في اختيار التردد"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثالث 2019</span></span>\n  <p>دائرة تيار متناوب متوالية الربط تحتوي مقاومة <span class=\"im\">R = 3 Ω</span> ومعامل حثها الذاتي <span class=\"im\">L = 0.04 H</span> ومتسعة ذات سعة صرف <span class=\"im\">C = 25 µF</span>، وُضعت فولطية متناوبة <span class=\"im\">75 V</span> والدائرة في حالة رنين. احسب: ① التيار المنساب، ② الفولطية عبر المحث وعبر المتسعة، ③ عامل النوعية.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><span class=\"im\">ω_r = 1/√(LC) = 1/√(0.04 × 25×10⁻⁶) = 1/√(10⁻⁶) = 1000 rad/s</span></p>\n    <p>عند الرنين <span class=\"im\">Z = R = 3 Ω</span> ⟹ ① <span class=\"im\">I = V/Z = 75/3 = </span> <span class=\"ans\">25 A</span></p>\n    <p><span class=\"im\">X_L = ω_r L = 1000 × 0.04 = 40 Ω</span> (و<span class=\"im\">X_C = 40 Ω</span> بالتساوي)</p>\n    <p>② <span class=\"im\">V_L = I·X_L = 25 × 40 = </span> <span class=\"ans\">1000 V</span> &nbsp;،&nbsp; <span class=\"im\">V_C = </span> <span class=\"ans\">1000 V</span> (متساويتان ومتعاكستان)</p>\n    <p>③ <span class=\"im\">Q_f = (1/R)√(L/C) = (1/3)√(0.04/25×10⁻⁶) = (1/3)√1600 = 40/3 = </span> <span class=\"ans\">13.33</span></p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "الدائرة المتوازية R–L–C",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "عند ربط العناصر على <b>التوازي</b> ينعكس المنطق: <span class=\"hl\">الفولطية نفسها عبر الجميع</span> <span class=\"im\">(V_R = V_L = V_C = V)</span>، أمّا التيارات فتختلف أطواراً. لذا نجمع <b>التيارات</b> متّجهياً لإيجاد التيار الرئيس <span class=\"im\">I_T</span>:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">تيارات الفروع</span><span class=\"eq\">I<sub>R</sub>=V/R ، I<sub>L</sub>=V/X<sub>L</sub> ، I<sub>C</sub>=V/X<sub>C</sub></span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">التيار الرئيس وزاويته</span><span class=\"eq\">I<sub>T</sub>² = I<sub>R</sub>² + (I<sub>C</sub>−I<sub>L</sub>)² ، tan Φ = (I<sub>C</sub>−I<sub>L</sub>)/I<sub>R</sub></span></div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">تمهيدي 2017</span></span>\n  <p>دائرة تيار متناوب متوازية الربط تحتوي مقاومة صرف ومحثاً ومتسعة، فرق الجهد بين طرفيها <span class=\"im\">240 V</span>، وكان التيار في فرع المتسعة <span class=\"im\">I_C = 8 A</span>، وفرع المحث <span class=\"im\">I_L = 12 A</span>، وفرع المقاومة <span class=\"im\">I_R = 3 A</span>. جد: ① التيار الرئيس، ② الممانعة الكلية، ③ زاوية فرق الطور. <span style=\"font-size:9pt\">(tan 53° = 4/3)</span></p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>① <span class=\"im\">I_T = √(I_R² + (I_C−I_L)²) = √(3² + (8−12)²) = √(9+16) = √25 = </span> <span class=\"ans\">5 A</span></p>\n    <p>② <span class=\"im\">Z = V/I_T = 240/5 = </span> <span class=\"ans\">48 Ω</span></p>\n    <p>③ <span class=\"im\">tan Φ = (I_C−I_L)/I_R = (8−12)/3 = −4/3</span> ⟹ <span class=\"ans\">Φ = −53°</span> (خواص حثّية)</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>① دائرة رنين محثها <span class=\"im\">L = 2 H</span> ومتسعتها <span class=\"im\">C = 0.5 µF</span>. جد التردد الزاوي الرنيني <span class=\"im\">ω_r</span>.</p>\n  <p>② دائرة رنين <span class=\"im\">R = 5 Ω</span>، <span class=\"im\">L = 0.1 H</span>، <span class=\"im\">C = 40 µF</span>. جد عامل النوعية <span class=\"im\">Q_f</span>.</p>\n  <p>③ دائرة متوازية <span class=\"im\">I_R = 4 A</span>، <span class=\"im\">I_C = 9 A</span>، <span class=\"im\">I_L = 6 A</span>. جد التيار الرئيس <span class=\"im\">I_T</span>. <span class=\"tnum\">(الأجوبة آخر الدرس)</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<svg width=\"720\" height=\"250\" viewBox=\"0 0 720 250\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12.5\">\n  <rect x=\"285\" y=\"12\" width=\"160\" height=\"46\" rx=\"12\" fill=\"#0B3B5E\"/>\n  <text x=\"365\" y=\"33\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\" font-size=\"13\">الرنين</text>\n  <text x=\"365\" y=\"50\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-weight=\"700\" font-size=\"11\">X_L = X_C</text>\n  <g stroke=\"#38BDF8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M300 48 C180 65 140 90 120 108\"/>\n    <path d=\"M365 58 V108\"/>\n    <path d=\"M430 48 C550 65 590 90 610 108\"/>\n    <path d=\"M365 58 C365 150 365 175 365 195\"/>\n  </g>\n  <rect x=\"30\" y=\"108\" width=\"175\" height=\"60\" rx=\"10\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.6\"/>\n  <text x=\"117\" y=\"130\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">الاهتزاز LC</text>\n  <text x=\"117\" y=\"150\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"10\">تأرجح الطاقة كهربائية↔مغناطيسية</text>\n  <rect x=\"283\" y=\"108\" width=\"164\" height=\"60\" rx=\"10\" fill=\"#FDECEC\" stroke=\"#B91C1C\" stroke-width=\"1.6\"/>\n  <text x=\"365\" y=\"130\" text-anchor=\"middle\" fill=\"#7F1D1D\" font-weight=\"800\">التردد الرنيني</text>\n  <text x=\"365\" y=\"150\" text-anchor=\"middle\" fill=\"#991B1B\" font-size=\"11\">f_r = 1/2π√(LC)</text>\n  <rect x=\"525\" y=\"108\" width=\"170\" height=\"60\" rx=\"10\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"1.6\"/>\n  <text x=\"610\" y=\"130\" text-anchor=\"middle\" fill=\"#5B21B6\" font-weight=\"800\">عامل النوعية</text>\n  <text x=\"610\" y=\"150\" text-anchor=\"middle\" fill=\"#6D28D9\" font-size=\"11\">Q_f = (1/R)√(L/C)</text>\n  <rect x=\"270\" y=\"195\" width=\"190\" height=\"46\" rx=\"10\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"365\" y=\"216\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"12\">الدائرة المتوازية</text>\n  <text x=\"365\" y=\"234\" text-anchor=\"middle\" fill=\"#0369A1\" font-size=\"10\">I_T²=I_R²+(I_C−I_L)²</text>\n</svg>"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📐",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>القانون</th><th>الصيغة</th><th>يُستعمل لـ</th><th>الوحدة</th></tr>\n  <tr><td class=\"right\">طاقة المتسعة</td><td class=\"ltr\">PE = ½ Q²/C</td><td class=\"right\">طاقة المجال الكهربائي</td><td class=\"ltr\">J</td></tr>\n  <tr><td class=\"right\">طاقة المحث</td><td class=\"ltr\">PE = ½ L I²</td><td class=\"right\">طاقة المجال المغناطيسي</td><td class=\"ltr\">J</td></tr>\n  <tr><td class=\"right\">شرط الرنين</td><td class=\"ltr\">X_L = X_C</td><td class=\"right\">تحقّق الرنين</td><td class=\"ltr\">Ω</td></tr>\n  <tr><td class=\"right\">التردد الرنيني</td><td class=\"ltr\">f_r = 1/(2π√(LC))</td><td class=\"right\">تردد الرنين</td><td class=\"ltr\">Hz</td></tr>\n  <tr><td class=\"right\">عامل النوعية</td><td class=\"ltr\">Q_f = (1/R)√(L/C)</td><td class=\"right\">حِدّة الرنين</td><td class=\"ltr\">—</td></tr>\n  <tr><td class=\"right\">التيار الرئيس (متوازية)</td><td class=\"ltr\">I_T² = I_R² + (I_C−I_L)²</td><td class=\"right\">جمع التيارات متّجهياً</td><td class=\"ltr\">A</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — الرنين والمتوازية (2017–2024)",
+   "icon": "🏛",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">دائرة رنين متوالية: التيار والفولطيات و<span class=\"im\">Q_f</span></td><td class=\"right\">مسألة</td><td class=\"right\">الدور الثالث 2019 · الدور الثالث 2018 · تمهيدي 2017</td></tr>\n  <tr><td class=\"right\">دائرة متوازية: <span class=\"im\">I_T، Z، Φ</span> من تيارات الفروع</td><td class=\"right\">مسألة</td><td class=\"right\">تمهيدي 2017 · الدور الثاني 2020</td></tr>\n  <tr><td class=\"right\">علّل: <span class=\"im\">Φ = 0</span> عند الرنين / أكبر عامل قدرة بأصغر ممانعة</td><td class=\"right\">تعليل / خطأ-صح</td><td class=\"right\">الدور الثاني 2020 · تمهيدي 2020 · الدور الثالث 2019</td></tr>\n  <tr><td class=\"right\">خواص الدائرة المتوازية (حثّية / سعوية)</td><td class=\"right\">اختيار</td><td class=\"right\">تمهيدي 2019</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✔",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div>① <span class=\"im\">ω_r = 1/√(LC) = 1/√(2 × 0.5×10⁻⁶) = 1/√(10⁻⁶) = 1000 rad/s</span>.</div></div>\n  <div class=\"a\"><div>② <span class=\"im\">Q_f = (1/R)√(L/C) = (1/5)√(0.1/40×10⁻⁶) = (1/5)√2500 = 50/5 = 10</span>.</div></div>\n  <div class=\"a\"><div>③ <span class=\"im\">I_T = √(I_R² + (I_C−I_L)²) = √(4² + (9−6)²) = √(16+9) = √25 = 5 A</span>.</div></div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ٣ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>عن راديو يختار محطةً من الفوضى، وأرجوحةٍ تعلّمك سرّ الرنين</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">📜 قصة تطبيق: كيف يختار الراديو محطة؟</span>\n    <p>حين تدير قرص «الدوزان» في راديو قديم، فأنت في الحقيقة تغيّر <b>سعة متسعة متغيّرة</b> في دائرة رنين. عند سعةٍ معيّنة يصير التردد الرنيني للدائرة <span class=\"im\">f_r = 1/2π√(LC)</span> مساوياً لتردد محطةٍ واحدة، فتُضخَّم إشارتها آلاف المرّات بينما تبقى بقية المحطات ضعيفة مُهمَلة. تغيير المحطة = تغيير <span class=\"im\">C</span> = إزاحة قمة الرنين إلى تردد جديد. الفيزياء التي تدرسها الآن تشغّل كل جهاز استقبال حولك.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>دائرة <span class=\"im\">LC</span> تُشبه البندول تماماً: شحنة المتسعة <span class=\"im\">Q</span> كإزاحة البندول، والتيار <span class=\"im\">I</span> كسرعته. طاقة المتسعة الكهربائية ↔ طاقة الوضع، وطاقة المحث المغناطيسية ↔ طاقة الحركة. حتى المعادلات جيبية في كليهما!</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>بطاقتك اللاصقة (RFID) وبوابات المتاجر المضادّة للسرقة تعمل بالرنين: ملفٌ ومتسعة في البطاقة يُدوزَنان على تردد البوابة، فيرنّان عند المرور ويُطلقان الإنذار — بلا بطارية أصلاً!</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>لدفع طفلٍ على أرجوحة إلى أعلى ارتفاع، لماذا يكفي دفعٌ خفيفٌ في <b>الوقت المناسب</b> من كل دورة، بدل دفعةٍ قوية في وقتٍ عشوائي؟ وما علاقة ذلك برنين دائرة <span class=\"im\">RLC</span>؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">لأن الأرجوحة لها تردد طبيعي، فإن دفعتَها بتردّدٍ يساويه (في الوقت المناسب من كل دورة) تراكمت طاقة كل دفعة مع سابقتها فارتفعت كثيراً — هذا هو الرنين الميكانيكي. المثل في دائرة RLC: حين يساوي تردد المصدر التردد الطبيعي للدائرة <span class=\"im\">(X_L=X_C)</span> «تتراكم» الطاقة فيبلغ التيار أعظم مقدار رغم فولطية مصدر صغيرة. الدفع في التوقيت الصحيح = مساواة الترددين.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-3-3.html",
+ "compiledAt": "2026-09-01"
+}

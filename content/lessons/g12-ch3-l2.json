@@ -1,0 +1,204 @@
+{
+ "id": "g12-ch3-l2",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "المحث والمتسعة والدائرة المتوالية وعامل القدرة",
+ "subtitle": "المقاومة تعارض التيار وتبدّد طاقته حرارةً. لكن المحث والمتسعة يعارضان التيار المتناوب أيضاً — دون تبديد أي طاقة! نسمّي هذه المعارضة «الرادة»، ونجمع الثلاثة في دائرة واحدة نصفها بمتّجه واحد: الممانعة Z.",
+ "hook": {
+  "html": "<p>في الدرس السابق كان الحمل مقاومةً فقط، فسار التيار والفولطية بطورٍ واحد. لكن ماذا لو كان الحمل <b>ملفاً</b> أو <b>متسعة</b>؟ كلاهما يعارض التيار المتناوب لكن بطريقةٍ ذكية: المحث يمانع <b>تغيّر</b> التيار (بالحث الذاتي)، والمتسعة تمانع <b>تغيّر</b> الفولطية (بشحنها وتفريغها). النتيجة: <span class=\"hl\">تأخّرٌ أو تقدّمٌ في الطور مقداره ٩٠°</span>، ومعارضةٌ اسمها الرادة تُقاس بالأوم لكنها لا تبدّد حرارة.</p>"
+ },
+ "sections": [
+  {
+   "title": "الحمل محث صرف: الفولطية تتقدّم",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "في دائرةٍ حملها <span class=\"term\">محث صرف</span> (ملف مهمل المقاومة)، تُبيّن التجربة أن الفولطية عبر المحث <span class=\"hl\">تتقدّم على التيار بزاوية فرق طور <span class=\"im\">Φ = π/2</span></span> (٩٠°):"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">الفولطية عبر المحث</span><span class=\"eq\">V<sub>L</sub> = V<sub>m</sub> sin(ωt + π/2)</span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">التيار خلال المحث</span><span class=\"eq\">I<sub>L</sub> = I<sub>m</sub> sin(ωt)</span></div>"
+    },
+    {
+     "type": "html",
+     "html": "تُسمّى المعاكسة التي يبديها المحث للتيار المتغيّر <span class=\"term\">رادة الحث</span> <span class=\"im\">X_L</span>، وتُقاس بالأوم <span class=\"im\">(Ω)</span> وتُعطى بالعلاقة:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">رادة الحث</span>\n  <span class=\"eq\">X<sub>L</sub> = ωL = 2πf L</span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"300\" height=\"130\" viewBox=\"0 0 300 130\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <line x1=\"30\" y1=\"90\" x2=\"270\" y2=\"90\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <circle cx=\"90\" cy=\"90\" r=\"3\" fill=\"#0B3B5E\"/>\n  <line x1=\"90\" y1=\"90\" x2=\"90\" y2=\"30\" stroke=\"#B91C1C\" stroke-width=\"3\" marker-end=\"url(#a1)\"/>\n  <line x1=\"90\" y1=\"90\" x2=\"180\" y2=\"90\" stroke=\"#0284C7\" stroke-width=\"3\" marker-end=\"url(#a2)\"/>\n  <text x=\"80\" y=\"24\" fill=\"#B91C1C\" font-weight=\"800\">V_L</text>\n  <text x=\"185\" y=\"86\" fill=\"#0284C7\" font-weight=\"800\">I_L</text>\n  <path d=\"M120 90 A30 30 0 0 0 108 63\" fill=\"none\" stroke=\"#059669\" stroke-width=\"1.4\"/>\n  <text x=\"122\" y=\"72\" fill=\"#059669\" font-size=\"10\">90°</text>\n  <text x=\"150\" y=\"118\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"10\">الفولطية تتقدّم التيار بـ90°</text>\n  <defs>\n    <marker id=\"a1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B91C1C\"/></marker>\n    <marker id=\"a2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0284C7\"/></marker>\n  </defs>\n</svg>",
+     "caption": "متجها الطور: VL يتقدّم IL بزاوية قائمة"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div>رادة الحث تتناسب طردياً مع التردد <span class=\"im\">f</span> ومع معامل الحث <span class=\"im\">L</span>. فعند التردّدات العالية يعمل الملف كمقاومة كبيرة تكاد تقطع التيار، وعند <span class=\"im\">f = 0</span> (تيار مستمر) تصبح <span class=\"im\">X_L = 0</span>.</div>",
+     "a": ""
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول</span>\n    <span class=\"q\">محث صرف معامل حثه <span class=\"im\">L = 50/π mH</span>، رُبط بمصدر متناوب <span class=\"im\">V_eff = 20 V</span>. احسب رادة الحث والتيار عند: ① <span class=\"im\">f = 10 Hz</span>، ② <span class=\"im\">f = 1 MHz</span>.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">①</span><div class=\"sc\"><span class=\"im\">X_L = 2πf L = 2π × 10 × (50/π)×10⁻³ = 1 Ω</span> ⟹ <span class=\"im\">I = V/X_L = 20/1 = </span> <span class=\"ans\">20 A</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">②</span><div class=\"sc\"><span class=\"im\">X_L = 2π × 10⁶ × (50/π)×10⁻³ = 10⁵ Ω</span> ⟹ <span class=\"im\">I = 20/10⁵ = </span> <span class=\"ans\">2×10⁻⁴ A</span>\n      <span class=\"why\">التردّد العالي رفع الرادة مئة ألف ضعف فكاد يخنق التيار — لهذا يُسمّى الملف «خانقاً».</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثاني 2020</span></span>\n  <p>ما مميزات منحني القدرة المتوسطة في دائرة تيار متناوب تحتوي محث صرف فقط؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>المنحني يحوي أجزاءً موجبة وأخرى سالبة متساوية بالمساحة، فمجموعها خلال دورة كاملة صفر — أي أن <span class=\"hl\">القدرة المتوسطة تساوي صفراً</span>. فالمحث الصرف لا يبدّد طاقة، بل يختزنها في مجاله المغناطيسي في ربع دورة ثم يعيدها للمصدر في الربع التالي.</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "الحمل متسعة صرف: التيار يتقدّم",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "في دائرةٍ حملها <span class=\"term\">متسعة ذات سعة صرف</span>، ينعكس الحال: <span class=\"hl\">التيار يتقدّم على الفولطية بزاوية <span class=\"im\">π/2</span></span>:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">الفولطية عبر المتسعة</span><span class=\"eq\">V<sub>C</sub> = V<sub>m</sub> sin(ωt)</span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">التيار خلال المتسعة</span><span class=\"eq\">I<sub>C</sub> = I<sub>m</sub> sin(ωt + π/2)</span></div>"
+    },
+    {
+     "type": "html",
+     "html": "وتُسمّى معاكستها للتيار <span class=\"term\">رادة السعة</span> <span class=\"im\">X_C</span> وتُقاس بالأوم:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">رادة السعة</span>\n  <span class=\"eq\">X<sub>C</sub> = <span class=\"frac\"><span>1</span><span class=\"den\">ωC</span></span> = <span class=\"frac\"><span>1</span><span class=\"den\">2πf C</span></span></span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"300\" height=\"130\" viewBox=\"0 0 300 130\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <line x1=\"30\" y1=\"70\" x2=\"270\" y2=\"70\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <circle cx=\"120\" cy=\"70\" r=\"3\" fill=\"#0B3B5E\"/>\n  <line x1=\"120\" y1=\"70\" x2=\"120\" y2=\"18\" stroke=\"#0284C7\" stroke-width=\"3\" marker-end=\"url(#b1)\"/>\n  <line x1=\"120\" y1=\"70\" x2=\"210\" y2=\"70\" stroke=\"#B91C1C\" stroke-width=\"3\" marker-end=\"url(#b2)\"/>\n  <text x=\"110\" y=\"14\" fill=\"#0284C7\" font-weight=\"800\">I_C</text>\n  <text x=\"215\" y=\"66\" fill=\"#B91C1C\" font-weight=\"800\">V_C</text>\n  <path d=\"M150 70 A30 30 0 0 0 138 43\" fill=\"none\" stroke=\"#059669\" stroke-width=\"1.4\"/>\n  <text x=\"152\" y=\"52\" fill=\"#059669\" font-size=\"10\">90°</text>\n  <text x=\"150\" y=\"100\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"10\">التيار يتقدّم الفولطية بـ90°</text>\n  <defs>\n    <marker id=\"b1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0284C7\"/></marker>\n    <marker id=\"b2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B91C1C\"/></marker>\n  </defs>\n</svg>",
+     "caption": "متجها الطور: IC يتقدّم VC بزاوية قائمة"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div>رادة السعة تتناسب <b>عكسياً</b> مع التردد <span class=\"im\">f</span> ومع السعة <span class=\"im\">C</span>. فعند <span class=\"im\">f = 0</span> (تيار مستمر) تصبح <span class=\"im\">X_C = ∞</span> — أي تعمل المتسعة كمفتاحٍ مفتوح، وهذا ما درسناه في دائرة التيار المستمر.</div>",
+     "a": ""
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه · القدرة في المحث والمتسعة</span>\n  <p>القدرة المتوسطة في <b>محث صرف</b> أو <b>متسعة صرف</b> تساوي صفراً، لأن زاوية فرق الطور <span class=\"im\">Φ = 90°</span> و<span class=\"im\">cos 90° = 0</span>. كلاهما يختزن الطاقة ويعيدها، ولا يحوّلها حرارةً كالمقاومة.</p>",
+     "private": true
+    }
+   ]
+  },
+  {
+   "title": "الدائرة المتوالية R–L–C: مخطط الفولطيات",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "نربط الثلاثة على التوالي فيمرّ فيها <span class=\"hl\">التيار نفسه</span>. لكن فولطياتها ليست بطورٍ واحد: <span class=\"im\">V_R</span> بطور التيار، و<span class=\"im\">V_L</span> يتقدّمه ٩٠°، و<span class=\"im\">V_C</span> يتأخّر عنه ٩٠°. لذا نجمعها <b>متّجهياً</b> (لا جبرياً) لنحصل على الفولطية الكلية <span class=\"im\">V_T</span>:"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"330\" height=\"180\" viewBox=\"0 0 330 180\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- axes -->\n  <line x1=\"60\" y1=\"120\" x2=\"260\" y2=\"120\" stroke=\"#CBD5E1\" stroke-width=\"1\"/>\n  <line x1=\"60\" y1=\"40\" x2=\"60\" y2=\"160\" stroke=\"#CBD5E1\" stroke-width=\"1\"/>\n  <!-- VL up -->\n  <line x1=\"60\" y1=\"120\" x2=\"60\" y2=\"55\" stroke=\"#B45309\" stroke-width=\"3\" marker-end=\"url(#c1)\"/>\n  <text x=\"30\" y=\"55\" fill=\"#B45309\" font-weight=\"800\">V_L</text>\n  <!-- VC down -->\n  <line x1=\"60\" y1=\"120\" x2=\"60\" y2=\"150\" stroke=\"#0284C7\" stroke-width=\"3\" marker-end=\"url(#c2)\"/>\n  <text x=\"30\" y=\"150\" fill=\"#0284C7\" font-weight=\"800\">V_C</text>\n  <!-- VR right -->\n  <line x1=\"60\" y1=\"120\" x2=\"200\" y2=\"120\" stroke=\"#B91C1C\" stroke-width=\"3\" marker-end=\"url(#c3)\"/>\n  <text x=\"130\" y=\"136\" fill=\"#B91C1C\" font-weight=\"800\">V_R</text>\n  <!-- VL-VC resultant vertical (net up) -->\n  <line x1=\"200\" y1=\"120\" x2=\"200\" y2=\"78\" stroke=\"#7C3AED\" stroke-width=\"2.4\" stroke-dasharray=\"4 3\" marker-end=\"url(#c4)\"/>\n  <text x=\"205\" y=\"98\" fill=\"#7C3AED\" font-size=\"10\">V_L−V_C</text>\n  <!-- VT -->\n  <line x1=\"60\" y1=\"120\" x2=\"200\" y2=\"78\" stroke=\"#0B3B5E\" stroke-width=\"3.2\" marker-end=\"url(#c5)\"/>\n  <text x=\"128\" y=\"90\" fill=\"#0B3B5E\" font-weight=\"800\">V_T</text>\n  <path d=\"M95 120 A35 35 0 0 0 88 103\" fill=\"none\" stroke=\"#059669\" stroke-width=\"1.4\"/>\n  <text x=\"97\" y=\"112\" fill=\"#059669\" font-size=\"10\">Φ</text>\n  <defs>\n    <marker id=\"c1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B45309\"/></marker>\n    <marker id=\"c2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0284C7\"/></marker>\n    <marker id=\"c3\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B91C1C\"/></marker>\n    <marker id=\"c4\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#7C3AED\"/></marker>\n    <marker id=\"c5\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0B3B5E\"/></marker>\n  </defs>\n</svg>",
+     "caption": "مخطط المتجهات الطورية للفولطيات: VT هو محصّلة VR مع الفرق (VL−VC)"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">الفولطية الكلية وزاوية الطور</span>\n  <span class=\"eq\">(V<sub>T</sub>)² = (V<sub>R</sub>)² + (V<sub>L</sub> − V<sub>C</sub>)² &nbsp;،&nbsp; tan Φ = <span class=\"frac\"><span>V<sub>L</sub> − V<sub>C</sub></span><span class=\"den\">V<sub>R</sub></span></span></span>"
+    }
+   ]
+  },
+  {
+   "title": "الممانعة Z: معارضة الدائرة كلها",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "بقسمة كل فولطية على التيار المشترك <span class=\"im\">(R = V_R/I، X_L = V_L/I، X_C = V_C/I)</span> نحصل على مثلث مماثل بدلالة المعارضات. تُسمّى المعارضة الكلية <span class=\"term\">الممانعة</span> <span class=\"im\">Z</span>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">الممانعة الكلية وزاوية الطور</span>\n  <span class=\"eq\">Z = <span class=\"frac\"><span>V<sub>T</sub></span><span class=\"den\">I</span></span> &nbsp;،&nbsp; Z² = R² + (X<sub>L</sub> − X<sub>C</sub>)² &nbsp;،&nbsp; tan Φ = <span class=\"frac\"><span>X<sub>L</sub> − X<sub>C</sub></span><span class=\"den\">R</span></span></span>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">📈</span> دائرة حثّية</span>\n    <p>إذا كان <span class=\"im\">X_L &gt; X_C</span> ⟹ <span class=\"im\">Φ</span> موجبة، والفولطية الكلية تتقدّم التيار.</p>\n  </div>\n  <div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">📉</span> دائرة سعوية</span>\n    <p>إذا كان <span class=\"im\">X_C &gt; X_L</span> ⟹ <span class=\"im\">Φ</span> سالبة، والفولطية الكلية تتأخّر عن التيار.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثالث 2022</span></span>\n  <p>دائرة تيار متناوب متوالية الربط تحتوي مقاومة ومحث ومتسعة، مقاومة المقاومة <span class=\"im\">R = 40 Ω</span>، والرادة الحثّية للملف <span class=\"im\">X_L = 120 Ω</span>، والرادة السعوية للمتسعة <span class=\"im\">X_C = 90 Ω</span>، والفولطية الموضوعة <span class=\"im\">240 V</span> بتردد <span class=\"im\">f = 500/π Hz</span>. احسب: ① معامل الحث الذاتي للملف وسعة المتسعة، ② الممانعة الكلية وتيار الدائرة وزاوية فرق الطور.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>① <span class=\"im\">X_L = 2πf L</span> ⟹ <span class=\"im\">120 = 1000 L</span> ⟹ <span class=\"ans\">L = 0.12 H</span> &nbsp;؛&nbsp; <span class=\"im\">X_C = 1/(2πf C)</span> ⟹ <span class=\"im\">90 = 1/(1000 C)</span> ⟹ <span class=\"ans\">C ≈ 11.1 µF</span></p>\n    <p>② <span class=\"im\">Z = √(R² + (X_L−X_C)²) = √(40² + 30²) = √2500 = </span> <span class=\"ans\">50 Ω</span></p>\n    <p><span class=\"im\">I = V_T/Z = 240/50 = </span> <span class=\"ans\">4.8 A</span> &nbsp;؛&nbsp; <span class=\"im\">tan Φ = 30/40 = 0.75</span> ⟹ <span class=\"ans\">Φ = 37°</span> (حثّية)</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "عامل القدرة",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "القدرة الحقيقية (المستهلَكة) تُستنزف في المقاومة فقط: <span class=\"im\">P_real = I_R V_R = I V_T cos Φ</span>. أمّا حاصل ضرب المقدارين المؤثّرين الكلّيين <span class=\"im\">P_app = I V_T</span> فيُسمّى <span class=\"term\">القدرة الظاهرية</span> (تُقاس بـ <span class=\"im\">V·A</span>). ونسبتهما هي <span class=\"term\">عامل القدرة</span>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">عامل القدرة</span>\n  <span class=\"eq\">pf = <span class=\"frac\"><span>P<sub>real</sub></span><span class=\"den\">P<sub>app</sub></span></span> = cos Φ = <span class=\"frac\"><span>R</span><span class=\"den\">Z</span></span></span>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div>مقاومة صرف: <span class=\"im\">pf = cos 0 = 1</span> (كل القدرة مستهلَكة). محث صرف أو متسعة صرف: <span class=\"im\">pf = cos 90° = 0</span> (لا استهلاك). والدائرة الحقيقية بينهما.</div>",
+     "a": ""
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثاني 2021</span></span>\n  <p>رُبط ملفٌ معامل حثه الذاتي <span class=\"im\">L = 1/(10π) H</span> بين قطبي مصدر للفولطية المتناوبة فرق جهده <span class=\"im\">100 V</span>، فكانت زاوية فرق الطور بين متجه الفولطية الكلية ومتجه التيار <span class=\"im\">37°</span>، ومقدار التيار <span class=\"im\">5 A</span>. جد: ① مقاومة الملف، ② تردد المصدر. <span style=\"font-size:9pt\">(cos 37° = 0.8)</span></p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>الممانعة: <span class=\"im\">Z = V_T/I = 100/5 = 20 Ω</span></p>\n    <p>① <span class=\"im\">cos Φ = R/Z</span> ⟹ <span class=\"im\">0.8 = R/20</span> ⟹ <span class=\"ans\">R = 16 Ω</span></p>\n    <p>② <span class=\"im\">Z² = R² + X_L²</span> ⟹ <span class=\"im\">400 = 256 + X_L²</span> ⟹ <span class=\"im\">X_L = 12 Ω</span></p>\n    <p><span class=\"im\">X_L = 2πf L</span> ⟹ <span class=\"im\">12 = 2πf × 1/(10π) = f/5</span> ⟹ <span class=\"ans\">f = 60 Hz</span></p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>① محث معامل حثه <span class=\"im\">0.2 H</span> في دائرة تردّدها <span class=\"im\">50 Hz</span>. جد رادة الحث <span class=\"im\">X_L</span>. <span style=\"font-size:9pt\">(خذ <span class=\"im\">π ≈ 3.14</span>)</span></p>\n  <p>② دائرة متوالية <span class=\"im\">R = 6 Ω</span>، <span class=\"im\">X_L = 12 Ω</span>، <span class=\"im\">X_C = 4 Ω</span>. جد الممانعة <span class=\"im\">Z</span> وعامل القدرة.</p>\n  <p>③ دائرة تيارها المؤثّر <span class=\"im\">2 A</span> وفولطيتها الكلية <span class=\"im\">100 V</span> وعامل قدرتها <span class=\"im\">0.6</span>. جد القدرة الحقيقية. <span class=\"tnum\">(الأجوبة آخر الدرس)</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<svg width=\"720\" height=\"255\" viewBox=\"0 0 720 255\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12.5\">\n  <rect x=\"285\" y=\"12\" width=\"160\" height=\"46\" rx=\"12\" fill=\"#0B3B5E\"/>\n  <text x=\"365\" y=\"33\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\" font-size=\"13\">الدائرة المتوالية</text>\n  <text x=\"365\" y=\"50\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-weight=\"700\" font-size=\"11\">R – L – C</text>\n  <g stroke=\"#38BDF8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M300 48 C180 65 140 90 120 108\"/>\n    <path d=\"M365 58 V108\"/>\n    <path d=\"M430 48 C550 65 590 90 610 108\"/>\n    <path d=\"M410 58 C520 150 555 185 585 205\"/>\n    <path d=\"M320 58 C210 150 175 185 150 205\"/>\n  </g>\n  <rect x=\"35\" y=\"108\" width=\"170\" height=\"62\" rx=\"10\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.6\"/>\n  <text x=\"120\" y=\"130\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">محث صرف</text>\n  <text x=\"120\" y=\"150\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"11\">X_L=2πfL · V يتقدّم</text>\n  <text x=\"120\" y=\"165\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"10\">القدرة = 0</text>\n  <rect x=\"283\" y=\"108\" width=\"164\" height=\"62\" rx=\"10\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"365\" y=\"130\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"800\">متسعة صرف</text>\n  <text x=\"365\" y=\"150\" text-anchor=\"middle\" fill=\"#0369A1\" font-size=\"11\">X_C=1/2πfC · I يتقدّم</text>\n  <text x=\"365\" y=\"165\" text-anchor=\"middle\" fill=\"#0369A1\" font-size=\"10\">القدرة = 0</text>\n  <rect x=\"525\" y=\"108\" width=\"170\" height=\"62\" rx=\"10\" fill=\"#FDECEC\" stroke=\"#B91C1C\" stroke-width=\"1.6\"/>\n  <text x=\"610\" y=\"130\" text-anchor=\"middle\" fill=\"#7F1D1D\" font-weight=\"800\">الممانعة Z</text>\n  <text x=\"610\" y=\"150\" text-anchor=\"middle\" fill=\"#991B1B\" font-size=\"10\">Z²=R²+(X_L−X_C)²</text>\n  <text x=\"610\" y=\"165\" text-anchor=\"middle\" fill=\"#991B1B\" font-size=\"10\">tanΦ=(X_L−X_C)/R</text>\n  <rect x=\"60\" y=\"205\" width=\"185\" height=\"42\" rx=\"10\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"1.6\"/>\n  <text x=\"152\" y=\"230\" text-anchor=\"middle\" fill=\"#065F46\" font-weight=\"800\" font-size=\"11\">V_T²=V_R²+(V_L−V_C)²</text>\n  <rect x=\"490\" y=\"205\" width=\"195\" height=\"42\" rx=\"10\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"1.6\"/>\n  <text x=\"587\" y=\"230\" text-anchor=\"middle\" fill=\"#5B21B6\" font-weight=\"800\" font-size=\"11\">عامل القدرة pf=cosΦ=R/Z</text>\n</svg>"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📐",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>القانون</th><th>الصيغة</th><th>يُستعمل لـ</th><th>الوحدة</th></tr>\n  <tr><td class=\"right\">رادة الحث</td><td class=\"ltr\">X_L = 2πf L</td><td class=\"right\">معارضة المحث</td><td class=\"ltr\">Ω</td></tr>\n  <tr><td class=\"right\">رادة السعة</td><td class=\"ltr\">X_C = 1/(2πf C)</td><td class=\"right\">معارضة المتسعة</td><td class=\"ltr\">Ω</td></tr>\n  <tr><td class=\"right\">الفولطية الكلية</td><td class=\"ltr\">V_T² = V_R² + (V_L−V_C)²</td><td class=\"right\">جمع الفولطيات متّجهياً</td><td class=\"ltr\">V</td></tr>\n  <tr><td class=\"right\">الممانعة</td><td class=\"ltr\">Z² = R² + (X_L−X_C)²</td><td class=\"right\">معارضة الدائرة كلها</td><td class=\"ltr\">Ω</td></tr>\n  <tr><td class=\"right\">زاوية الطور</td><td class=\"ltr\">tan Φ = (X_L−X_C)/R</td><td class=\"right\">إيجاد Φ</td><td class=\"ltr\">درجة</td></tr>\n  <tr><td class=\"right\">عامل القدرة</td><td class=\"ltr\">pf = cos Φ = R/Z</td><td class=\"right\">نسبة القدرة المستهلَكة</td><td class=\"ltr\">—</td></tr>\n  <tr><td class=\"right\">القدرة الحقيقية</td><td class=\"ltr\">P_real = I V_T cos Φ</td><td class=\"right\">القدرة المستهلَكة</td><td class=\"ltr\">W</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — المحث والمتسعة والمتوالية (2017–2024)",
+   "icon": "🏛",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">دائرة متوالية <span class=\"im\">RLC</span>: <span class=\"im\">Z، I، Φ</span> و<span class=\"im\">L، C</span> من الرادات</td><td class=\"right\">مسألة</td><td class=\"right\">الدور الثالث 2022</td></tr>\n  <tr><td class=\"right\">ملف بمقاومة: إيجاد <span class=\"im\">R</span> و<span class=\"im\">f</span> من <span class=\"im\">Φ</span> والتيار</td><td class=\"right\">مسألة</td><td class=\"right\">الدور الثاني 2021</td></tr>\n  <tr><td class=\"right\">القدرة المتوسطة لمحث/متسعة صرف = صفر</td><td class=\"right\">تعليل / مميزات المنحني</td><td class=\"right\">الدور الثاني 2020 · الدور الثالث 2018 · تمهيدي 2017</td></tr>\n  <tr><td class=\"right\">تأثير تغيّر <span class=\"im\">f</span> في رادة الحث <span class=\"im\">X_L</span> + رسم</td><td class=\"right\">نشاط / بياني</td><td class=\"right\">تمهيدي 2017</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✔",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div>① <span class=\"im\">X_L = 2πf L = 2 × 3.14 × 50 × 0.2 ≈ 62.8 Ω</span>.</div></div>\n  <div class=\"a\"><div>② <span class=\"im\">Z = √(6² + (12−4)²) = √(36+64) = √100 = 10 Ω</span>، و<span class=\"im\">pf = R/Z = 6/10 = 0.6</span>.</div></div>\n  <div class=\"a\"><div>③ <span class=\"im\">P_real = I V_T cos Φ = 2 × 100 × 0.6 = 120 W</span>.</div></div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ٢ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>عن ملفٍ يخنق التيار ليضيء الفلورسنت، ومتسعةٍ تمرّر الصوت وتحجب البطارية</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">📜 قصة تطبيق: «الخانق» في مصباح الفلورسنت</span>\n    <p>مصباح الفلورسنت القديم يحتاج تياراً محدوداً وإلا احترق. الحلّ الذكي: نضع <b>ملفاً (خانقاً)</b> على التوالي معه. لماذا ملفٌ لا مقاومة؟ لأن المقاومة تحدّ التيار لكنها تبدّد طاقةً كبيرة حرارةً (هدرٌ وحرّ). أمّا رادة الحث <span class=\"im\">X_L</span> فتحدّ التيار <b>دون أن تبدّد أي طاقة</b> (قدرتها صفر) — فالمصباح يعمل والكفاءة عالية. هذا بالضبط ما تسأل عنه الأسئلة الوزارية: «لماذا يُفضَّل محث صرف لا مقاومة صرف؟».</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>المتسعة تمرّر التيار المتناوب وتحجب المستمر! لأن <span class=\"im\">X_C = 1/2πfC</span>: عند <span class=\"im\">f</span> عالٍ تصغر الرادة فيمرّ AC، وعند <span class=\"im\">f=0</span> تصير لانهاية فيُحجب DC. هذا مبدأ «مكثّف الربط» في مكبّرات الصوت التي تمرّر إشارة الصوت وتحجب فولطية التغذية.</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>سمّاعتك تفصل الجهير عن الصفير بالفيزياء نفسها: المتسعة (رادتها تصغر بالتردد العالي) تمرّر الأصوات الحادّة إلى السمّاعة الصغيرة، والملف (رادته تصغر بالتردد الواطئ) يمرّر الجهير إلى السمّاعة الكبيرة. تُسمّى الدائرة «الفاصل الترددي».</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>وصلتَ مصباحاً على التوالي مع متسعة كبيرة، ثم بمصدر <b>متناوب</b> فأضاء، وبمصدر <b>مستمر</b> بالفولطية نفسها فانطفأ تماماً. لماذا؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">لأن رادة المتسعة <span class=\"im\">X_C = 1/(2πfC)</span> تعتمد على التردد. مع المتناوب <span class=\"im\">(f=50Hz)</span> تكون الرادة محدودة فيمرّ تيار يكفي لإضاءة المصباح. أمّا مع المستمر <span class=\"im\">(f=0)</span> فتصبح <span class=\"im\">X_C</span> لانهاية — تعمل المتسعة كمفتاحٍ مفتوح فلا يمرّ تيار ولا يضيء المصباح. المتسعة «تمرّر» المتناوب و«تقطع» المستمر.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-3-2.html",
+ "compiledAt": "2026-09-01"
+}

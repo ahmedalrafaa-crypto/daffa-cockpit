@@ -1,0 +1,408 @@
+{
+ "id": "g12-ch1-l1",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "المتسعة المنفردة",
+ "subtitle": "من الموصل الكروي المنفرد إلى المتسعة: كيف نخزّن الشحنة والطاقة الكهربائية؟ وما العوامل التي تتحكم بالسعة؟ وماذا يفعل العازل؟",
+ "hook": {
+  "html": "<p>فلاش كاميرا الموبايل يومض بضوء يخطف البصر لجزء من الألف من الثانية. البطارية <b>لا تستطيع</b> دفع هذه الطاقة بهذه السرعة أبداً — فهي تفرغ طاقتها ببطء. إذن من أين جاءت هذه الدفقة المفاجئة؟</p><p>الجواب: قطعة صغيرة داخل الجهاز اسمها <span class=\"term\">المتسعة</span>؛ تُملأ بالشحنة على مهل ثم تفرغها دفعة واحدة — تماماً مثل <b>خزان الماء فوق سطح البيت</b>: الإسالة الحكومية تملؤه ببطء طوال الليل، لكنه يعطيك دفقاً قوياً لحظة فتح الحنفية. في هذا الدرس سنفهم كيف تُبنى هذه «الخزانات الكهربائية» وممَّ تتحكم سعتها.</p>"
+ },
+ "sections": [
+  {
+   "title": "لماذا لا تكفي كرةٌ معدنية؟ (الموصل المنفرد)",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "أبسط فكرة لخزن الشحنة: خذ موصلاً كروياً معزولاً واشحنه. لكن من دراستك السابقة للجهد الكهربائي تعلم أن جهد الموصل الكروي على بُعدٍ <span class=\"im\">r</span> من مركز الشحنة يُعطى بالعلاقة:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">جهد الموصل الكروي</span>\n  <span class=\"eq\">V = k <span class=\"frac\"><span>Q</span><span class=\"den\">r</span></span> &nbsp;,&nbsp; k = <span class=\"frac\"><span>1</span><span class=\"den\">4πε<sub>o</sub></span></span> = 9×10<sup>9</sup> N.m<sup>2</sup>/C<sup>2</sup></span>"
+    },
+    {
+     "type": "html",
+     "html": "أي أن الجهد <span class=\"hl\">يتناسب طردياً مع الشحنة</span>. فكلما أضفنا شحنة <span class=\"im\">Q</span> ازداد جهد الموصل <span class=\"im\">V</span>، ويزداد معه فرق الجهد بينه وبين أي جسم آخر (الهواء مثلاً)، فيزداد المجال الكهربائي حوله حتى يبلغ حداً يحصل عنده <span class=\"term\">التفريغ الكهربائي</span> خلال الهواء المحيط — شرارة تهرب فيها الشحنة! <b>لذا نادراً ما يُستعمل الموصل المنفرد لتخزين الشحنات الكهربائية.</b>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"640\" height=\"210\" viewBox=\"0 0 640 210\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"13\">\n  <!-- كرة مشحونة: توزيع الشحنة على السطح -->\n  <circle cx=\"120\" cy=\"105\" r=\"58\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"2.5\"/>\n  <g fill=\"#B91C1C\" font-weight=\"bold\" font-size=\"13\">\n    <text x=\"114\" y=\"56\">+</text><text x=\"150\" y=\"68\">+</text><text x=\"172\" y=\"100\">+</text>\n    <text x=\"166\" y=\"138\">+</text><text x=\"138\" y=\"162\">+</text><text x=\"98\" y=\"164\">+</text>\n    <text x=\"68\" y=\"142\">+</text><text x=\"60\" y=\"106\">+</text><text x=\"70\" y=\"72\">+</text>\n  </g>\n  <text x=\"120\" y=\"110\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"700\">موصل كروي منفرد</text>\n  <text x=\"120\" y=\"196\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"11\">الشحنة تتوزع على السطح الخارجي</text>\n  <!-- سهم -->\n  <g stroke=\"#64748B\" stroke-width=\"2\" fill=\"none\"><path d=\"M225 105 h60\" marker-end=\"url(#gray-ar)\"/></g>\n  <defs><marker id=\"gray-ar\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 z\" fill=\"#64748B\"/></marker></defs>\n  <!-- كرة بشحنة أكبر مع شرارة -->\n  <circle cx=\"400\" cy=\"105\" r=\"58\" fill=\"#FEF6E7\" stroke=\"#D97706\" stroke-width=\"2.5\"/>\n  <g fill=\"#B91C1C\" font-weight=\"bold\" font-size=\"13\">\n    <text x=\"394\" y=\"56\">+</text><text x=\"428\" y=\"64\">+</text><text x=\"452\" y=\"92\">+</text>\n    <text x=\"452\" y=\"126\">+</text><text x=\"428\" y=\"152\">+</text><text x=\"396\" y=\"162\">+</text>\n    <text x=\"362\" y=\"152\">+</text><text x=\"344\" y=\"122\">+</text><text x=\"348\" y=\"86\">+</text>\n    <text x=\"376\" y=\"70\">+</text><text x=\"412\" y=\"96\">+</text><text x=\"382\" y=\"120\">+</text><text x=\"418\" y=\"130\">+</text>\n  </g>\n  <text x=\"400\" y=\"196\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"11\">Q↑ ⟹ V↑ ⟹ E↑ حتى الانهيار</text>\n  <!-- شرارة -->\n  <path d=\"M462 82 l26 -12 -10 16 30 -6 -22 20 16 2\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"3\" stroke-linejoin=\"round\"/>\n  <text x=\"560\" y=\"72\" fill=\"#B91C1C\" font-weight=\"700\" font-size=\"12\">تفريغ كهربائي</text>\n  <text x=\"560\" y=\"90\" fill=\"#B91C1C\" font-size=\"11\">(شرارة في الهواء)</text>\n</svg>",
+     "caption": "الشكل (١) · الموصل المنفرد: كل زيادة بالشحنة ترفع الجهد حتى يقهر المجالُ عازليةَ الهواء فتهرب الشحنة"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> إذا تضاعفت شحنة موصل كروي منفرد (نصف قطره ثابت)، فماذا يحصل لجهده؟ — يتضاعف، لأن <span class=\"im\">V ∝ Q</span>.</div>",
+     "a": ""
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(١)</span></span>\n  <p>علّل من فهمك (لا من حفظك): لماذا نادراً ما يُستعمل الموصل المنفرد لتخزين الشحنات الكهربائية؟ <i>(الأجوبة نهاية الدرس)</i></p>"
+    }
+   ]
+  },
+  {
+   "title": "فكرة عبقرية: موصلان بدل موصل واحد (المتسعة)",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "لعلك تتساءل: هل يمكن صنع جهاز يُستعمل لتخزين مقادير كبيرة من الشحنات الكهربائية وتُخزن فيه الطاقة الكهربائية؟ لتحقيق ذلك نستعمل نظاماً يتألف من <span class=\"hl\">موصلَين (بأي شكلين كانا) معزولَين</span> يفصل بينهما عازل (الفراغ أو الهواء أو مادة عازلة كهربائياً)، فيكون بمقدوره اختزان شحنات موجبة على أحد الموصلين وشحنات سالبة على الموصل الآخر."
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · التعريف الوزاري</span>\n  <p class=\"rule-line\">«المتسعة جهاز يُستعمل لتخزين الشحنات الكهربائية والطاقة الكهربائية، يتكوّن من زوج (أو أكثر) من الصفائح الموصلة يفصل بينها عازل»</p>\n  <p style=\"text-align:center;font-size:10pt;color:var(--muted)\">صافي الشحنة على المتسعة المشحونة = صفر، لأن <span class=\"im\">+Q</span> على صفيحة و<span class=\"im\">−Q</span> على الأخرى</p>"
+    },
+    {
+     "type": "html",
+     "html": "توجد المتسعات بأشكال هندسية مختلفة: ذات الصفيحتين المتوازيتين، وذات الأسطوانتين المتمركزتين، وذات الكرتين المتمركزتين — ودراستنا في هذا الفصل على <b>ذات الصفيحتين المتوازيتين</b>. ورمز المتسعة في الدوائر الكهربائية: <span class=\"im\">⊣⊢</span> وينطبق على جميع أنواع المتسعات."
+    },
+    {
+     "type": "html",
+     "html": "اربطها بالمنهج</span>\n  <p><b>بما قبلها:</b> قانونا <span class=\"im\">V = kQ/r</span> و <span class=\"im\">E = ΔV/d</span> من موضوع الجهد الكهربائي (انحدار الجهد) هما أدواتنا في هذا الدرس كله.<br>\n  <b>بما بعدها:</b> كل ما تتعلمه هنا عن المتسعة <b>الواحدة</b> هو حجر الأساس لدرس <b>ربط المتسعات (توازٍ وتوالٍ)</b> الآتي، ثم دائرة <span class=\"im\">RC</span>، وستقابل المتسعة مجدداً في فصل التيار المتناوب (رادة السعة <span class=\"im\">X<sub>C</sub></span>).</p>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متسعة مشحونة على إحدى صفيحتيها <span class=\"im\">+8μC</span> — كم صافي الشحنة الكلية عليها؟ صفر، لأن الصفيحة الأخرى تحمل <span class=\"im\">−8μC</span>.</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "المتسعة ذات الصفيحتين المتوازيتين",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "أبسط أشكال المتسعات وأكثرها استعمالاً. لشحنها تُربط إحدى الصفيحتين بالقطب الموجب للبطارية فتظهر عليها شحنة <span class=\"im\">+Q</span>، والأخرى بالقطب السالب فتظهر عليها <span class=\"im\">−Q</span> مساوية لها بالمقدار، وكلا الشحنتين تقعان على السطحين <b>المتقابلين</b> للصفيحتين بسبب قوى التجاذب."
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"620\" height=\"290\" viewBox=\"0 0 620 290\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\">\n  <rect x=\"30\" y=\"115\" width=\"88\" height=\"66\" rx=\"8\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"2\"/>\n  <text x=\"74\" y=\"154\" text-anchor=\"middle\" font-size=\"13\" fill=\"#0B3B5E\">بطارية</text>\n  <text x=\"44\" y=\"108\" font-size=\"18\" fill=\"#B91C1C\">+</text><text x=\"98\" y=\"108\" font-size=\"18\" fill=\"#152238\">−</text>\n  <path d=\"M52 115 V64 H300\" fill=\"none\" stroke=\"#152238\" stroke-width=\"2.4\"/>\n  <path d=\"M104 115 V240 H300\" fill=\"none\" stroke=\"#152238\" stroke-width=\"2.4\"/>\n  <rect x=\"300\" y=\"60\" width=\"262\" height=\"9\" fill=\"#B91C1C\"/>\n  <text x=\"574\" y=\"56\" font-size=\"14\" fill=\"#B91C1C\">+Q</text>\n  <rect x=\"300\" y=\"234\" width=\"262\" height=\"9\" fill=\"#0369A1\"/>\n  <text x=\"574\" y=\"258\" font-size=\"14\" fill=\"#0369A1\">−Q</text>\n  <g fill=\"#B91C1C\" font-size=\"13\" font-weight=\"bold\">\n    <text x=\"312\" y=\"56\">+</text><text x=\"352\" y=\"56\">+</text><text x=\"392\" y=\"56\">+</text>\n    <text x=\"432\" y=\"56\">+</text><text x=\"472\" y=\"56\">+</text><text x=\"512\" y=\"56\">+</text><text x=\"546\" y=\"56\">+</text>\n  </g>\n  <g fill=\"#0369A1\" font-size=\"13\" font-weight=\"bold\">\n    <text x=\"312\" y=\"260\">−</text><text x=\"352\" y=\"260\">−</text><text x=\"392\" y=\"260\">−</text>\n    <text x=\"432\" y=\"260\">−</text><text x=\"472\" y=\"260\">−</text><text x=\"512\" y=\"260\">−</text><text x=\"546\" y=\"260\">−</text>\n  </g>\n  <defs><marker id=\"tealar\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 z\" fill=\"#059669\"/></marker></defs>\n  <g stroke=\"#059669\" stroke-width=\"1.9\" marker-end=\"url(#tealar)\">\n    <line x1=\"325\" y1=\"74\" x2=\"325\" y2=\"228\"/><line x1=\"365\" y1=\"74\" x2=\"365\" y2=\"228\"/>\n    <line x1=\"405\" y1=\"74\" x2=\"405\" y2=\"228\"/><line x1=\"445\" y1=\"74\" x2=\"445\" y2=\"228\"/>\n    <line x1=\"485\" y1=\"74\" x2=\"485\" y2=\"228\"/><line x1=\"525\" y1=\"74\" x2=\"525\" y2=\"228\"/>\n  </g>\n  <text x=\"412\" y=\"158\" font-size=\"17\" fill=\"#059669\" font-style=\"italic\" font-weight=\"700\">E</text>\n  <line x1=\"584\" y1=\"69\" x2=\"584\" y2=\"234\" stroke=\"#64748B\" stroke-width=\"1.2\"/>\n  <text x=\"594\" y=\"156\" font-size=\"13\" fill=\"#64748B\">d</text>\n</svg>",
+     "caption": "الشكل (٢) · المجال الكهربائي المنتظم بين صفيحتي المتسعة عند شحنها بالبطارية"
+    },
+    {
+     "type": "html",
+     "html": "يُعدّ المجال الكهربائي بين الصفيحتين <span class=\"term\">مجالاً منتظماً</span> إذا كان البعد <span class=\"im\">d</span> صغيراً جداً مقارنةً بأبعاد الصفيحة (تُهمل عندئذٍ حافات المجال)، ويرتبط بفرق الجهد بعلاقة انحدار الجهد: <span class=\"im\">E = ΔV/d</span>."
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متى نعدّ المجال بين الصفيحتين منتظماً؟ — عندما يكون <span class=\"im\">d</span> صغيراً جداً بالنسبة لأبعاد الصفيحتين.</div>",
+     "a": ""
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٢)</span></span>\n  <p>متسعة صفيحتاها متوازيتان، فرق الجهد بينهما <span class=\"im\">ΔV = 12V</span> والبعد <span class=\"im\">d = 3mm</span>. احسب مقدار المجال الكهربائي المنتظم بينهما.</p>"
+    }
+   ]
+  },
+  {
+   "title": "السعة: هوية المتسعة الثابتة",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "وُجد عملياً أن فرق الجهد <span class=\"im\">ΔV</span> بين صفيحتي المتسعة المشحونة <span class=\"hl\">يتناسب طردياً مع مقدار الشحنة</span> <span class=\"im\">Q</span> على أيٍّ من صفيحتيها، أي أن النسبة بينهما مقدار ثابت لا يتغير — هذا الثابت هو <span class=\"term\">سعة المتسعة</span>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">تعريف السعة</span>\n  <span class=\"eq\">C = <span class=\"frac\"><span>Q</span><span class=\"den\">ΔV</span></span></span>"
+    },
+    {
+     "type": "html",
+     "html": "وتُعرَّف سعة المتسعة بأنها: <b>«نسبة الشحنة <span class=\"im\">Q</span> المختزنة في أيٍّ من صفيحتيها إلى مقدار فرق الجهد <span class=\"im\">ΔV</span> بين الصفيحتين»</b>، وتُعدّ مقياساً لمقدار الشحنة اللازم وضعها على أيٍّ من الصفيحتين لتوليد فرق جهد معيّن بينهما — فالمتسعة ذات السعة الأكبر تستوعب شحنة أكبر عند فرق الجهد نفسه."
+    },
+    {
+     "type": "html",
+     "html": "وحدة السعة في النظام الدولي: <span class=\"im\">Farad = Coulomb/Volt</span>، وهي وحدة كبيرة جداً عملياً، فنستعمل أجزاءها:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"eq\">1μF = 10<sup>-6</sup>F &nbsp;·&nbsp; 1nF = 10<sup>-9</sup>F &nbsp;·&nbsp; 1pF = 10<sup>-12</sup>F</span>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه! الخطأ الأول في الوزاري</span>\n  <p>الخلط بين <b>تعريف</b> السعة <span class=\"im\">C = Q/ΔV</span> وبين <b>ما تعتمد عليه</b> السعة. القاعدة: السعة تعتمد على <b>الأبعاد الهندسية ونوع العازل فقط</b> (المساحة A، البعد d، ثابت العزل k) — <b>ولا تعتمد إطلاقاً على Q أو ΔV</b>. فإذا سُئلت «ماذا يحصل للسعة عند مضاعفة فرق الجهد؟» فالجواب: <b>لا شيء</b>؛ الذي يتغير هو الشحنة المختزنة.</p>",
+     "private": true
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ١</span>\n    <span class=\"q\">متسعة سعتها <span class=\"im\">10pF</span> رُبطت ببطارية فرق جهدها <span class=\"im\">12V</span>. احسب الشحنة المختزنة في أيٍّ من صفيحتيها.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">المعطيات:</span> <span class=\"im\">C = 10pF = 10×10<sup>-12</sup>F</span> ، <span class=\"im\">ΔV = 12V</span>\n      <span class=\"why\">لماذا؟ نحوّل pF إلى F فوراً — أخطاء الوحدات أكثر ما يضيّع درجات المسائل.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">المطلوب:</span> <span class=\"im\">Q = ?</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">القانون:</span> <span class=\"im\">Q = C × ΔV</span>\n      <span class=\"why\">لماذا؟ التعريف C = Q/ΔV يُعاد ترتيبه لأن المجهول هو الشحنة.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">التعويض:</span> <span class=\"im\">Q = 10×10<sup>-12</sup> × 12</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٥</span><div class=\"sc\"><span class=\"slabel\">الناتج:</span> <span class=\"ans\">Q = 120×10⁻¹² Coulomb = 120 pC</span>\n      <span class=\"why\">لماذا نذكر الوحدة؟ الجواب العددي بلا وحدة ناقص في التصحيح الوزاري.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري</span><span class=\"badge\">2019 · الدور الثاني</span>\n  <p><b>اختر:</b> عند مضاعفة مقدار فرق الجهد الكهربائي بين صفيحتي متسعة ذات سعة ثابتة فإن مقدار الشحنة المختزنة <span class=\"im\">Q</span> في أيٍّ من صفيحتيها تصبح: &nbsp;<span class=\"im\">( Q ، 4Q ، 2Q ، ½Q )</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>بما أن <span class=\"im\">Q = C×ΔV</span> والسعة ثابتة (لا تتأثر بالجهد)، فإن <span class=\"im\">ΔV → 2ΔV</span> يعطي <span class=\"im\">Q → 2Q</span>. <b>الجواب: 2Q</b>.<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ السؤال نفسه ورد بصيغة «وضّح ماذا يحصل» في <b>وزاري 2018 – الدور الثاني</b>: الجواب تتضاعف الشحنة للسبب نفسه.</span></p>\n  </div>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متسعة <span class=\"im\">4μF</span> جُهدها <span class=\"im\">3V</span> — كم شحنتها؟ <span class=\"im\">Q = 12μC</span>. لو رفعنا الجهد إلى <span class=\"im\">6V</span>، كم تصير السعة؟ تبقى <span class=\"im\">4μF</span>!</div>",
+     "a": ""
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٣)</span></span>\n  <p>أ) متسعة <span class=\"im\">5μF</span> رُبطت بمصدر <span class=\"im\">12V</span>: احسب الشحنة المختزنة.&nbsp;&nbsp; ب) حوّل: <span class=\"im\">47pF = ? F</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "ممَّ تتحكم السعة؟ العوامل الهندسية الثلاثة",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "سعة المتسعة ذات الصفيحتين المتوازيتين تعتمد على ثلاثة عوامل فقط:"
+    },
+    {
+     "type": "html",
+     "html": "<thead><tr><th>العامل</th><th>نوع التناسب</th><th>ماذا يحصل عملياً؟</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\"><b>المساحة السطحية المتقابلة (A)</b></td><td class=\"ltr\">C ∝ A</td><td class=\"right\">زيادة A تزيد استيعاب الشحنة → السعة تزداد</td></tr>\n    <tr><td class=\"right\"><b>البعد بين الصفيحتين (d)</b></td><td class=\"ltr\">C ∝ 1/d</td><td class=\"right\">تقريب الصفيحتين يقلل ΔV بثبوت Q → السعة تزداد</td></tr>\n    <tr><td class=\"right\"><b>نوع الوسط العازل (k)</b></td><td class=\"ltr\">C<sub>k</sub> = kC</td><td class=\"right\">العازل يُضعف المجال → السعة تزداد k مرة</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">سعة المتسعة (الفراغ أو الهواء عازل)</span>\n  <span class=\"eq\">C = <span class=\"frac\"><span>ε<sub>o</sub> A</span><span class=\"den\">d</span></span> &nbsp;,&nbsp; ε<sub>o</sub> = 8.85×10<sup>-12</sup> C<sup>2</sup>/N.m<sup>2</sup></span>"
+    },
+    {
+     "type": "html",
+     "html": "<b>كيف نثبت ذلك عملياً؟</b> (تجربتا الفولطميتر — تردان في الوزاري بصيغة «وضّح عملياً»):"
+    },
+    {
+     "type": "html",
+     "html": "<li><b>تغيير المساحة:</b> متسعة مشحونة ومفصولة عن البطارية (Q ثابتة) مربوطة بفولطميتر؛ نزيح إحدى الصفيحتين جانبياً فتقل المساحة المتقابلة إلى النصف، فنلاحظ ازدياد قراءة الفولطميتر إلى الضعف <span class=\"im\">2ΔV</span>. وبما أن <span class=\"im\">C = Q/ΔV</span> فقد قلّت السعة إلى النصف ⟹ <span class=\"hl\">C تتناسب طردياً مع A</span>.</li>\n  <li><b>تغيير البعد:</b> نقرّب الصفيحتين إلى نصف البعد (بثبوت Q)، فنلاحظ نقصان قراءة الفولطميتر إلى النصف <span class=\"im\">½ΔV</span> ⟹ السعة تضاعفت ⟹ <span class=\"hl\">C تتناسب عكسياً مع d</span>.</li>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري</span><span class=\"badge\">2022 · التمهيدي</span>\n  <p><b>وضّح عملياً:</b> كيف يتغيّر مقدار سعة المتسعة بتغيّر المساحة السطحية المتقابلة <span class=\"im\">A</span> للصفيحتين؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>نربط متسعة مشحونة ومفصولة عن البطارية (لتبقى Q ثابتة) بفولطميتر، ثم نزيح إحدى الصفيحتين جانبياً مع بقاء التوازي؛ عند نقصان المساحة المتقابلة إلى النصف تزداد قراءة الفولطميتر إلى الضعف، ومن <span class=\"im\">C = Q/ΔV</span> نستنتج أن السعة قلّت إلى النصف، أي إن <span class=\"im\">C ∝ A</span>.<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ ونظيره عن البعد <span class=\"im\">d</span> ورد في <b>وزاري 2022 – الدور الثاني</b> «وضّح عملياً كيف يتغير مقدار سعة المتسعة بتغيّر البعد بين الصفيحتين المتوازيتين؟» — نقرّب الصفيحتين إلى نصف البعد بثبوت الشحنة فتقل قراءة الفولطميتر إلى النصف ⟹ السعة تزداد إلى الضعف ⟹ C ∝ 1/d.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري</span><span class=\"badge\">2017 · التمهيدي</span>\n  <p>ما العوامل المؤثرة في سعة المتسعة؟ اكتب علاقة رياضية توضّح ذلك.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>١) المساحة السطحية المتقابلة للصفيحتين (طردياً). ٢) البعد بين الصفيحتين (عكسياً). ٣) نوع الوسط العازل بين الصفيحتين. والعلاقة: <span class=\"im\">C<sub>k</sub> = k ε<sub>o</sub>A/d</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تغيّر البعد</span><span class=\"badge\">2022 · التمهيدي</span><span class=\"badge\">2021 · التمهيدي</span>\n  <p><b>اختر (2022 تمهيدي):</b> متسعة ذات الصفيحتين المتوازيتين سعتها <span class=\"im\">C</span>، قُرّبت صفيحتاها من بعضهما حتى صار البعد بينهما <span class=\"im\">⅓</span> ما كان عليه، فإن مقدار سعتها الجديدة يساوي: <span class=\"im\">( 9C ، 3C ، 1/9C ، 1/3C )</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p><span class=\"im\">C ∝ 1/d</span> فإذا صار <span class=\"im\">d → d/3</span> تصبح السعة <b>3C</b>.<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ وعكسه في <b>وزاري 2021 – التمهيدي</b>: «أُبعدت صفيحتاها حتى صار البعد (3) مرات ما كان عليه» ⟹ الجواب <b>C/3</b>. لاحظ كيف يقلب الوزاري الفكرة نفسها.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري</span><span class=\"badge\">2020 · الدور الثاني</span>\n  <p><b>اختر:</b> عندما تُقلَّل المساحة السطحية المتقابلة بين صفيحتي متسعة ذات الصفيحتين المتوازيتين مشحونة ومفصولة عن البطارية إلى نصف ما كانت عليه، فإن فرق الجهد بين صفيحتيها مقارنةً بما كان عليه يصبح: (نصف ما كان عليه ، ضعف ما كان عليه ، ربع ما كان عليه ، لا يتأثر)</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>مفصولة ⟹ <span class=\"im\">Q</span> ثابتة. المساحة نصفت ⟹ السعة نصفت <span class=\"im\">C → C/2</span>. ومن <span class=\"im\">ΔV = Q/C</span> ⟹ <b>فرق الجهد يصبح ضعف ما كان عليه</b>.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٢</span>\n    <span class=\"q\">متسعة ذات صفيحتين متوازيتين، البعد بينهما <span class=\"im\">0.5cm</span> وكل صفيحة مربعة طول ضلعها <span class=\"im\">10cm</span> ويفصل بينهما الفراغ. احسب: ١) سعة المتسعة. ٢) الشحنة المختزنة بعد تسليط فرق جهد <span class=\"im\">10V</span>.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">المعطيات:</span> <span class=\"im\">d = 0.5cm = 5×10<sup>-3</sup>m</span> ، ضلع الصفيحة <span class=\"im\">L = 0.1m</span> ، <span class=\"im\">ε<sub>o</sub> = 8.85×10<sup>-12</sup></span>\n      <span class=\"why\">لماذا؟ كل الأطوال إلى المتر قبل أي تعويض — القانون بوحدات النظام الدولي.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">المساحة:</span> <span class=\"im\">A = L<sup>2</sup> = (0.1)<sup>2</sup> = 1×10<sup>-2</sup> m<sup>2</sup></span>\n      <span class=\"why\">لماذا؟ الصفيحة مربعة، والقانون يريد المساحة المتقابلة لا طول الضلع.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">القانون والتعويض:</span> <span class=\"im\">C = ε<sub>o</sub>A/d = 8.85×10<sup>-12</sup> × (10<sup>-2</sup> / 5×10<sup>-3</sup>)</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">الناتج:</span> <span class=\"ans\">C = 17.7×10⁻¹² F = 17.7 pF</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٥</span><div class=\"sc\"><span class=\"slabel\">الشحنة:</span> <span class=\"im\">Q = C×ΔV = 17.7×10<sup>-12</sup> × 10</span> ⟹ <span class=\"ans\">Q = 177×10⁻¹² Coulomb</span>\n      <span class=\"why\">لماذا هذا الترتيب؟ لا نستطيع حساب Q قبل معرفة C — رتّب مطلوباتك بحسب اعتماد بعضها على بعض.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة متكاملة)</span><span class=\"badge\">2019 · الدور الأول</span>\n  <p>متسعة ذات الصفيحتين المتوازيتين، البعد بين صفيحتيها <span class=\"im\">0.4cm</span> وكل من صفيحتيها مربعة الشكل طول ضلع كل منها <span class=\"im\">10cm</span> ويفصل بينهما الفراغ، علماً أن سماحية الفراغ <span class=\"im\">ε<sub>o</sub> = 8.85×10<sup>-12</sup> C<sup>2</sup>/N.m<sup>2</sup></span>:<br>\n  ١) ما مقدار سعة المتسعة؟ &nbsp; ٢) ما مقدار الشحنة المختزنة في أيٍّ من صفيحتيها بعد تسليط فرق جهد <span class=\"im\">10V</span> بينهما؟ &nbsp; ٣) إذا فُصلت المتسعة عن البطارية وأُدخل لوح عازل كهربائي بين صفيحتيها هبط فرق الجهد إلى <span class=\"im\">5V</span>، فما مقدار ثابت العزل للوح العازل؟ وما مقدار سعة المتسعة بوجود العازل؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <span class=\"im\">A = (0.1)<sup>2</sup> = 10<sup>-2</sup>m<sup>2</sup></span> ، <span class=\"im\">d = 4×10<sup>-3</sup>m</span> ⟹ <span class=\"im\">C = 8.85×10<sup>-12</sup> × 10<sup>-2</sup>/4×10<sup>-3</sup> = 22.125×10<sup>-12</sup>F ≈ 22.125pF</span><br>\n    ٢) <span class=\"im\">Q = C×ΔV = 22.125×10<sup>-12</sup> × 10 = 221.25×10<sup>-12</sup>C</span><br>\n    ٣) المتسعة مفصولة ⟹ Q ثابتة: <span class=\"im\">k = ΔV/ΔV<sub>k</sub> = 10/5 = 2</span> ، <span class=\"im\">C<sub>k</sub> = kC = 2×22.125 = 44.25pF</span></p>\n  </div>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية</span>\n  <p class=\"rule-line\">«السعة تصنعها الهندسة: كبِّر المساحة، قرِّب الصفيحتين، حسِّن العازل — أما الشحنة والجهد فلا يصنعان السعة»</p>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٤)</span></span>\n  <p>متسعة هوائية ضُوعفت مساحة صفيحتيها المتقابلة وضُوعف البعد بينهما في آنٍ واحد — ماذا يحصل لسعتها؟ علّل بالقانون.</p>"
+    }
+   ]
+  },
+  {
+   "title": "العازل الكهربائي: السلاح الخفي للمتسعة",
+   "icon": "٦",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "المواد مثل الورق المشمّع واللدائن والزجاج غير موصلة للكهرباء عند الظروف الاعتيادية، وتعمل على <b>تقليل المجال الكهربائي</b> الموضوعة فيه، لذا تسمى <span class=\"term\">المواد العازلة كهربائياً (Dielectric materials)</span>. وتُصنَّف إلى نوعين:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"box\" style=\"border-inline-start-color:var(--link);margin:6px 0\">\n    <span class=\"tab\" style=\"background:var(--link)\"><span class=\"ic\">①</span> عوازل قطبية</span>\n    <p style=\"font-size:10.8pt\">مثل <b>الماء النقي</b>: جزيئاتها تمتلك عزوماً كهربائية ثنائية القطب <b>دائمية</b> (التباعد بين مركزي الشحنتين ثابت — تسمى الجزيئة دايبول). في غياب المجال تكون اتجاهاتها عشوائية، وعند إدخالها بين صفيحتين مشحونتين يصفّها المجال بموازاته.</p>\n  </div>\n  <div class=\"box\" style=\"border-inline-start-color:var(--try);margin:6px 0\">\n    <span class=\"tab\" style=\"background:var(--try)\"><span class=\"ic\">②</span> عوازل غير قطبية</span>\n    <p style=\"font-size:10.8pt\">مثل <b>الزجاج والبولي أثيلين</b>: التباعد بين مركزي الشحنتين غير ثابت. المجال الخارجي يزيح مركزي الشحنتين إزاحة ضئيلة فتكتسب الجزيئة عزماً ثنائي القطب <b>مؤقتاً بطريقة الحث</b>، فتصطفّ معاكسةً للمجال.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "وفي كلا النوعين تظهر شحنات سطحية على وجهي العازل (مع بقائه متعادلاً كهربائياً) تولّد داخل العازل مجالاً <span class=\"im\">E<sub>d</sub></span> <b>يعاكس</b> المجال المؤثر <span class=\"im\">E</span>، فيكون المجال المحصّل:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"max-width:100%\"><span class=\"eq\"><span style=\"position:relative\">E</span><sub>k</sub> = E − E<sub>d</sub></span></div>\n  <div class=\"formula small\" style=\"max-width:100%\"><span class=\"eq\">E<sub>k</sub> = <span class=\"frac\"><span>E</span><span class=\"den\">k</span></span> &nbsp;,&nbsp; ΔV<sub>k</sub> = <span class=\"frac\"><span>ΔV</span><span class=\"den\">k</span></span></span></div>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · ثابت العزل</span>\n  <p class=\"rule-line\">«ثابت العزل k = النسبة بين سعة المتسعة بوجود العازل وسعتها بوجود الفراغ أو الهواء: k = C<sub>k</sub>/C ⟹ C<sub>k</sub> = kC»</p>\n  <p style=\"text-align:center;font-size:10pt;color:var(--muted)\">k عدد مجرد من الوحدات (يسمى أيضاً السماحية النسبية)، وقيمته للهواء ≈ 1 وللفراغ = 1 تماماً</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تأثير العازل في المجال</span><span class=\"badge\">2024 · الدور الأول</span><span class=\"badge\">2022 · التمهيدي</span>\n  <p><b>(2024 د١):</b> ما تأثير إدخال عازل <b>غير قطبي</b> بين صفيحتي متسعة مشحونة ومفصولة عن المصدر في المجال الكهربائي المنتظم بين صفيحتيها؟<br>\n  <b>(2022 تمهيدي):</b> ما تأثير إدخال عازل <b>قطبي</b> بين صفيحتي متسعة مشحونة ومفصولة عن البطارية في المجال الكهربائي بين صفيحتيها؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>في الحالتين (قطبي أو غير قطبي) النتيجة واحدة: تظهر شحنات سطحية على وجهي العازل تولّد مجالاً داخلياً <span class=\"im\">E<sub>d</sub></span> معاكساً للمجال المؤثر، <b>فيقلّ المجال الكهربائي المحصّل بين الصفيحتين بنسبة ثابت العزل</b>: <span class=\"im\">E<sub>k</sub> = E/k</span> (والشحنة باقية لأن المتسعة مفصولة).</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تجربة إدخال العازل</span><span class=\"badge\">2023 · الدور الثالث</span>\n  <p><b>اشرح</b> تجربة لتوضيح تأثير إدخال العازل الكهربائي بين صفيحتي متسعة مشحونة ومفصولة عن البطارية في مقدار فرق الجهد الكهربائي بينهما (تجربة فراداي)؟ وما تأثيره في سعة المتسعة؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>نربط متسعة مشحونة ومفصولة عن البطارية (لتبقى الشحنة <span class=\"im\">Q</span> ثابتة) بفولطميتر ونثبّت قراءته <span class=\"im\">ΔV</span>، ثم نُدخل لوحاً عازلاً ثابت عزله <span class=\"im\">k</span> يملأ الحيّز بين الصفيحتين بدلاً من الهواء، فنلاحظ <b>انخفاض قراءة الفولطميتر إلى</b> <span class=\"im\">ΔV<sub>k</sub> = ΔV/k</span> — لأن العازل يستقطب فتظهر شحنات سطحية على وجهيه تولّد مجالاً معاكساً يقلل المجال المحصّل بين الصفيحتين. وعند سحب العازل تعود القراءة إلى قيمتها الأصلية.<br>\n    <b>تأثيره في السعة:</b> بما أن <span class=\"im\">C = Q/ΔV</span> والشحنة ثابتة وفرق الجهد قلّ <span class=\"im\">k</span> مرة، فإن <b>السعة تزداد <span class=\"im\">k</span> مرة</b>: <span class=\"im\">C<sub>k</sub> = kC</span>.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — فائدتا إدخال العازل</span><span class=\"badge\">2018 · الدور الثاني</span><span class=\"badge\">2020 · الدور الأول</span><span class=\"badge\">2021 · الدور الثاني</span>\n  <p>اذكر فائدتين عمليتين تتحققان من إدخال مادة عازلة كهربائياً تملأ الحيّز بين صفيحتي المتسعة ذات الصفيحتين المتوازيتين بدلاً من الهواء. <span style=\"font-size:10pt;color:var(--muted)\">(تكرر ثلاث مرات بألفاظ متقاربة — احفظه جيداً!)</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>١) <b>زيادة سعة المتسعة</b> بمقدار ثابت العزل: <span class=\"im\">C<sub>k</sub> = kC</span>.<br>\n    ٢) <b>زيادة قدرة تحمّل المتسعة لفروق الجهد العالية</b> (رفع فرق جهد الانهيار) لأن قوة العزل الكهربائي للمادة العازلة أكبر من قوة عزل الهواء، فضلاً عن إمكانية تقريب الصفيحتين دون تلامس.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "قوة العزل الكهربائي وأقصى جهد تشغيل"
+    },
+    {
+     "type": "html",
+     "html": "<span class=\"term\">قوة العزل الكهربائي</span> لمادة: «أقصى مقدار لمجال كهربائي يمكن أن تتحمّله تلك المادة قبل حصول الانهيار الكهربائي لها»، وتُعدّ مقياساً لقابلية المادة على الصمود أمام المجال المسلَّط عليها. فإذا زاد فرق الجهد عن حدٍّ معيّن ازداد المجال حتى يخترق شرارةٌ العازلَ فتتفرغ المتسعة من شحنتها ويحصل تلفها — <b>لهذا يُكتب على كل متسعة أقصى فرق جهد تعمل عنده</b>."
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — الأكثر تكراراً في الدرس!</span>\n  <span class=\"badge\">2017 · التمهيدي</span><span class=\"badge\">2020 · التمهيدي</span><span class=\"badge\">2020 · الدور الثاني</span><span class=\"badge\">2021 · الدور الثاني التكميلي</span>\n  <p><b>علّل:</b> يُحدَّد مقدار أقصى فرق جهد كهربائي يمكن أن تعمل عنده المتسعة. <span style=\"font-size:10pt;color:#7C2D12\"><b>(ورد ٤ مرات — أهم تعليل في الدرس)</b></span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>لأن الاستمرار في زيادة فرق الجهد المسلَّط بين صفيحتيها يتسبب في ازدياد مقدار المجال الكهربائي بين الصفيحتين إلى حدٍّ كبير جداً قد يحصل عنده <b>الانهيار الكهربائي للعازل</b> نتيجة عبور الشرارة الكهربائية خلاله، فتتفرغ المتسعة من جميع شحنتها وهذا يعني تلفها.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<caption>جدول ثابت العزل الكهربائي وقوة العزل الكهربائي لمواد مستعملة عملياً (كما في الكتاب الوزاري)</caption>\n  <thead><tr><th>المادة</th><th>ثابت العزل k</th><th>قوة العزل (V/m)</th></tr></thead>\n  <tbody>\n    <tr><td>الفراغ</td><td class=\"ltr\">1.00000</td><td>—</td></tr>\n    <tr><td>الهواء الجاف (1atm)</td><td class=\"ltr\">1.00059</td><td class=\"ltr\">3×10⁶</td></tr>\n    <tr><td>المطاط</td><td class=\"ltr\">6.7</td><td class=\"ltr\">12×10⁶</td></tr>\n    <tr><td>النايلون</td><td class=\"ltr\">3.4</td><td class=\"ltr\">14×10⁶</td></tr>\n    <tr><td>الورق</td><td class=\"ltr\">3.7</td><td class=\"ltr\">16×10⁶</td></tr>\n    <tr><td>لدائن البوليستيرين</td><td class=\"ltr\">2.56</td><td class=\"ltr\">24×10⁶</td></tr>\n    <tr><td>زجاج البايركس</td><td class=\"ltr\">5.6</td><td class=\"ltr\">14×10⁶</td></tr>\n    <tr><td>زيت السيليكون</td><td class=\"ltr\">2.5</td><td class=\"ltr\">15×10⁶</td></tr>\n    <tr><td>التفلون</td><td class=\"ltr\">2.1</td><td class=\"ltr\">60×10⁶</td></tr>\n    <tr><td>الماء النقي (20°C)</td><td class=\"ltr\">80</td><td>—</td></tr>\n    <tr><td>السترونيوم</td><td class=\"ltr\">300</td><td class=\"ltr\">8×10⁶</td></tr>\n    <tr><td>المايكا</td><td class=\"ltr\">3 – 6</td><td class=\"ltr\">(150–220)×10⁶</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة)</span><span class=\"badge\">2018 · التمهيدي</span>\n  <p>متسعة ذات الصفيحتين المتوازيتين سعتها <span class=\"im\">6μF</span> رُبطت بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">30V</span>: ١) ما مقدار الشحنة المختزنة في أيٍّ من صفيحتي المتسعة؟ ٢) إذا فُصلت المتسعة عن البطارية وأُدخل لوح عازل بين صفيحتيها هبط فرق الجهد بين صفيحتيها إلى <span class=\"im\">5V</span>، ما مقدار سعة المتسعة في حالة وجود العازل بين صفيحتيها؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <span class=\"im\">Q = C×ΔV = 6×10<sup>-6</sup> × 30 = 180×10<sup>-6</sup>C = 180μC</span><br>\n    ٢) مفصولة ⟹ Q ثابتة: <span class=\"im\">C<sub>k</sub> = Q/ΔV<sub>k</sub> = 180μC / 5V = 36μF</span> &nbsp;(ويكون <span class=\"im\">k = 36/6 = 6</span>)</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٥)</span></span>\n  <p>متسعة هوائية سعتها <span class=\"im\">8pF</span>، مُلئ الحيّز بين صفيحتيها بالمايكا <span class=\"im\">(k = 5)</span>. احسب سعتها الجديدة.</p>"
+    }
+   ]
+  },
+  {
+   "title": "الحالتان الشهيرتان: مفصولة أم موصولة بالبطارية؟",
+   "icon": "٧",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "عند إدخال العازل، إجابتك تتغير كلياً بحسب حالة المتسعة — هذا <b>أخطر تمييز في الدرس</b> وأكثر ما يفرّق بين طالب السبعينات وطالب المئة:"
+    },
+    {
+     "type": "html",
+     "html": "<caption>ماذا يحصل عند إدخال عازل (ثابت عزله k) بين صفيحتي متسعة مشحونة؟</caption>\n  <thead><tr><th>الكمية</th><th>مفصولة عن البطارية</th><th>ما زالت موصولة بالبطارية</th></tr></thead>\n  <tbody>\n    <tr><td><b>الشحنة Q</b></td><td>ثابتة (لا مسار لهروبها)</td><td class=\"ltr\" style=\"direction:rtl\">تزداد: Q<sub>k</sub> = kQ</td></tr>\n    <tr><td><b>فرق الجهد ΔV</b></td><td class=\"ltr\" style=\"direction:rtl\">يقل: ΔV<sub>k</sub> = ΔV/k</td><td>ثابت (تفرضه البطارية)</td></tr>\n    <tr><td><b>السعة C</b></td><td class=\"ltr\" style=\"direction:rtl\">تزداد: C<sub>k</sub> = kC</td><td class=\"ltr\" style=\"direction:rtl\">تزداد: C<sub>k</sub> = kC</td></tr>\n    <tr><td><b>المجال E</b></td><td class=\"ltr\" style=\"direction:rtl\">يقل: E<sub>k</sub> = E/k</td><td>ثابت (لأن E = ΔV/d وكلاهما ثابت)</td></tr>\n    <tr><td><b>الطاقة PE</b></td><td class=\"ltr\" style=\"direction:rtl\">تقل: PE<sub>k</sub> = PE/k</td><td class=\"ltr\" style=\"direction:rtl\">تزداد: PE<sub>k</sub> = k·PE</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه! السعة لا «تقرأ» الدائرة</span>\n  <p>لاحظ أن <b>السعة تزداد <span class=\"im\">C<sub>k</sub> = kC</span> في الحالتين</b> — لأنها صفة هندسية تتأثر بالعازل لا بوجود البطارية. الذي يتبادل الثبات هو <span class=\"im\">Q</span> و<span class=\"im\">ΔV</span>: المفصولة تحفظ شحنتها، والموصولة تحفظ جهدها. اسأل نفسك دائماً قبل الحل: <b>«مَن الثابت هنا؟»</b></p>",
+     "private": true
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري</span><span class=\"badge\">2021 · الدور الأول</span>\n  <p><b>وضّح تأثير</b> إدخال مادة عازلة كهربائياً ثابت عزلها <span class=\"im\">k = 2</span> بين صفيحتي متسعة ذات الصفيحتين المتوازيتين مشحونة ومفصولة عن البطارية بدلاً من الهواء في: (فرق الجهد بين صفيحتيها ، الطاقة المختزنة في المجال الكهربائي بين صفيحتيها).</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>المتسعة مفصولة ⟹ الشحنة ثابتة.<br>\n    • فرق الجهد: يقل إلى النصف: <span class=\"im\">ΔV<sub>k</sub> = ΔV/k = ΔV/2</span> (لأن المجال المحصّل قلّ بوجود العازل).<br>\n    • الطاقة: <span class=\"im\">PE<sub>k</sub> = ½Q·ΔV<sub>k</sub> = ½Q·(ΔV/2) = PE/2</span> — تقل إلى النصف (يُبذل جزء منها شغلاً في سحب العازل واستقطاب جزيئاته).</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — حالة الموصولة</span><span class=\"badge\">2023 · التمهيدي</span>\n  <p><b>ما تأثير</b> إدخال مادة عازلة كهربائياً ثابت عزلها <span class=\"im\">(6)</span> بين صفيحتي متسعة ذات الصفيحتين المتوازيتين <b>مربوطة بين قطبي بطارية</b> بدلاً من الهواء في: (فرق الجهد بين صفيحتيها ، سعتها)؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>المتسعة ما زالت موصولة بالبطارية ⟹ فرق الجهد هو الثابت.<br>\n    • فرق الجهد: <b>لا يتغير</b> (تفرضه البطارية المربوطة بين الصفيحتين).<br>\n    • السعة: <b>تزداد ست مرات</b>: <span class=\"im\">C<sub>k</sub> = kC = 6C</span> (السعة صفة هندسية تزداد بالعازل في الحالتين).<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ قارنه بسؤال <b>وزاري 2021 – الدور الأول</b> أعلاه: هناك المتسعة <b>مفصولة</b> فقلّ الجهد، وهنا <b>موصولة</b> فثبت الجهد — هذا هو التمييز الذي يقصده الجدول.</span></p>\n  </div>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متسعة موصولة ببطارية أُدخل عازل <span class=\"im\">k = 3</span> — ماذا يحصل للشحنة؟ تتضاعف ثلاث مرات <span class=\"im\">Q<sub>k</sub> = 3Q</span> (البطارية تضخ شحنة إضافية لإبقاء الجهد ثابتاً).</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "الطاقة المختزنة في المجال الكهربائي للمتسعة",
+   "icon": "٨",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "عند نقل شحنات من صفيحة إلى أخرى بينهما فرق جهد يتحتم إنجاز <b>شغل</b> على تلك الشحنات، ويُختزن هذا الشغل بشكل <span class=\"term\">طاقة كامنة كهربائية</span> في المجال الكهربائي بين الصفيحتين. وبرسم مخطط بياني بين الشحنة <span class=\"im\">Q</span> وفرق الجهد <span class=\"im\">ΔV</span> تكون الطاقة مساوية <b>مساحة المثلث تحت المنحني</b>:"
+    },
+    {
+     "type": "html",
+     "html": "<figure class=\"figure\" style=\"margin:4px 0\">\n    <svg width=\"250\" height=\"190\" viewBox=\"0 0 250 190\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\">\n      <line x1=\"45\" y1=\"18\" x2=\"45\" y2=\"158\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"45\" y1=\"158\" x2=\"225\" y2=\"158\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <polygon points=\"45,158 200,158 200,42\" fill=\"#FDE9C8\" stroke=\"#D97706\" stroke-width=\"2\"/>\n      <line x1=\"45\" y1=\"158\" x2=\"200\" y2=\"42\" stroke=\"#B91C1C\" stroke-width=\"2.4\"/>\n      <text x=\"20\" y=\"30\" font-size=\"13\" fill=\"#0B3B5E\" font-weight=\"700\">Q</text>\n      <text x=\"150\" y=\"180\" font-size=\"13\" fill=\"#0B3B5E\" font-weight=\"700\">ΔV</text>\n      <text x=\"118\" y=\"132\" font-size=\"11\" fill=\"#92400E\">PE = المساحة</text>\n    </svg>\n    <figcaption>الشكل (٣) · الطاقة = مساحة المثلث = ½ القاعدة × الارتفاع</figcaption>\n  </figure>\n  <div>\n    <div class=\"formula\" style=\"max-width:100%;margin-top:8px\"><span class=\"fname\">الصيغ الثلاث للطاقة</span>\n      <span class=\"eq\" style=\"flex-direction:column;gap:6px\">\n        <span>PE = ½ ΔV × Q</span>\n        <span>PE = ½ C (ΔV)<sup>2</sup></span>\n        <span>PE = <span class=\"frac\"><span>Q<sup>2</sup></span><span class=\"den\">2C</span></span></span>\n      </span>\n    </div>\n    <p style=\"font-size:10.3pt;color:var(--muted);text-align:center\">بالتعويض عن Q = CΔV أو ΔV = Q/C<br>اختر الصيغة التي تناسب معطياتك!</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٣</span>\n    <span class=\"q\">ما مقدار الطاقة المختزنة في المجال الكهربائي لمتسعة سعتها <span class=\"im\">2μF</span> إذا شُحنت لفرق جهد <span class=\"im\">5000V</span>؟ وما مقدار القدرة التي نحصل عليها عند تفريغها بزمن <span class=\"im\">10μs</span>؟</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">المعطيات:</span> <span class=\"im\">C = 2×10<sup>-6</sup>F</span> ، <span class=\"im\">ΔV = 5000V</span> ، <span class=\"im\">t = 10×10<sup>-6</sup>s</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">اختيار القانون:</span> <span class=\"im\">PE = ½C(ΔV)<sup>2</sup></span>\n      <span class=\"why\">لماذا هذه الصيغة؟ لأن المعطى C وΔV — لا داعي لحساب Q وسيطاً.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">التعويض:</span> <span class=\"im\">PE = ½ × 2×10<sup>-6</sup> × (5000)<sup>2</sup></span> ⟹ <span class=\"ans\">PE = 25 J</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">القدرة:</span> <span class=\"im\">P = PE/t = 25 / 10×10<sup>-6</sup></span> ⟹ <span class=\"ans\">P = 2.5×10⁶ Watt</span>\n      <span class=\"why\">لماذا القدرة هائلة؟ الطاقة نفسها أُفرغت بزمن قصير جداً — هذه ميزة المتسعة الأساسية على البطارية.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة)</span><span class=\"badge\">2019 · الدور الثالث</span>\n  <p>ما مقدار الطاقة المختزنة في المجال الكهربائي لمتسعة سعتها <span class=\"im\">5μF</span> إذا شُحنت لفرق جهد كهربائي <span class=\"im\">4000V</span>؟ وما مقدار القدرة التي نحصل عليها عند تفريغها بزمن <span class=\"im\">10μs</span>؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p><span class=\"im\">PE = ½C(ΔV)<sup>2</sup> = ½ × 5×10<sup>-6</sup> × (4000)<sup>2</sup> = ½ × 5×10<sup>-6</sup> × 16×10<sup>6</sup> = 40 J</span><br>\n    <span class=\"im\">P = PE/t = 40 / (10×10<sup>-6</sup>) = 4×10<sup>6</sup> Watt</span> — لاحظ أنه نسخة مطابقة لمثالنا المحلول ٣!</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — الطاقة ⟵ الجهد</span><span class=\"badge\">2023 · التمهيدي</span><span class=\"badge\">2020 · الدور الأول</span>\n  <p><b>(2023 تمهيدي):</b> متسعة مقدار سعتها <span class=\"im\">60μF</span> لكي تختزن طاقة في مجالها الكهربائي مقدارها <span class=\"im\">4.8J</span> يتطلب ربطها بمصدر فرق جهده مستمر — ما مقدار فرق جهد المصدر؟<br>\n  <b>(2020 د١ اختيار):</b> متسعة <span class=\"im\">40μF</span> لكي تختزن <span class=\"im\">7.2J</span> يتطلب ربطها بمصدر فرق جهد مستمر مقداره: <span class=\"im\">(600V ، 150V ، 160V ، 120V)</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>من <span class=\"im\">PE = ½C(ΔV)<sup>2</sup></span> ⟹ <span class=\"im\">ΔV = √(2PE/C)</span><br>\n    <b>2023:</b> <span class=\"im\">ΔV = √(2×4.8 / 60×10<sup>-6</sup>) = √(160000) = 400V</span><br>\n    <b>2020:</b> <span class=\"im\">ΔV = √(2×7.2 / 40×10<sup>-6</sup>) = √(360000) = <b>600V</b></span> ✓</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — مضاعفة الجهد والطاقة</span><span class=\"badge\">2017 · الدور الثاني</span>\n  <p><b>وضّح ماذا يحصل</b> للطاقة المختزنة في المجال الكهربائي بين صفيحتي متسعة ذات سعة ثابتة عند مضاعفة مقدار فرق الجهد الكهربائي بين صفيحتي المتسعة؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p><span class=\"im\">PE = ½C(ΔV)<sup>2</sup></span> والسعة ثابتة ⟹ <span class=\"im\">PE′ = ½C(2ΔV)<sup>2</sup> = 4(½C(ΔV)<sup>2</sup>)</span> — <b>تصبح الطاقة أربعة أمثال ما كانت عليه</b> (التناسب مع مربع الجهد).</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة شاملة: عازل + طاقة)</span><span class=\"badge\">2023 · التمهيدي</span>\n  <p>متسعة ذات الصفيحتين المتوازيتين سعتها <span class=\"im\">18μF</span> رُبطت بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">100V</span>: ١) احسب مقدار الشحنة المختزنة في أيٍّ من صفيحتي المتسعة. ٢) إذا فُصلت المتسعة عن البطارية وأُدخل لوح عازل كهربائي بين صفيحتيها هبطت الطاقة المختزنة في المجال الكهربائي للمتسعة إلى <span class=\"im\">18×10<sup>-3</sup>J</span> — ما مقدار فرق الجهد بين صفيحتي المتسعة وثابت العزل الكهربائي والسعة بعد وضع العازل؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <span class=\"im\">Q = C×ΔV = 18×10<sup>-6</sup> × 100 = 18×10<sup>-4</sup>C = 1800μC</span><br>\n    ٢) الطاقة قبل العازل: <span class=\"im\">PE = ½C(ΔV)<sup>2</sup> = ½ × 18×10<sup>-6</sup> × (100)<sup>2</sup> = 90×10<sup>-3</sup>J</span><br>\n    مفصولة ⟹ <span class=\"im\">PE<sub>k</sub> = PE/k</span> ⟹ <span class=\"im\">k = 90×10<sup>-3</sup> / 18×10<sup>-3</sup> = 5</span><br>\n    <span class=\"im\">ΔV<sub>k</sub> = ΔV/k = 100/5 = 20V</span> &nbsp;،&nbsp; <span class=\"im\">C<sub>k</sub> = kC = 5×18 = 90μF</span><br>\n    <b>تحقق:</b> <span class=\"im\">½ × 90×10<sup>-6</sup> × (20)<sup>2</sup> = 18×10<sup>-3</sup>J</span> ✓</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة: عازل + طاقة)</span><span class=\"badge\">2021 · الدور الثاني</span>\n  <p>متسعة ذات الصفيحتين المتوازيتين سعتها <span class=\"im\">4μF</span> رُبطت بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">20V</span>: ١) ما مقدار الشحنة المختزنة في أيٍّ من صفيحتيها؟ ٢) إذا فُصلت المتسعة عن البطارية وأُدخل لوح عازل ثابت عزله <span class=\"im\">k</span> بين صفيحتيها هبطت الطاقة المختزنة في المجال الكهربائي إلى <span class=\"im\">4×10<sup>-4</sup>J</span> — ما مقدار سعة المتسعة في حالة وجود العازل؟ وما مقدار ثابت العزل <span class=\"im\">k</span>؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <span class=\"im\">Q = 4×10<sup>-6</sup> × 20 = 80μC</span><br>\n    ٢) الطاقة قبل العازل: <span class=\"im\">PE = ½ × 4×10<sup>-6</sup> × (20)<sup>2</sup> = 8×10<sup>-4</sup>J</span><br>\n    <span class=\"im\">k = PE/PE<sub>k</sub> = 8×10<sup>-4</sup> / 4×10<sup>-4</sup> = 2</span> &nbsp;⟹&nbsp; <span class=\"im\">C<sub>k</sub> = kC = 8μF</span><br>\n    <b>تحقق بصيغة الشحنة الثابتة:</b> <span class=\"im\">PE<sub>k</sub> = Q<sup>2</sup>/2C<sub>k</sub> = (80×10<sup>-6</sup>)<sup>2</sup> / (2×8×10<sup>-6</sup>) = 4×10<sup>-4</sup>J</span> ✓</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٦)</span></span>\n  <p>أ) متسعة مفصولة عن البطارية تعرف شحنتها <span class=\"im\">Q</span> وسعتها <span class=\"im\">C</span> — أي صيغة للطاقة تختار ولماذا؟<br>ب) احسب الطاقة المختزنة في متسعة <span class=\"im\">2μF</span> عند فرق جهد <span class=\"im\">100V</span>.</p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "figure",
+     "html": "<svg width=\"820\" height=\"510\" viewBox=\"0 0 900 560\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\">\n  <defs>\n    <marker id=\"mmar\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 z\" fill=\"#94A3B8\"/></marker>\n  </defs>\n  <!-- المركز -->\n  <g>\n    <rect x=\"360\" y=\"245\" width=\"180\" height=\"70\" rx=\"18\" fill=\"#0B3B5E\"/>\n    <text x=\"450\" y=\"275\" text-anchor=\"middle\" fill=\"#fff\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"19\">المتسعة المنفردة</text>\n    <text x=\"450\" y=\"298\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-size=\"11\">خزان الشحنة والطاقة</text>\n  </g>\n  <!-- فروع -->\n  <g stroke=\"#94A3B8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M360 265 C 300 230, 260 200, 205 178\" marker-end=\"url(#mmar)\"/>\n    <path d=\"M360 295 C 290 330, 255 355, 200 382\" marker-end=\"url(#mmar)\"/>\n    <path d=\"M540 265 C 600 225, 640 195, 695 172\" marker-end=\"url(#mmar)\"/>\n    <path d=\"M540 295 C 605 335, 645 360, 700 385\" marker-end=\"url(#mmar)\"/>\n    <path d=\"M450 245 V 130\" marker-end=\"url(#mmar)\"/>\n    <path d=\"M450 315 V 435\" marker-end=\"url(#mmar)\"/>\n  </g>\n  <!-- فرع: لماذا -->\n  <g>\n    <rect x=\"40\" y=\"120\" width=\"200\" height=\"80\" rx=\"14\" fill=\"#EAF7FE\" stroke=\"#38BDF8\" stroke-width=\"2\"/>\n    <text x=\"140\" y=\"145\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">لماذا المتسعة؟</text>\n    <text x=\"140\" y=\"166\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">الموصل المنفرد: V = kQ/r يرتفع</text>\n    <text x=\"140\" y=\"184\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">حتى التفريغ ⟸ موصلان + عازل</text>\n  </g>\n  <!-- فرع: التعريف -->\n  <g>\n    <rect x=\"350\" y=\"55\" width=\"200\" height=\"75\" rx=\"14\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"2\"/>\n    <text x=\"450\" y=\"80\" text-anchor=\"middle\" fill=\"#7C2D12\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">السعة C = Q/ΔV</text>\n    <text x=\"450\" y=\"100\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">وحدتها Farad = C/V</text>\n    <text x=\"450\" y=\"118\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">μF · nF · pF</text>\n  </g>\n  <!-- فرع: العوامل -->\n  <g>\n    <rect x=\"655\" y=\"115\" width=\"210\" height=\"82\" rx=\"14\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"2\"/>\n    <text x=\"760\" y=\"140\" text-anchor=\"middle\" fill=\"#065F46\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">العوامل الهندسية</text>\n    <text x=\"760\" y=\"161\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"11\" direction=\"ltr\">C = ε₀A/d</text>\n    <text x=\"760\" y=\"181\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">A طرداً · d عكساً · k يضاعف</text>\n  </g>\n  <!-- فرع: العازل -->\n  <g>\n    <rect x=\"35\" y=\"345\" width=\"210\" height=\"90\" rx=\"14\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"2\"/>\n    <text x=\"140\" y=\"370\" text-anchor=\"middle\" fill=\"#5B21B6\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">العازل الكهربائي</text>\n    <text x=\"140\" y=\"390\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">قطبي (دائم) · غير قطبي (محتث)</text>\n    <text x=\"140\" y=\"408\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\" direction=\"ltr\">E_k = E/k ، C_k = kC</text>\n    <text x=\"140\" y=\"426\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">قوة العزل ⟸ أقصى جهد تشغيل</text>\n  </g>\n  <!-- فرع: الحالتان -->\n  <g>\n    <rect x=\"345\" y=\"440\" width=\"210\" height=\"85\" rx=\"14\" fill=\"#FDECEC\" stroke=\"#DC2626\" stroke-width=\"2\"/>\n    <text x=\"450\" y=\"465\" text-anchor=\"middle\" fill=\"#991B1B\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">مَن الثابت؟</text>\n    <text x=\"450\" y=\"486\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">مفصولة ⟸ Q ثابتة، ΔV وE وPE تقل</text>\n    <text x=\"450\" y=\"505\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">موصولة ⟸ ΔV ثابت، Q وPE تزداد</text>\n  </g>\n  <!-- فرع: الطاقة -->\n  <g>\n    <rect x=\"660\" y=\"350\" width=\"205\" height=\"88\" rx=\"14\" fill=\"#FEF6E7\" stroke=\"#D97706\" stroke-width=\"2\"/>\n    <text x=\"762\" y=\"375\" text-anchor=\"middle\" fill=\"#92400E\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">الطاقة المختزنة</text>\n    <text x=\"762\" y=\"397\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\" direction=\"ltr\">PE = ½QΔV = ½C(ΔV)² = Q²/2C</text>\n    <text x=\"762\" y=\"416\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">مساحة مثلث (Q–ΔV)</text>\n    <text x=\"762\" y=\"432\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\" direction=\"ltr\">P = PE/t</text>\n  </g>\n</svg>",
+     "caption": "خريطة ذهنية تلخيصية — تتبع الأسهم من المركز وأعد بناء الدرس من ذاكرتك"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📋",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<thead><tr><th>القانون</th><th>يُستعمل لـ</th><th>الكميات ووحداتها</th></tr></thead>\n  <tbody>\n    <tr><td class=\"ltr\"><b>V = kQ/r</b></td><td class=\"right\">جهد الموصل الكروي المنفرد</td><td class=\"right\">V بالفولت (V) · Q بالكولوم (C) · r بالمتر (m) · k = 9×10⁹ N.m²/C²</td></tr>\n    <tr><td class=\"ltr\"><b>C = Q/ΔV</b></td><td class=\"right\">تعريف السعة وحساباتها</td><td class=\"right\">C بالفاراد (F) · Q بالكولوم (C) · ΔV بالفولت (V)</td></tr>\n    <tr><td class=\"ltr\"><b>C = ε₀A/d</b></td><td class=\"right\">سعة متسعة الهواء/الفراغ من هندستها</td><td class=\"right\">A بالمتر المربع (m²) · d بالمتر (m) · ε₀ = 8.85×10⁻¹² C²/N.m²</td></tr>\n    <tr><td class=\"ltr\"><b>C<sub>k</sub> = kC = kε₀A/d</b></td><td class=\"right\">السعة بوجود عازل</td><td class=\"right\">k عدد مجرد (بلا وحدة)</td></tr>\n    <tr><td class=\"ltr\"><b>ΔV<sub>k</sub> = ΔV/k · E<sub>k</sub> = E/k</b></td><td class=\"right\">أثر العازل (مشحونة مفصولة)</td><td class=\"right\">E بالفولت/متر (V/m)</td></tr>\n    <tr><td class=\"ltr\"><b>E = ΔV/d</b></td><td class=\"right\">المجال المنتظم بين الصفيحتين</td><td class=\"right\">انحدار الجهد الكهربائي</td></tr>\n    <tr><td class=\"ltr\"><b>PE = ½QΔV = ½C(ΔV)² = Q²/2C</b></td><td class=\"right\">الطاقة المختزنة في المجال</td><td class=\"right\">PE بالجول (J)</td></tr>\n    <tr><td class=\"ltr\"><b>P = PE/t</b></td><td class=\"right\">قدرة التفريغ</td><td class=\"right\">P بالواط (W) · t بالثانية (s)</td></tr>\n  </tbody>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — المتسعة المنفردة (2017–2024)",
+   "icon": "🎯",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<thead><tr><th style=\"width:42%\">السؤال (مختصراً)</th><th>السنة · الدور</th><th>الفكرة المقاسة</th><th>النمط</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\">العوامل المؤثرة في سعة المتسعة + علاقة رياضية</td><td>2017 · تمهيدي</td><td class=\"right\">العوامل الثلاثة</td><td>سرد + علاقة</td></tr>\n    <tr><td class=\"right\">علّل: يُحدَّد أقصى فرق جهد تعمل عنده المتسعة</td><td>2017 · تمهيدي</td><td class=\"right\">قوة العزل والانهيار</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">ماذا يحصل للطاقة عند مضاعفة ΔV بثبوت C؟</td><td>2017 · الدور الثاني</td><td class=\"right\">PE ∝ (ΔV)²</td><td>وضّح/استنتاج</td></tr>\n    <tr><td class=\"right\">مسألة: 6μF/30V ثم فصل + عازل → ΔV=5V، جد Q وC_k</td><td>2018 · تمهيدي</td><td class=\"right\">C=Q/ΔV + حالة المفصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">العازل الكهربائي + فائدتان عمليتان من إدخاله</td><td>2018 · الدور الثاني</td><td class=\"right\">فوائد العازل</td><td>تعريف + سرد</td></tr>\n    <tr><td class=\"right\">ماذا يحصل للشحنة عند مضاعفة ΔV بثبوت C؟</td><td>2018 · الدور الثاني</td><td class=\"right\">Q = CΔV</td><td>وضّح</td></tr>\n    <tr><td class=\"right\">مسألة شاملة: حساب C من الأبعاد ثم Q ثم عازل → k وC_k</td><td>2019 · الدور الأول</td><td class=\"right\">C=ε₀A/d + المفصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">اختيار: مضاعفة ΔV بثبوت C ⟹ الشحنة تصبح (2Q)</td><td>2019 · الدور الثاني</td><td class=\"right\">Q = CΔV</td><td>اختيار</td></tr>\n    <tr><td class=\"right\">مسألة: طاقة متسعة 5μF عند 4000V + قدرة التفريغ بـ10μs</td><td>2019 · الدور الثالث</td><td class=\"right\">PE=½C(ΔV)² + P=PE/t</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">علّل: يُحدَّد أقصى فرق جهد تعمل عنده المتسعة</td><td>2020 · تمهيدي</td><td class=\"right\">قوة العزل والانهيار</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">فائدتان عمليتان من إدخال مادة عازلة بدلاً من الهواء</td><td>2020 · الدور الأول</td><td class=\"right\">فوائد العازل</td><td>سرد</td></tr>\n    <tr><td class=\"right\">اختيار: 40μF تختزن 7.2J → جهد المصدر (600V)</td><td>2020 · الدور الأول</td><td class=\"right\">ΔV = √(2PE/C)</td><td>اختيار حسابي</td></tr>\n    <tr><td class=\"right\">علّل: يُحدَّد أقصى فرق جهد تعمل عنده المتسعة</td><td>2020 · الدور الثاني</td><td class=\"right\">قوة العزل والانهيار</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">اختيار: تقليل A إلى النصف (مشحونة مفصولة) ⟹ ΔV ضعف</td><td>2020 · الدور الثاني</td><td class=\"right\">C ∝ A + حالة المفصولة</td><td>اختيار</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "html",
+     "html": "<thead><tr><th style=\"width:42%\">السؤال (مختصراً) — تكملة</th><th>السنة · الدور</th><th>الفكرة المقاسة</th><th>النمط</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\">اختيار: البعد ×3 ⟹ السعة الجديدة (C/3)</td><td>2021 · تمهيدي</td><td class=\"right\">C ∝ 1/d</td><td>اختيار</td></tr>\n    <tr><td class=\"right\">تأثير عازل k=2 (مشحونة مفصولة) في ΔV وPE</td><td>2021 · الدور الأول</td><td class=\"right\">حالة المفصولة</td><td>وضّح تأثير</td></tr>\n    <tr><td class=\"right\">مسألة: 4μF/20V ثم فصل + عازل → PE=4×10⁻⁴J، جد C_k وk</td><td>2021 · الدور الثاني</td><td class=\"right\">طاقة + عازل + مفصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">الفائدة من إدخال مادة عازلة تملأ الحيّز بدلاً من الهواء</td><td>2021 · الدور الثاني</td><td class=\"right\">فوائد العازل</td><td>سرد</td></tr>\n    <tr><td class=\"right\">علّل: يُحدَّد أقصى فرق جهد تعمل عنده المتسعة</td><td>2021 · الدور الثاني التكميلي</td><td class=\"right\">قوة العزل والانهيار</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">اختيار: البعد إلى ⅓ ⟹ السعة الجديدة (3C)</td><td>2022 · تمهيدي</td><td class=\"right\">C ∝ 1/d</td><td>اختيار</td></tr>\n    <tr><td class=\"right\">وضّح عملياً تغيّر السعة بتغيّر المساحة A</td><td>2022 · تمهيدي</td><td class=\"right\">تجربة الفولطميتر</td><td>وصف تجربة</td></tr>\n    <tr><td class=\"right\">تأثير عازل قطبي (مشحونة مفصولة) في المجال الكهربائي</td><td>2022 · تمهيدي</td><td class=\"right\">E_k = E/k</td><td>وضّح تأثير</td></tr>\n    <tr><td class=\"right\">وضّح عملياً تغيّر السعة بتغيّر البعد d</td><td>2022 · الدور الثاني</td><td class=\"right\">تجربة الفولطميتر</td><td>وصف تجربة</td></tr>\n    <tr><td class=\"right\">مسألة شاملة: 18μF/100V ثم فصل + عازل → PE=18×10⁻³J</td><td>2023 · تمهيدي</td><td class=\"right\">طاقة + عازل + مفصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">مسألة: 60μF تختزن 4.8J → فرق جهد المصدر (400V)</td><td>2023 · تمهيدي</td><td class=\"right\">ΔV = √(2PE/C)</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">تأثير عازل k=6 (موصولة بالبطارية) في ΔV والسعة</td><td>2023 · تمهيدي</td><td class=\"right\">حالة الموصولة</td><td>وضّح تأثير</td></tr>\n    <tr><td class=\"right\">اشرح تجربة إدخال العازل (مفصولة) وأثره في ΔV وC</td><td>2023 · الدور الثالث</td><td class=\"right\">تجربة العازل + المفصولة</td><td>وصف تجربة</td></tr>\n    <tr><td class=\"right\">تأثير عازل غير قطبي (مشحونة مفصولة) في المجال المنتظم</td><td>2024 · الدور الأول</td><td class=\"right\">E_k = E/k</td><td>وضّح تأثير</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "قراءة المعلّم للجدول — أين يضرب الوزاري؟</span>\n  <p>أكثر ثلاث أفكار تكراراً: <b>«علّل أقصى فرق جهد» (٤ مرات)</b>، <b>حالة المفصولة + عازل (٦ مسائل)</b>، <b>فوائد العازل (٣ مرات)</b>. لاحظ أيضاً أن الموصل الكروي المنفرد لم يرد عنه سؤال مباشر في هذه السنوات — لكنه أساس فهم «لماذا المتسعة».</p>",
+     "private": true
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✍",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div>لأن الاستمرار بإضافة الشحنات إليه يرفع جهده باستمرار (<span class=\"im\">V ∝ Q</span>)، فيزداد المجال الكهربائي حوله حتى يحصل التفريغ الكهربائي خلال الهواء المحيط فتضيع الشحنة — أي أنه يخزن كمية محدودة فقط.</div></div>\n  <div class=\"a\"><div><span class=\"im\">E = ΔV/d = 12 / 3×10<sup>-3</sup> = 4000 V/m</span> باتجاه من الصفيحة الموجبة إلى السالبة.</div></div>\n  <div class=\"a\"><div>أ) <span class=\"im\">Q = C×ΔV = 5×10<sup>-6</sup> × 12 = 60μC</span>. &nbsp; ب) <span class=\"im\">47pF = 47×10<sup>-12</sup>F</span>.</div></div>\n  <div class=\"a\"><div>لا تتغير السعة: <span class=\"im\">C′ = ε₀(2A)/(2d) = ε₀A/d = C</span> — التضاعفان يلغي أحدهما الآخر.</div></div>\n  <div class=\"a\"><div><span class=\"im\">C<sub>k</sub> = kC = 5 × 8pF = 40pF</span>.</div></div>\n  <div class=\"a\"><div>أ) نختار <span class=\"im\">PE = Q²/2C</span> لأن المعطيين هما Q وC مباشرة — الصيغتان الأخريان تحتاجان حساب ΔV وسيطاً. &nbsp; ب) <span class=\"im\">PE = ½ × 2×10<sup>-6</sup> × (100)<sup>2</sup> = 0.01J</span>.</div></div>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "رسالة الدرس الأخيرة</span>\n  <p class=\"rule-line\">«قبل أي مسألة متسعة اسأل ثلاثة أسئلة: ما المعطى هندسة أم شحنة؟ مفصولة أم موصولة؟ وأي صيغة للطاقة تناسب معطياتي؟»</p>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ١ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>معلومات لا يسألها الوزاري… لكنها تريك أين تعيش متسعاتُ هذا الدرس في العالم الحقيقي</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">🏺 قصة اختراع · القارورة التي صعقت صاحبها</span>\n    <p>في عام ١٧٤٦م في مدينة لايدن الهولندية، حاول العالم <b>بيتر فان موشنبروك</b> «تخزين الكهرباء» في قارورة زجاجية فيها ماء. أمسك القارورة بيدٍ ولمس سلكها باليد الأخرى، فتلقّى صعقة عنيفة كتب بعدها لصديقه: <span class=\"hl\">«لن أكرر هذه التجربة ولو أعطوني مملكة فرنسا كلها!»</span></p>\n    <p>الذي لم يدركه لحظتها أنه صنع <b>أول متسعة في التاريخ</b>: الماء موصل داخلي، وكفُّه موصل خارجي، والزجاج عازل بينهما — الوصفة نفسها التي درستَها قبل قليل: موصلان بينهما عازل! وسُمّيت «قارورة لايدن» باسم مدينته، وبقيت أهم أداة لخزن الشحنة قرناً كاملاً.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🌍 هل تعلم؟</span>\n      <p>الأرض كلها موصل كروي منفرد عملاق، ومع ذلك لو حسبتَ سعتها بعلاقة <span class=\"im\">C = 4πε<sub>o</sub>r</span> لوجدتها نحو <b>٧١٠ ميكروفاراد فقط</b> — كوكب كامل سعته أقل من متسعة كهروليتية صغيرة تمسكها بإصبعين! الآن تفهم لماذا هجر العلماء الموصل المنفرد نحو المتسعات.</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🪁 هل تعلم؟</span>\n      <p><b>بنجامين فرانكلين</b> شحن قارورات لايدن من البرق نفسه في تجربة الطائرة الورقية الشهيرة (١٧٥٢م)، وهو أول من أطلق كلمة <b>«بطارية»</b> على مجموعة قارورات مربوطة معاً — قبل اختراع البطارية الحقيقية بنصف قرن كامل!</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>كرتان موصلتان تحملان <b>الشحنة نفسها Q</b>، نصف قطر الأولى ضِعف نصف قطر الثانية. لو رفعنا شحنتيهما معاً بالتدريج، فمن أيّهما تنطلق شرارة التفريغ أولاً؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">من الصغيرة! لأن V = kQ/r: كلما صغُر نصف القطر ارتفع الجهد وارتفع معه المجال حولها حتى الانهيار. وللسبب نفسه تُصنع مانعة الصواعق برأس مدبّب — فالتفريغ يعشق الرؤوس الصغيرة الحادة.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-1-1.html",
+ "compiledAt": "2026-09-01"
+}

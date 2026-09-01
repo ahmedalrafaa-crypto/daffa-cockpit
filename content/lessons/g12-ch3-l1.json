@@ -1,0 +1,184 @@
+{
+ "id": "g12-ch3-l1",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "أساسيات التيار المتناوب والمقاومة الصرف",
+ "subtitle": "تيار بيتك لا يسير باتجاه واحد كتيار البطارية — بل ينعكس ١٠٠ مرة في الثانية. سنفهم لماذا هو جيبيّ، وكيف نمثّله بمتجه الطور، وكيف تتصرّف المقاومة معه، ولماذا نقيسه بـالمقدار المؤثّر لا بذروته.",
+ "hook": {
+  "html": "<p>لماذا تُنتج محطّات الكهرباء تياراً <b>متناوباً (ac)</b> لا مستمراً (dc)؟ لأنّ المتناوب وحده يُرفَع جهده بالمحوّلات فيُنقل مئات الكيلومترات بخسارة قليلة (<span class=\"im\">P = I²R</span> تصغر إذا صغر التيار). وهو أيضاً ثمرةٌ مباشرة للحث الذي درسناه: ملفٌ يدور في مجال فيولّد فولطية جيبية.</p><p>وبما أنّ مقداره يتغيّر كل لحظة بين صفرٍ وذروة، يواجهنا سؤالان: <span class=\"hl\">كيف نصف قيمته بعددٍ واحد؟</span> و<span class=\"hl\">كيف تتغيّر القدرة معه؟</span> — وهذا محور الدرس.</p>"
+ },
+ "sections": [
+  {
+   "title": "الفولطية والتيار الجيبيان",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "التيار المستمر (dc) ثابت المقدار والاتجاه، أمّا <span class=\"term\">التيار المتناوب</span> (ac) فيتغيّر دورياً مع الزمن وينعكس اتجاهه مرّات عديدة في الثانية. تردّده في العراق ومعظم دول العالم <span class=\"im\">f = 50 Hz</span> (أي ينعكس اتجاهه <span class=\"im\">100</span> مرّة في الثانية)."
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"560\" height=\"150\" viewBox=\"0 0 560 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- DC -->\n  <g transform=\"translate(10,10)\">\n    <line x1=\"10\" y1=\"65\" x2=\"250\" y2=\"65\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"15\" x2=\"15\" y2=\"120\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"40\" x2=\"250\" y2=\"40\" stroke=\"#059669\" stroke-width=\"2.6\"/>\n    <text x=\"120\" y=\"138\" text-anchor=\"middle\" fill=\"#059669\" font-weight=\"800\">تيار مستمر dc · ثابت</text>\n  </g>\n  <line x1=\"285\" y1=\"20\" x2=\"285\" y2=\"118\" stroke=\"#E2E8F0\"/>\n  <!-- AC -->\n  <g transform=\"translate(300,10)\">\n    <line x1=\"10\" y1=\"65\" x2=\"250\" y2=\"65\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"15\" x2=\"15\" y2=\"120\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <path d=\"M15 65 Q45 15 75 65 T135 65 Q165 115 195 65 T255 65\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.6\"/>\n    <text x=\"120\" y=\"138\" text-anchor=\"middle\" fill=\"#B91C1C\" font-weight=\"800\">تيار متناوب ac · جيبي</text>\n  </g>\n</svg>",
+     "caption": "المستمر خط ثابت، والمتناوب موجة جيبية تنعكس قطبيتها كل نصف دورة"
+    },
+    {
+     "type": "html",
+     "html": "الفولطية المتناوبة موجة جيبية تُعطى بالعلاقة (<span class=\"im\">ω = 2πf</span>):"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">الفولطية والتيار الآنيّان</span>\n  <span class=\"eq\">V = V<sub>m</sub> sin(ωt) &nbsp;،&nbsp; I = I<sub>m</sub> sin(ωt)</span>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div><span class=\"im\">V</span> الفولطية <b>الآنيّة</b> (لحظية)، و<span class=\"im\">V_m</span> <b>ذروتها</b> (المقدار الأعظم) وتحدث عند <span class=\"im\">ωt = π/2</span> لأن <span class=\"im\">sin 90° = 1</span>. المثل للتيار مع <span class=\"im\">I_m</span>.</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "متجه الطور: تمثيلٌ دوّار",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "لتمثيل الفولطية والتيار الجيبيين بسهولة، نرسم <span class=\"term\">متجه الطور</span> (المتّجه الدوّار): متّجهٌ طوله يساوي المقدار الأعظم (<span class=\"im\">V_m</span> أو <span class=\"im\">I_m</span>)، يدور عكس عقارب الساعة بتردّد زاوي <span class=\"im\">ω</span>. ومسقطه على المحور الشاقولي يعطي القيمة الآنية."
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"300\" height=\"160\" viewBox=\"0 0 300 160\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <line x1=\"30\" y1=\"130\" x2=\"270\" y2=\"130\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n  <text x=\"262\" y=\"146\" fill=\"#64748B\">X</text>\n  <circle cx=\"90\" cy=\"130\" r=\"55\" fill=\"none\" stroke=\"#E2E8F0\" stroke-dasharray=\"3 3\"/>\n  <line x1=\"90\" y1=\"130\" x2=\"135\" y2=\"98\" stroke=\"#B91C1C\" stroke-width=\"3\" marker-end=\"url(#ah)\"/>\n  <text x=\"118\" y=\"92\" fill=\"#B91C1C\" font-weight=\"800\">V_m</text>\n  <path d=\"M118 130 A28 28 0 0 0 128 112\" fill=\"none\" stroke=\"#0284C7\" stroke-width=\"1.4\"/>\n  <text x=\"132\" y=\"126\" fill=\"#0284C7\" font-size=\"10\">ωt</text>\n  <path d=\"M90 130 q30 -8 45 -32\" fill=\"none\" stroke=\"#059669\" stroke-width=\"1.2\" marker-end=\"url(#ah2)\"/>\n  <text x=\"150\" y=\"60\" fill=\"#059669\" font-size=\"10\">اتجاه الدوران</text>\n  <defs>\n    <marker id=\"ah\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B91C1C\"/></marker>\n    <marker id=\"ah2\" markerWidth=\"7\" markerHeight=\"7\" refX=\"4\" refY=\"3.5\" orient=\"auto\"><path d=\"M0 0 L7 3.5 L0 7 z\" fill=\"#059669\"/></marker>\n  </defs>\n</svg>",
+     "caption": "متجه الطور يدور بسرعة ω؛ زاوية دورانه ωt ومسقطه يعطي القيمة الآنية"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span>\n  <div><span class=\"term\">زاوية فرق الطور</span> <span class=\"im\">Φ</span> هي الزاوية بين متجهَي الفولطية والتيار. فإذا تغيّرا معاً (بلغا ذروتيهما في اللحظة نفسها) كان <span class=\"im\">Φ = 0</span> ويُقال إنهما <b>بطورٍ واحد</b>.</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "دائرة حِملها مقاومة صرف",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "إذا كان حِمل الدائرة <span class=\"term\">مقاومة صرف</span> <span class=\"im\">R</span> فقط (مقاومة مثالية)، فإن الفولطية عبرها والتيار خلالها <span class=\"hl\">يبلغان ذروتيهما ويصفران معاً</span> — أي بطورٍ واحد (<span class=\"im\">Φ = 0</span>):"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">الفولطية عبر R</span><span class=\"eq\">V<sub>R</sub> = V<sub>m</sub> sin(ωt)</span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">التيار خلال R</span><span class=\"eq\">I<sub>R</sub> = I<sub>m</sub> sin(ωt)</span></div>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"560\" height=\"150\" viewBox=\"0 0 560 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- waveforms in phase -->\n  <g transform=\"translate(5,8)\">\n    <line x1=\"10\" y1=\"70\" x2=\"270\" y2=\"70\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"15\" y1=\"18\" x2=\"15\" y2=\"122\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <path d=\"M15 70 Q50 18 85 70 T155 70 Q190 122 225 70 T295 70\" fill=\"none\" stroke=\"#B91C1C\" stroke-width=\"2.4\"/>\n    <path d=\"M15 70 Q50 28 85 70 T155 70 Q190 112 225 70 T295 70\" fill=\"none\" stroke=\"#0284C7\" stroke-width=\"2.2\" stroke-dasharray=\"5 3\"/>\n    <text x=\"120\" y=\"140\" text-anchor=\"middle\" fill=\"#334155\" font-weight=\"700\">الفولطية والتيار بطورٍ واحد</text>\n    <text x=\"235\" y=\"30\" fill=\"#B91C1C\" font-size=\"10\">V</text><text x=\"235\" y=\"118\" fill=\"#0284C7\" font-size=\"10\">I</text>\n  </g>\n  <line x1=\"320\" y1=\"20\" x2=\"320\" y2=\"120\" stroke=\"#E2E8F0\"/>\n  <!-- phasor -->\n  <g transform=\"translate(340,10)\">\n    <line x1=\"20\" y1=\"80\" x2=\"200\" y2=\"80\" stroke=\"#94A3B8\" stroke-width=\"1.2\"/>\n    <line x1=\"120\" y1=\"30\" x2=\"200\" y2=\"55\" stroke=\"#B91C1C\" stroke-width=\"3\" marker-end=\"url(#p1)\"/>\n    <line x1=\"120\" y1=\"30\" x2=\"185\" y2=\"50\" stroke=\"#0284C7\" stroke-width=\"3\" marker-end=\"url(#p2)\"/>\n    <text x=\"205\" y=\"52\" fill=\"#B91C1C\" font-weight=\"800\" font-size=\"10\">V_m</text>\n    <text x=\"150\" y=\"42\" fill=\"#0284C7\" font-weight=\"800\" font-size=\"10\">I_m</text>\n    <text x=\"70\" y=\"100\" fill=\"#64748B\" font-size=\"10\">Φ = 0 (متجهان متطابقان)</text>\n    <circle cx=\"120\" cy=\"80\" r=\"3\" fill=\"#0B3B5E\"/>\n  </g>\n  <defs>\n    <marker id=\"p1\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#B91C1C\"/></marker>\n    <marker id=\"p2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"5\" refY=\"4\" orient=\"auto\"><path d=\"M0 0 L8 4 L0 8 z\" fill=\"#0284C7\"/></marker>\n  </defs>\n</svg>",
+     "caption": "في المقاومة الصرف: المنحنيان متلاصقان، ومتجها الطور متطابقان — لا تأخّر ولا تقدّم"
+    }
+   ]
+  },
+  {
+   "title": "القدرة في المقاومة الصرف",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "القدرة الآنية <span class=\"im\">P = I_R · V_R</span>. وبما أن التيار والفولطية بطورٍ واحد، فإن القدرة <b>موجبة دائماً</b> (منحنى جيب-تمام لا يهبط تحت الصفر): كل القدرة تُستهلك حرارةً في المقاومة. ويتراوح مقدارها بين الصفر والذروة <span class=\"im\">I_m V_m</span>، فيكون <b>متوسطها نصف الذروة</b>:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">القدرة المتوسطة في مقاومة صرف</span>\n  <span class=\"eq\">P<sub>av</sub> = <span class=\"frac\"><span>I<sub>m</sub> · V<sub>m</sub></span><span class=\"den\">2</span></span></span>"
+    }
+   ]
+  },
+  {
+   "title": "المقدار المؤثّر (RMS): قيمةٌ واحدة صادقة",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "ما دام التيار المتناوب يتغيّر كل لحظة، بأي قيمةٍ نصفه؟ لا بالذروة (لحظية) ولا بالمتوسط الحسابي (صفر خلال دورة كاملة!). الحلّ هو <span class=\"term\">المقدار المؤثّر</span> — القيمة التي تكافئ تياراً مستمراً في التأثير الحراري نفسه."
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · تعريف المقدار المؤثّر</span>\n  <p><b>المقدار المؤثّر للتيار المتناوب</b> هو مقدار التيار المستمر الذي يولّد — في المقاومة نفسها وخلال الزمن نفسه — التأثير الحراري نفسه الذي يولّده التيار المتناوب.</p>"
+    },
+    {
+     "type": "html",
+     "html": "نساوي القدرة المتوسطة للمتناوب بقدرة المستمر: <span class=\"im\">I²_eff · R = ½ I²_m · R</span>، فنحصل بجذر الطرفين على «جذر معدّل مربّع» المقدار الأعظم (<span dir=\"ltr\">root mean square</span>):"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">المقدار المؤثّر للتيار والفولطية</span>\n  <span class=\"eq\">I<sub>eff</sub> = <span class=\"frac\"><span>I<sub>m</sub></span><span class=\"den\">√2</span></span> = 0.707 I<sub>m</sub> &nbsp;،&nbsp; V<sub>eff</sub> = <span class=\"frac\"><span>V<sub>m</sub></span><span class=\"den\">√2</span></span> = 0.707 V<sub>m</sub></span>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه · ما تقرؤه المقاييس</span>\n  <p>مقاييس التيار والفولطية المتناوبة (الأميتر والفولتميتر) تقيس <b>المقدار المؤثّر</b>، لا الأعظم. فقولنا «التيار في الدائرة ١ أمبير» يعني أن <span class=\"im\">I_eff = 1 A</span>. لهذا تُكتب فولطية بيتك <span class=\"im\">220 V</span> وهي مؤثّرة، بينما ذروتها الحقيقية <span class=\"im\">≈ 311 V</span>.</p>",
+     "private": true
+    },
+    {
+     "type": "html",
+     "html": "وبدلالة المقدار المؤثّر تصير القدرة المتوسطة كقدرة التيار المستمر تماماً: <span class=\"im\">P_av = I²_eff R = I_eff · V_eff</span>."
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">تمهيدي 2020</span></span>\n  <p>مصدر للفولطية المتناوبة، رُبط بين طرفيه مقاومة صرف <span class=\"im\">R = 100 Ω</span>، الفولطية في الدائرة تُعطى بالعلاقة <span class=\"im\">V<sub>R</sub> = 424.2 sin(200πt)</span>. ① اكتب العلاقة التي يُعطى بها التيار. ② احسب المقدار المؤثّر للفولطية والمقدار المؤثّر للتيار.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>من الصيغة: <span class=\"im\">V_m = 424.2 V</span>، و<span class=\"im\">ω = 200π</span> (أي <span class=\"im\">f = 100 Hz</span>).</p>\n    <p>① الذروة: <span class=\"im\">I_m = V_m/R = 424.2/100 = 4.242 A</span> ⟹ <span class=\"ans\">I = 4.242 sin(200πt)</span></p>\n    <p>② <span class=\"im\">V_eff = V_m/√2 = 424.2/1.414 = </span> <span class=\"ans\">300 V</span> &nbsp;،&nbsp; <span class=\"im\">I_eff = V_eff/R = 300/100 = </span> <span class=\"ans\">3 A</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الثالث 2019</span></span>\n  <p>علّل: القدرة المتبدّدة بوساطة تيار متناوب له مقدار أعظم <span class=\"im\">I_m</span> <b>لا تساوي</b> القدرة التي ينتجها تيار مستمر يمتلك المقدار نفسه.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>لأن التيار المتناوب لا يبقى عند مقداره الأعظم <span class=\"im\">I_m</span> إلا لحظةً واحدة كل ربع دورة، بينما هو أقلّ منه بقية الوقت. فالقدرة المتوسطة له <span class=\"im\">P_av = ½ I²_m R</span>، أي تكافئ تياراً مستمراً مقداره <span class=\"im\">I_eff = I_m/√2</span> فقط — وهو أصغر من <span class=\"im\">I_m</span>. لذلك تأثيره الحراري أقلّ.</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>① تيار متناوب مقداره الأعظم <span class=\"im\">I_m = 5 A</span>. جد مقداره المؤثّر.</p>\n  <p>② فولطية متناوبة مؤثّرة <span class=\"im\">V_eff = 220 V</span>. جد ذروتها <span class=\"im\">V_m</span>.</p>\n  <p>③ مقاومة صرف <span class=\"im\">R = 50 Ω</span> يمرّ بها تيار مؤثّر <span class=\"im\">4 A</span>. جد القدرة المتوسطة المستهلكة. <span class=\"tnum\">(الأجوبة آخر الدرس)</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<svg width=\"720\" height=\"250\" viewBox=\"0 0 720 250\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12.5\">\n  <rect x=\"285\" y=\"12\" width=\"160\" height=\"46\" rx=\"12\" fill=\"#0B3B5E\"/>\n  <text x=\"365\" y=\"33\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\" font-size=\"13\">التيار المتناوب</text>\n  <text x=\"365\" y=\"50\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-weight=\"700\" font-size=\"11\">V = V_m sin ωt</text>\n  <g stroke=\"#38BDF8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M300 48 C180 65 140 90 120 110\"/>\n    <path d=\"M365 58 V110\"/>\n    <path d=\"M430 48 C550 65 590 90 610 110\"/>\n    <path d=\"M320 58 C210 150 175 185 150 205\"/>\n    <path d=\"M410 58 C520 150 555 185 585 205\"/>\n  </g>\n  <rect x=\"40\" y=\"110\" width=\"165\" height=\"58\" rx=\"10\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"122\" y=\"132\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"800\">متجه الطور</text>\n  <text x=\"122\" y=\"152\" text-anchor=\"middle\" fill=\"#0369A1\" font-size=\"11\">Φ زاوية فرق الطور</text>\n  <rect x=\"283\" y=\"110\" width=\"164\" height=\"58\" rx=\"10\" fill=\"#FDECEC\" stroke=\"#B91C1C\" stroke-width=\"1.6\"/>\n  <text x=\"365\" y=\"132\" text-anchor=\"middle\" fill=\"#7F1D1D\" font-weight=\"800\">مقاومة صرف</text>\n  <text x=\"365\" y=\"152\" text-anchor=\"middle\" fill=\"#991B1B\" font-size=\"11\">Φ = 0 · بطور واحد</text>\n  <rect x=\"525\" y=\"110\" width=\"170\" height=\"58\" rx=\"10\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.6\"/>\n  <text x=\"610\" y=\"132\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">القدرة</text>\n  <text x=\"610\" y=\"152\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"11\">P_av = I_m V_m / 2</text>\n  <rect x=\"60\" y=\"205\" width=\"180\" height=\"40\" rx=\"10\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"1.6\"/>\n  <text x=\"150\" y=\"230\" text-anchor=\"middle\" fill=\"#065F46\" font-weight=\"800\" font-size=\"11\">f = 50 Hz (العراق)</text>\n  <rect x=\"495\" y=\"205\" width=\"190\" height=\"40\" rx=\"10\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"1.6\"/>\n  <text x=\"590\" y=\"230\" text-anchor=\"middle\" fill=\"#5B21B6\" font-weight=\"800\" font-size=\"11\">المؤثّر = 0.707 الأعظم</text>\n</svg>"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📐",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>القانون</th><th>الصيغة</th><th>يُستعمل لـ</th><th>الوحدة</th></tr>\n  <tr><td class=\"right\">الفولطية الآنية</td><td class=\"ltr\">V = V_m sin(ωt)</td><td class=\"right\">قيمة الفولطية لحظياً</td><td class=\"ltr\">V</td></tr>\n  <tr><td class=\"right\">التردد الزاوي</td><td class=\"ltr\">ω = 2πf</td><td class=\"right\">الربط بالتردد</td><td class=\"ltr\">rad/s</td></tr>\n  <tr><td class=\"right\">القدرة المتوسطة</td><td class=\"ltr\">P_av = I_m V_m / 2</td><td class=\"right\">قدرة مقاومة صرف</td><td class=\"ltr\">W</td></tr>\n  <tr><td class=\"right\">التيار المؤثّر</td><td class=\"ltr\">I_eff = I_m/√2 = 0.707 I_m</td><td class=\"right\">قيمة التيار الفعّالة</td><td class=\"ltr\">A</td></tr>\n  <tr><td class=\"right\">الفولطية المؤثّرة</td><td class=\"ltr\">V_eff = V_m/√2 = 0.707 V_m</td><td class=\"right\">قيمة الفولطية الفعّالة</td><td class=\"ltr\">V</td></tr>\n  <tr><td class=\"right\">القدرة بالمؤثّر</td><td class=\"ltr\">P_av = I²_eff R = I_eff V_eff</td><td class=\"right\">القدرة المستهلكة</td><td class=\"ltr\">W</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — أساسيات المتناوب (2017–2024)",
+   "icon": "🏛",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">حساب المقدار المؤثّر من الصيغة الجيبية <span class=\"im\">V_m sin(ωt)</span></td><td class=\"right\">مسألة</td><td class=\"right\">تمهيدي 2020</td></tr>\n  <tr><td class=\"right\">علّل: قدرة <span class=\"im\">I_m</span> المتناوب ≠ قدرة تيار مستمر بالمقدار نفسه</td><td class=\"right\">تعليل</td><td class=\"right\">الدور الثالث 2019 · تمهيدي 2020</td></tr>\n  <tr><td class=\"right\">علّل: تفضيل استعمال التيار المتناوب في الدوائر</td><td class=\"right\">تعليل</td><td class=\"right\">الدور الثالث 2018 · تمهيدي 2021</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✔",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div>① <span class=\"im\">I_eff = 0.707 × 5 = 3.535 A</span>.</div></div>\n  <div class=\"a\"><div>② <span class=\"im\">V_m = √2 × V_eff = 1.414 × 220 ≈ 311 V</span>.</div></div>\n  <div class=\"a\"><div>③ <span class=\"im\">P_av = I²_eff R = (4)² × 50 = 800 W</span>.</div></div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ١ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>عن مصباحٍ يومض مئة مرة وأنت لا تراه، ورقمٍ سحريّ اسمه ٥٠ هرتز</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">📜 قصة رقم: من أين جاء «٥٠ هرتز»؟</span>\n    <p>لماذا ٥٠ هرتز تحديداً في العراق وأوروبا (و٦٠ في أمريكا)؟ لا يوجد سببٌ فيزيائي مقدّس — بل قرارٌ هندسي تاريخي. اختار مهندسو شركة <b>AEG</b> الألمانية أواخر القرن التاسع عشر الرقم ٥٠ لأنه يناسب تصميم مولّداتهم وساعاتهم، فانتشر مع شبكاتهم. تردّدٌ أقلّ يجعل المصابيح تومض بوضوح مزعج، وأعلى يزيد خسائر النقل — فكان ٥٠ توفيقاً عملياً بقي معنا قرناً كاملاً.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>مصباحك يومض <b>١٠٠ مرة</b> في الثانية! فالقدرة تبلغ ذروتها مرّتين كل دورة (عند <span class=\"im\">+V_m</span> و<span class=\"im\">−V_m</span>)، أي <span class=\"im\">2 × 50 = 100</span> ومضة. لكن شبكية عينك أبطأ من أن تلاحقها، فتراه ثابتاً.</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>حين تقرأ «٢٢٠ فولت» على مقبس بيتك، فهذه هي القيمة <b>المؤثّرة</b>. أمّا الذروة الحقيقية فهي <span class=\"im\">220 × √2 ≈ 311 V</span>! لذا يُصمَّم عزل الأسلاك ليتحمّل الذروة لا الرقم المكتوب.</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>يقول زميلك: «بما أن التيار المتناوب ينعكس اتجاهه، فإن متوسطه صفر، إذن هو لا يعطي قدرة ولا يسخّن شيئاً». أين الخطأ في كلامه؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">الخطأ أنه خلط بين متوسط <b>التيار</b> ومتوسط <b>القدرة</b>. نعم متوسط التيار الجيبي صفر، لكن القدرة تتناسب مع <b>مربّع</b> التيار <span class=\"im\">(P = I²R)</span>، ومربّع أي عدد موجب — سالباً كان أم موجباً — فالقدرة موجبة دائماً ومتوسطها لا يساوي صفراً بل <span class=\"im\">½ I²_m R</span>. لهذا تسخن المدفأة ويضيء المصباح رغم انعكاس التيار.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-3-1.html",
+ "compiledAt": "2026-09-01"
+}

@@ -1,0 +1,264 @@
+{
+ "id": "g12-ch7-l3",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "الثنائي pn والانحياز وأنواع الثنائيات والترانزستور",
+ "subtitle": "حين نلصق بلورة نوع P ببلورة نوع N، يحدث شيءٌ مدهش عند حدودهما: تتولّد منطقةٌ خالية من حاملات الشحنة، وحاجز جهدٍ يمنع التيار — إلا في اتجاهٍ واحد. هذه «الصمّامة» ذات الاتجاه الواحد هي الثنائي، الذي يقوّم التيار ويبعث الضوء ويحوّل الشمس كهرباء. ثم نضيف بلورةً ثالثة فيولد الترانزستور: الجهاز الذي يضخّم الإشارات وبنى عليه العالم كل حاسوبٍ وهاتف. هذا الدرس يختم الفصل بأكثره طلباً وزارياً — بما فيه مسائل المضخّم.",
+ "hook": {
+  "html": "<p>بلورة N وحدها لا تفعل شيئاً مميّزاً، وبلورة P كذلك. لكن حين نصنعهما في بلّورةٍ واحدة متلاصقة، تنشأ عند حدّهما ظاهرةٌ لا توجد في أيٍّ منهما منفرداً: <span class=\"hl\">حاجز جهدٍ يسمح بمرور التيار في اتجاهٍ ويمنعه في الاتجاه المعاكس</span>. هذا «الاتجاه الواحد» هو أساس كل شيء: به نحوّل التيار المتناوب إلى مستمر، ونصنع مصابيح LED، وخلايا شمسية. وحين نضيف طبقةً ثالثة، نحصل على الترانزستور الذي يضخّم إشارةً ضعيفة إلى قويّة. لنفهم أولاً كيف يولد حاجز الجهد.</p>"
+ },
+ "sections": [
+  {
+   "title": "الثنائي pn ومنطقة الاستنزاف وحاجز الجهد",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "يُحصَل على <span class=\"term\">الثنائي البلوري pn</span> بأخذ بلورة شبه موصلٍ نقية، تُطعَّم بنوعين من الشوائب: أحدهما ثلاثية التكافؤ (البورون) فنحصل على منطقة نوع <b>P</b>، والأخرى خماسية التكافؤ (الأنتيمون) فنحصل على منطقة نوع <b>N</b>. ويُطلق على السطح الفاصل بين المنطقتين <span class=\"term\">الملتقى (junction)</span>."
+    },
+    {
+     "type": "html",
+     "html": "وقد عرفنا أن حوامل الأغلبية في المنطقة N هي الإلكترونات، وفي المنطقة P هي الفجوات. فتنتشر الإلكترونات الحرة من المنطقة N عبر الملتقى إلى المنطقة P، وتنتقل الفجوات من P إلى N، وعندئذٍ تلتحم الإلكترونات مع الفجوات القريبة من الملتقى."
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "منطقة الاستنزاف وحاجز الجهد</span>\n  <p>نتيجةً لهذه العملية تنشأ على جانبي الملتقى منطقةٌ رقيقة تحتوي أيوناتٍ موجبةً في المنطقة N وأيوناتٍ سالبةً في المنطقة P، وتكون <b>خاليةً من حاملات الشحنة</b>، تُسمّى <span class=\"term\">منطقة الاستنزاف (Depletion region)</span>. يتولّد عن هذه الأيونات <b>مجالٌ كهربائي</b> يمنع عبور إلكتروناتٍ إضافية عبر الملتقى، فتتوقّف عملية الانتشار. ويُسمّى فرق الجهد الناتج <span class=\"term\">حاجز الجهد (Potential barrier)</span>.</p>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"600\" height=\"180\" viewBox=\"0 0 600 180\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n  <!-- منطقة P -->\n  <rect x=\"60\" y=\"40\" width=\"200\" height=\"90\" fill=\"#FDEEF2\" stroke=\"#BE185D\" stroke-width=\"1.5\"/>\n  <text x=\"160\" y=\"30\" text-anchor=\"middle\" fill=\"#9D174D\" font-weight=\"800\">منطقة P</text>\n  <g fill=\"#BE185D\"><circle cx=\"100\" cy=\"70\" r=\"5\"/><circle cx=\"140\" cy=\"95\" r=\"5\"/><circle cx=\"190\" cy=\"65\" r=\"5\"/><circle cx=\"120\" cy=\"115\" r=\"5\"/><circle cx=\"210\" cy=\"105\" r=\"5\"/></g>\n  <!-- منطقة N -->\n  <rect x=\"340\" y=\"40\" width=\"200\" height=\"90\" fill=\"#E8F2FE\" stroke=\"#1D4ED8\" stroke-width=\"1.5\"/>\n  <text x=\"440\" y=\"30\" text-anchor=\"middle\" fill=\"#1E3A8A\" font-weight=\"800\">منطقة N</text>\n  <g fill=\"#1D4ED8\"><circle cx=\"380\" cy=\"70\" r=\"5\"/><circle cx=\"420\" cy=\"95\" r=\"5\"/><circle cx=\"470\" cy=\"65\" r=\"5\"/><circle cx=\"400\" cy=\"115\" r=\"5\"/><circle cx=\"490\" cy=\"105\" r=\"5\"/></g>\n  <!-- منطقة الاستنزاف -->\n  <rect x=\"260\" y=\"40\" width=\"80\" height=\"90\" fill=\"#FEF9C3\" stroke=\"#CA8A04\" stroke-width=\"1.2\"/>\n  <text x=\"300\" y=\"150\" text-anchor=\"middle\" fill=\"#854D0E\" font-weight=\"700\" font-size=\"10\">منطقة الاستنزاف</text>\n  <g font-size=\"12\" font-weight=\"800\"><text x=\"278\" y=\"75\" fill=\"#BE185D\">−</text><text x=\"278\" y=\"105\" fill=\"#BE185D\">−</text><text x=\"318\" y=\"75\" fill=\"#1D4ED8\">+</text><text x=\"318\" y=\"105\" fill=\"#1D4ED8\">+</text></g>\n  <line x1=\"300\" y1=\"40\" x2=\"300\" y2=\"130\" stroke=\"#CA8A04\" stroke-width=\"1\" stroke-dasharray=\"3 2\"/>\n  <text x=\"300\" y=\"20\" text-anchor=\"middle\" fill=\"#854D0E\" font-size=\"9\">الملتقى</text>\n</svg>",
+     "caption": "الثنائي pn: انتشار الحاملات عبر الملتقى يولّد منطقة استنزافٍ خالية من الشحنات وحاجز جهدٍ يوقف الانتشار"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div>يعتمد مقدار حاجز الجهد في الثنائي pn على: ① <b>نوع مادة شبه الموصل</b> المستعملة، ② <b>نسبة الشوائب</b> المطعّمة بها، ③ <b>درجة حرارة المادة</b>. ومقداره عند درجة حرارة الغرفة <span class=\"im\">(300K)</span>: <span class=\"im\">0.7 V</span> للمصنوع من السيليكون، و<span class=\"im\">0.3 V</span> للمصنوع من الجرمانيوم.</div>",
+     "a": ""
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري متكرّر — علّل <span class=\"badge\">التمهيدي 2017 · التمهيدي 2019 · الدور الأول 2022</span></span>\n  <p>علّل: سبب تولّد منطقة الاستنزاف في الثنائي البلوري pn.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>لأن حوامل الأغلبية تنتشر عبر الملتقى: الإلكترونات الحرة من المنطقة N تنتشر إلى المنطقة P، والفجوات من P إلى N، فتلتحم الإلكترونات مع الفجوات القريبة من الملتقى، تاركةً على جانبيه منطقةً رقيقة تحتوي أيوناتٍ موجبة (في N) وأيوناتٍ سالبة (في P) <b>خاليةً من حاملات الشحنة</b> — هي منطقة الاستنزاف.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الأول 2022–2023</span></span>\n  <p>ما المقصود بمنطقة الاستنزاف في الثنائي البلوري pn؟ وكيف تتولّد؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>منطقة الاستنزاف:</b> منطقةٌ رقيقة على جانبي الملتقى تحتوي أيوناتٍ موجبةً في المنطقة N وأيوناتٍ سالبةً في المنطقة P، وتكون خاليةً من حاملات الشحنة. <b>تتولّد</b> نتيجة انتشار حوامل الأغلبية (الإلكترونات والفجوات) عبر الملتقى والتحامها قرب الملتقى.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري متكرّر <span class=\"badge\">الدور الثالث 2019 · الدور الثالث 2022–2023 · التمهيدي 2022–2023</span></span>\n  <p>علامَ يعتمد مقدار حاجز الجهد الكهربائي في الثنائي البلوري pn؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>يعتمد على: ① <b>نوع مادة شبه الموصل</b> المستعملة (سيليكون أم جرمانيوم). ② <b>نسبة الشوائب</b> المطعّمة بها. ③ <b>درجة حرارة المادة</b>.</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "فولطية الانحياز: الأمامي والعكسي",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "لكي ينساب تيارٌ في الدائرة، نسلّط فرق جهدٍ مستمر يُسمّى <span class=\"term\">فولطية الانحياز (Biasing potential)</span>. وتوجد طريقتان لانحياز الملتقى pn:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">▶</span> الانحياز الأمامي (Forward Bias)</span>\n    <p>يُربَط القطب <b>الموجب</b> للبطارية مع المنطقة P، والقطب <b>السالب</b> مع المنطقة N (بشرط أن يكون الجهد المسلّط أكبر من حاجز الجهد). فتندفع حوامل الأغلبية نحو الملتقى، <b>فتضيق منطقة الاستنزاف ويقلّ حاجز الجهد</b>، وتقلّ مقاومة الثنائي، فينساب <span class=\"term\">تيارٌ أمامي كبير</span>.</p>\n  </div>\n  <div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">◀</span> الانحياز العكسي (Reverse Bias)</span>\n    <p>يُربَط القطب <b>السالب</b> للبطارية مع المنطقة P، والقطب <b>الموجب</b> مع المنطقة N. فتُجذَب حوامل الأغلبية بعيداً عن الملتقى، <b>فتتّسع منطقة الاستنزاف ويزداد حاجز الجهد</b>، وتزداد مقاومة الثنائي، فينساب <span class=\"term\">تيارٌ عكسي صغير جداً</span> (يمكن إهماله).</p>\n  </div>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"600\" height=\"150\" viewBox=\"0 0 600 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"10.5\">\n  <!-- أمامي -->\n  <text x=\"150\" y=\"20\" text-anchor=\"middle\" fill=\"#065F46\" font-weight=\"800\">انحياز أمامي</text>\n  <rect x=\"70\" y=\"40\" width=\"70\" height=\"40\" fill=\"#FDEEF2\" stroke=\"#BE185D\"/><text x=\"105\" y=\"65\" text-anchor=\"middle\" fill=\"#9D174D\" font-weight=\"700\">P</text>\n  <rect x=\"160\" y=\"40\" width=\"70\" height=\"40\" fill=\"#E8F2FE\" stroke=\"#1D4ED8\"/><text x=\"195\" y=\"65\" text-anchor=\"middle\" fill=\"#1E3A8A\" font-weight=\"700\">N</text>\n  <text x=\"55\" y=\"65\" fill=\"#B91C1C\" font-weight=\"800\">+</text><text x=\"240\" y=\"65\" fill=\"#1D4ED8\" font-weight=\"800\">−</text>\n  <path d=\"M150 100 L240 100\" stroke=\"#065F46\" stroke-width=\"2\"/><polygon points=\"242,100 232,95 232,105\" fill=\"#065F46\"/>\n  <text x=\"150\" y=\"120\" text-anchor=\"middle\" fill=\"#065F46\" font-size=\"9\">تيار أمامي كبير · الاستنزاف تضيق</text>\n  <!-- عكسي -->\n  <text x=\"450\" y=\"20\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">انحياز عكسي</text>\n  <rect x=\"370\" y=\"40\" width=\"70\" height=\"40\" fill=\"#FDEEF2\" stroke=\"#BE185D\"/><text x=\"405\" y=\"65\" text-anchor=\"middle\" fill=\"#9D174D\" font-weight=\"700\">P</text>\n  <rect x=\"460\" y=\"40\" width=\"70\" height=\"40\" fill=\"#E8F2FE\" stroke=\"#1D4ED8\"/><text x=\"495\" y=\"65\" text-anchor=\"middle\" fill=\"#1E3A8A\" font-weight=\"700\">N</text>\n  <text x=\"355\" y=\"65\" fill=\"#1D4ED8\" font-weight=\"800\">−</text><text x=\"540\" y=\"65\" fill=\"#B91C1C\" font-weight=\"800\">+</text>\n  <text x=\"450\" y=\"120\" text-anchor=\"middle\" fill=\"#7C2D12\" font-size=\"9\">تيار عكسي صغير جداً · الاستنزاف تتّسع</text>\n</svg>",
+     "caption": "الانحياز الأمامي يضيّق منطقة الاستنزاف فيمرّر تياراً كبيراً؛ العكسي يوسّعها فيمنع التيار تقريباً"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — علّل <span class=\"badge\">الدور الثاني 2018</span></span>\n  <p>علّل: انسياب تيارٍ كبير في دائرة الثنائي البلوري pn عندما يزداد فولطية الانحياز بالاتجاه الأمامي.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>لأن اتجاه المجال الكهربائي المسلّط (في الانحياز الأمامي) يكون <b>معاكساً</b> لاتجاه مجال حاجز الجهد و<b>أكبر</b> منه، فتضيق منطقة الاستنزاف ويقلّ حاجز الجهد، وتقلّ مقاومة الملتقى، فتتمكّن حوامل الأغلبية من التغلّب على حاجز الجهد وعبور الملتقى، فينساب تيارٌ كبير.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري <span class=\"badge\">الدور الأول 2023–2024 · الدور الثاني 2017</span></span>\n  <p>ماذا يحصل لكلٍّ من عرض منطقة الاستنزاف ومقدار حاجز الجهد (ومقاومة الملتقى) في طريقة الانحياز الأمامي للثنائي البلوري pn؟ ولماذا؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>في الانحياز الأمامي: <b>يضيق عرض منطقة الاستنزاف، ويقلّ مقدار حاجز الجهد، وتقلّ مقاومة الملتقى</b>. والسبب أن المجال الكهربائي المسلّط معاكسٌ لمجال حاجز الجهد وأكبر منه، فيدفع حوامل الأغلبية نحو الملتقى فتضيق منطقة الاستنزاف.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "اختيار وزاري (= سؤال الكتاب س٢) <span class=\"badge\">الدور الأول 2017</span></span>\n  <p>عند زيادة حاجز الجهد في الثنائي البلوري pn المحيّز انحيازاً أمامياً، فإن مقدار التيار الأمامي في دائرته: (يزداد، <b>يقلّ</b>، يبقى ثابتاً، يزداد ثم ينقص)؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>الجواب: <span class=\"hl\">يقلّ</span>. فزيادة حاجز الجهد تعني ازدياد إعاقة عبور حوامل الأغلبية عبر الملتقى، فيقلّ التيار الأمامي المنساب.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "صح أو خطأ وزاري <span class=\"badge\">الدور الثالث 2019</span></span>\n  <p>ضع (صح) أو (خطأ) مع التصحيح: «يزداد مقدار حاجز الجهد في الثنائي البلوري عندما يكون محيّزاً بالاتجاه الأمامي».</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>خطأ.</b> التصحيح: <b>يقلّ</b> مقدار حاجز الجهد في الثنائي البلوري عندما يكون محيّزاً بالاتجاه الأمامي (ويزداد في الانحياز العكسي).</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>① رُبِط ثنائي pn بالانحياز العكسي. ماذا يحصل لعرض منطقة الاستنزاف؟ ولمقدار التيار المنساب؟ ولماذا؟</p>"
+    }
+   ]
+  },
+  {
+   "title": "بعض أنواع الثنائيات",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "مصدر الطاقة اللازم لتوليد الأزواج (إلكترون–فجوة) في أشباه الموصلات ليس حرارياً دائماً — يمكن أن يكون <b>ضوئياً</b>. ومن الثنائيات ما يستثمر الضوء دخولاً أو خروجاً:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">📸</span> الثنائي المتحسّس للضوء (Photodiode)</span>\n    <p>يُربَط بطريقة الانحياز <b>العكسي</b>. قبل تسليط الضوء يكون التيار ضعيفاً جداً (تيار الحاملات الأقلية). وعند سقوط الضوء تتولّد حاملاتٌ جديدة بكميةٍ تعتمد على <b>شدة الضوء الساقط</b>، فيتناسب التيار طردياً مع شدة الضوء. يُستعمل في <b>كاشفات الضوء وكمقياسٍ لشدة الضوء</b>.</p>\n  </div>\n  <div class=\"box link-box\" style=\"margin:0\">\n    <span class=\"tab\"><span class=\"ic\">☀</span> ثنائي الخلية الشمسية (Solar cell)</span>\n    <p>يُربَط بطريقة الانحياز <b>العكسي</b> قبل تسليط الضوء على منطقة الملتقى، فيحوّل الطاقة الضوئية إلى <b>طاقة كهربائية</b> (يولّد قوة دافعة كهربائية). يُستعمل في الأقمار الصناعية كمصدر طاقة: تُربَط الخلايا على التوالي لزيادة جهدها، وعلى التوازي لزيادة قدرتها.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "الثنائي الباعث للضوء LED (Light Emitting Diode)</span>\n  <p>يُربَط بطريقة الانحياز <b>الأمامي</b>. عند تسليط فرق جهدٍ خارجي ينساب تيارٌ في دائرته، فتحصل عملية <b>إعادة الالتحام</b> بين الإلكترونات والفجوات فتتحرّر طاقةٌ نتيجة سقوط الإلكترونات في الفجوات. وإذا كانت مادة الثنائي من زرنيخيد الكاليوم <span class=\"im\">(GaAs)</span> تظهر هذه الطاقة على شكل <b>ضوء</b>. تبعث ألواناً مختلفة (أحمر، أصفر، أخضر) حسب المادة المصنوع منها، وتُستعمل في الشاشات الرقمية والساعات والحاسبات (سبعة أضلاع لإظهار الأرقام 0–9).</p>"
+    },
+    {
+     "type": "html",
+     "html": "الثنائي المعدِّل للتيار (Rectifier)</span>\n  <p>يعمل على تعديل (تقويم) التيار المتناوب إلى تيارٍ معدَّلٍ باتجاهٍ واحد. عند ربطه بمصدرٍ للفولطية المتناوبة، يمرّر النصف الموجب من الموجة (انحياز أمامي) ويمنع النصف السالب (انحياز عكسي)، فنحصل على <b>تيارٍ معدَّل بنصف موجة</b>. (وباستعمال أكثر من ثنائي يمكن الحصول على تيارٍ معدَّل بموجةٍ كاملة).</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري متكرّر — قارن <span class=\"badge\">التمهيدي 2017 · التمهيدي 2018 · الدور الأول 2018</span></span>\n  <p>ما الفرق بين الثنائي الباعث للضوء (LED) والثنائي المتحسّس للضوء (Photodiode)؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>الثنائي الباعث للضوء (LED):</b> يُربَط بالانحياز <b>الأمامي</b>، ويحوّل الطاقة <b>الكهربائية إلى ضوئية</b> (يبعث ضوءاً عند مرور التيار).</p>\n    <p><b>الثنائي المتحسّس للضوء (Photodiode):</b> يُربَط بالانحياز <b>العكسي</b>، ويحوّل الطاقة <b>الضوئية إلى كهربائية</b> (يزداد تياره بازدياد شدة الضوء الساقط عليه).</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — ما الفائدة <span class=\"badge\">الدور الثاني 2021–2022</span></span>\n  <p>ما الفائدة من: ① الثنائي المتحسّس للضوء (الخلية الكهروضوئية)؟ ② الثنائي الباعث للضوء؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>① <b>الثنائي المتحسّس للضوء:</b> يُستعمل في كاشفات الضوء وكمقياسٍ لشدة الضوء (تحويل الطاقة الضوئية إلى كهربائية). ② <b>الثنائي الباعث للضوء (LED):</b> يُستعمل في الشاشات الرقمية والساعات والحاسبات لإظهار الأرقام (تحويل الطاقة الكهربائية إلى ضوئية).</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "الترانزستور Transistor",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "الترانزستور نبيطة (جهاز) تتكوّن من <b>ثلاث مناطق</b> مصنوعة من مادة شبه موصلة، يفصل بينها ملتقيان. تُسمّى المناطق الثلاث: <span class=\"term\">الباعث (Emitter) E</span>، و<span class=\"term\">القاعدة (Base) B</span>، و<span class=\"term\">الجامع (Collector) C</span>. منطقة الباعث تُطعَّم دائماً بنسبةٍ <b>عالية</b> من الشوائب، ومنطقة القاعدة بنسبةٍ <b>قليلة جداً</b> وتكون <b>رقيقة</b>، أما الجامع فبنسبةٍ متوسطة. ويكون الترانزستور بنوعين: <b>pnp</b> و<b>npn</b>."
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>انحياز الترانزستور دائماً:</b> بما أن الباعث هو الذي يجهّز حاملات الشحنة، فإنه يُحيَّز دائماً <b>انحيازاً أمامياً</b> (ملتقى الباعث–قاعدة). وبما أن الجامع يعمل على جذب تلك الحاملات خلال القاعدة، فإنه يُحيَّز دائماً <b>انحيازاً عكسياً</b> (ملتقى الجامع–قاعدة).</div>",
+     "a": ""
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "العلاقة بين تيارات الترانزستور</span>\n  <p>تيار الجامع <span class=\"im\">I<sub>C</sub></span> يكون دائماً <b>أقلّ</b> من تيار الباعث <span class=\"im\">I<sub>E</sub></span> بمقدار تيار القاعدة <span class=\"im\">I<sub>B</sub></span> (بسبب حصول إعادة الالتحام في منطقة القاعدة):</p>\n  <div class=\"formula\" style=\"margin-top:6px\"><span class=\"fname\">علاقة تيارات الترانزستور</span><span class=\"eq\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub></span></div>\n  <p>وتيار القاعدة <span class=\"im\">I<sub>B</sub></span> صغيرٌ جداً (لأن القاعدة رقيقة وقليلة التطعيم)؛ فإذا كان مثلاً <span class=\"im\">I<sub>B</sub> = 1% I<sub>E</sub></span> يكون <span class=\"im\">I<sub>C</sub> ≈ 99% I<sub>E</sub></span>.</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "صح أو خطأ وزاري <span class=\"badge\">التمهيدي 2019</span></span>\n  <p>ضع (صح) أو (خطأ): «في الترانزستور pnp ذي القاعدة المشتركة يكون تيار الباعث أكبر من تيار الجامع».</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>العبارة صحيحة (صح)</b>. لأن <span class=\"im\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub></span>، فتيار الباعث أكبر من تيار الجامع بمقدار تيار القاعدة دائماً.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "اختيار وزاري <span class=\"badge\">الدور الثالث 2018</span></span>\n  <p>تيار الباعث <span class=\"im\">I<sub>E</sub></span> في دائرة الترانزستور يكون دائماً: (أكبر من تيار القاعدة، أقلّ من تيار القاعدة، أكبر من تيار الجامع، <b>الأجوبة (أكبر من تيار القاعدة وأكبر من تيار الجامع)</b>)؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>الجواب: <span class=\"hl\">أكبر من تيار القاعدة وأكبر من تيار الجامع معاً</span>. لأن <span class=\"im\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub></span>، فتيار الباعث هو الأكبر.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "صح أو خطأ وزاري <span class=\"badge\">الدور الأول 2019</span></span>\n  <p>ضع (صح) أو (خطأ): «يُحيَّز الباعث في الترانزستور دائماً بانحياز أمامي».</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>العبارة صحيحة (صح)</b>. لأن الباعث هو الذي يجهّز حاملات الشحنة، فيُحيَّز انحيازاً أمامياً دائماً (بينما الجامع يُحيَّز عكسياً دائماً).</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — علّل <span class=\"badge\">الدور الأول 2017 · الدور الأول 2018</span></span>\n  <p>علّل: ممانعة ملتقى (الجامع–قاعدة) في الترانزستور تكون عالية، بينما ممانعة ملتقى (الباعث–قاعدة) تكون واطئة.</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>لأن ملتقى (الباعث–قاعدة) يكون محيّزاً بالاتجاه <b>الأمامي</b> فتقلّ منطقة استنزافه ومقاومته → ممانعته واطئة. أما ملتقى (الجامع–قاعدة) فيكون محيّزاً بالاتجاه <b>العكسي</b> فتتّسع منطقة استنزافه وتزداد مقاومته → ممانعته عالية.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — قارن <span class=\"badge\">الدور الثاني 2018</span></span>\n  <p>ما الفرق بين الباعث والجامع في الترانزستور من حيث: طريقة الانحياز، ونسبة الشوائب؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p><b>الباعث:</b> يُحيَّز انحيازاً <b>أمامياً</b>، ويُطعَّم بنسبةٍ <b>عالية</b> من الشوائب.</p>\n    <p><b>الجامع:</b> يُحيَّز انحيازاً <b>عكسياً</b>، ويُطعَّم بنسبةٍ <b>متوسطة</b> من الشوائب.</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "الترانزستور مضخِّماً وقوانين الربح",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "العمل الأساسي للترانزستور هو <span class=\"term\">تضخيم</span> الإشارة الداخلة فيه. ومن أشهر المضخّمات: المضخّم ذو <b>القاعدة المشتركة (القاعدة المؤرَّضة)</b>. وتُعرَّف ثلاثة أنواع من الربح:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">ربح الفولطية (Voltage gain)</span>\n  <span class=\"eq\">A<sub>v</sub> = V<sub>out</sub> / V<sub>in</sub></span>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">ربح التيار (قاعدة مشتركة)</span><span class=\"eq\">α = I<sub>C</sub> / I<sub>E</sub></span></div>\n  <div class=\"formula small\" style=\"margin:0\"><span class=\"fname\">ربح القدرة (Power gain)</span><span class=\"eq\">G = α × A<sub>v</sub></span></div>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div>في المضخّم ذي القاعدة المشتركة: <b>ربح التيار α أقلّ من الواحد الصحيح</b> (لأن <span class=\"im\">I<sub>C</sub> < I<sub>E</sub></span>)، بينما <b>ربح الفولطية كبير</b>، فيكون <b>ربح القدرة متوسّطاً</b>. ويمكن أيضاً حساب: <span class=\"im\">V<sub>in</sub> = I<sub>E</sub>R<sub>in</sub></span> و<span class=\"im\">V<sub>out</sub> = I<sub>C</sub>R<sub>out</sub></span> و<span class=\"im\">G = P<sub>out</sub>/P<sub>in</sub></span>.</div>",
+     "a": ""
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>فرق الطور:</b> في المضخّم ذي القاعدة المشتركة تكون الإشارة الخارجة <b>بالطور نفسه</b> للإشارة الداخلة (فرق الطور = <span class=\"im\">صفر</span>). أما في المضخّم ذي الباعث المشترك فتكون الإشارة الخارجة <b>معاكسةً بالطور</b> (فرق الطور = <span class=\"im\">180°</span>)، وفيه ربح التيار <span class=\"im\">α = I<sub>C</sub>/I<sub>B</sub></span> كبيرٌ (عالٍ).</div>",
+     "a": ""
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول — ورد وزارياً حرفياً</span>\n    <span class=\"q\">في دائرة الترانزستور كمضخّم ذي القاعدة المشتركة (القاعدة مؤرَّضة)، إذا كان تيار الباعث <span class=\"im\">I<sub>E</sub> = 3 mA</span> وتيار الجامع <span class=\"im\">I<sub>C</sub> = 2.94 mA</span> ومقاومة الدخول <span class=\"im\">R<sub>in</sub> = 500 Ω</span> ومقاومة الخروج <span class=\"im\">R<sub>out</sub> = 400 kΩ</span>، احسب: ① ربح التيار α ② ربح الفولطية A<sub>v</sub>. <span class=\"badge\">= مثال الكتاب ١ · ورد في التمهيدي 2023–2024</span></span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><b>ربح التيار:</b> <span class=\"im\">α = I<sub>C</sub>/I<sub>E</sub> = (2.94×10⁻³)/(3×10⁻³)</span>\n      <span class=\"why\">⟹ <span class=\"ans\">α = 0.98</span> (أقلّ من الواحد كما هو متوقّع في القاعدة المشتركة).</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><b>فولطية الدخول:</b> <span class=\"im\">V<sub>in</sub> = I<sub>E</sub>R<sub>in</sub> = (3×10⁻³)(500) = 1.5 V</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><b>فولطية الخروج:</b> <span class=\"im\">V<sub>out</sub> = I<sub>C</sub>R<sub>out</sub> = (2.94×10⁻³)(400000) = 1176 V</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><b>ربح الفولطية:</b> <span class=\"im\">A<sub>v</sub> = V<sub>out</sub>/V<sub>in</sub> = 1176/1.5</span>\n      <span class=\"why\">⟹ <span class=\"ans\">A<sub>v</sub> = 784</span></span></div></div>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول — ورد وزارياً</span>\n    <span class=\"q\">في دائرة الترانزستور كمضخّم ذي القاعدة المشتركة (القاعدة مؤرَّضة)، إذا كان ربح القدرة <span class=\"im\">G = 768</span> وتكبير الفولطية <span class=\"im\">A<sub>v</sub> = 784</span> وتيار الباعث <span class=\"im\">I<sub>E</sub> = 3×10⁻³ A</span>، جد تيار القاعدة <span class=\"im\">I<sub>B</sub></span>. <span class=\"badge\">= مثال الكتاب ٢ · نمط التمهيدي 2017</span></span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><b>من ربح القدرة:</b> <span class=\"im\">G = α × A<sub>v</sub></span> ⟹ <span class=\"im\">768 = α × 784</span>\n      <span class=\"why\">⟹ <span class=\"im\">α = 768/784 = 0.98</span></span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><b>تيار الجامع من ربح التيار:</b> <span class=\"im\">α = I<sub>C</sub>/I<sub>E</sub></span> ⟹ <span class=\"im\">I<sub>C</sub> = 0.98 × 3×10⁻³ = 2.94×10⁻³ A</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><b>تيار القاعدة:</b> <span class=\"im\">I<sub>B</sub> = I<sub>E</sub> − I<sub>C</sub> = 3×10⁻³ − 2.94×10⁻³</span>\n      <span class=\"why\">⟹ <span class=\"ans\">I<sub>B</sub> = 0.06×10⁻³ A = 0.06 mA</span></span></div></div>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول — ورد وزارياً</span>\n    <span class=\"q\">في دائرة الترانزستور كمضخّم ذي القاعدة المشتركة، إذا كان تيار الجامع <span class=\"im\">I<sub>C</sub> = 2.94 mA</span> وتيار القاعدة <span class=\"im\">I<sub>B</sub> = 0.06 mA</span> وربح الفولطية <span class=\"im\">A<sub>v</sub> = 500</span>، احسب ربح القدرة G. <span class=\"badge\">الدور الأول 2023–2024</span></span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><b>تيار الباعث:</b> <span class=\"im\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub> = 2.94 + 0.06 = 3 mA</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><b>ربح التيار:</b> <span class=\"im\">α = I<sub>C</sub>/I<sub>E</sub> = 2.94/3 = 0.98</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><b>ربح القدرة:</b> <span class=\"im\">G = α × A<sub>v</sub> = 0.98 × 500</span>\n      <span class=\"why\">⟹ <span class=\"ans\">G = 490</span></span></div></div>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول — ورد وزارياً (باعث مشترك)</span>\n    <span class=\"q\">في دائرة الترانزستور ذي الباعث المشترك، كانت مقاومة الخروج <span class=\"im\">R<sub>out</sub> = 15 kΩ</span>، وربح التيار <span class=\"im\">= 8</span>، وفولطية الانحياز في دائرة الخروج <span class=\"im\">= 60 V</span>. فما مقدار تيار الباعث <span class=\"im\">I<sub>E</sub></span>؟ <span class=\"badge\">الدور الأول 2018</span></span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><b>تيار الجامع من دائرة الخروج:</b> <span class=\"im\">I<sub>C</sub> = V<sub>out</sub>/R<sub>out</sub> = 60/15000</span>\n      <span class=\"why\">⟹ <span class=\"im\">I<sub>C</sub> = 4×10⁻³ A = 4 mA</span></span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><b>تيار القاعدة (باعث مشترك، ربح التيار = I<sub>C</sub>/I<sub>B</sub>):</b> <span class=\"im\">I<sub>B</sub> = I<sub>C</sub>/8 = 4/8 = 0.5 mA</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><b>تيار الباعث:</b> <span class=\"im\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub> = 4 + 0.5</span>\n      <span class=\"why\">⟹ <span class=\"ans\">I<sub>E</sub> = 4.5 mA = 4.5×10⁻³ A</span></span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "اختيار وزاري <span class=\"badge\">الدور الثالث 2017</span></span>\n  <p>ربح التيار (α) في المضخّم ذي الباعث المشترك يساوي نسبة: (<span class=\"im\">I<sub>E</sub>/I<sub>B</sub></span>، <span class=\"im\">I<sub>C</sub>/I<sub>E</sub></span>، <span class=\"im\">I<sub>C</sub>/I<sub>B</sub></span>، <span class=\"im\">I<sub>E</sub>/I<sub>C</sub></span>)؟</p>\n  <div class=\"msol\">\n    <span class=\"stag\">الحل</span>\n    <p>الجواب: <span class=\"im\">I<sub>C</sub>/I<sub>B</sub></span>. ففي المضخّم ذي الباعث المشترك يكون ربح التيار = تيار الخروج (الجامع) على تيار الدخول (القاعدة).</p>\n  </div>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<svg width=\"720\" height=\"250\" viewBox=\"0 0 720 250\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12\">\n  <rect x=\"280\" y=\"10\" width=\"160\" height=\"44\" rx=\"12\" fill=\"#0B3B5E\"/>\n  <text x=\"360\" y=\"30\" text-anchor=\"middle\" fill=\"#fff\" font-weight=\"800\" font-size=\"12\">الملتقى pn</text>\n  <text x=\"360\" y=\"47\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-size=\"10\">استنزاف · حاجز جهد</text>\n  <g stroke=\"#38BDF8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M320 54 C210 78 170 92 150 106\"/>\n    <path d=\"M360 54 V106\"/>\n    <path d=\"M400 54 C510 78 550 92 570 106\"/>\n  </g>\n  <rect x=\"55\" y=\"106\" width=\"185\" height=\"58\" rx=\"10\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"1.6\"/>\n  <text x=\"147\" y=\"130\" text-anchor=\"middle\" fill=\"#065F46\" font-weight=\"800\">الانحياز</text>\n  <text x=\"147\" y=\"149\" text-anchor=\"middle\" fill=\"#047857\" font-size=\"10\">أمامي (يمرّر) · عكسي (يمنع)</text>\n  <rect x=\"270\" y=\"106\" width=\"180\" height=\"58\" rx=\"10\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"1.6\"/>\n  <text x=\"360\" y=\"130\" text-anchor=\"middle\" fill=\"#7C2D12\" font-weight=\"800\">أنواع الثنائيات</text>\n  <text x=\"360\" y=\"149\" text-anchor=\"middle\" fill=\"#92400E\" font-size=\"10\">LED · شمسية · معدِّل</text>\n  <rect x=\"480\" y=\"106\" width=\"185\" height=\"58\" rx=\"10\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"1.6\"/>\n  <text x=\"572\" y=\"130\" text-anchor=\"middle\" fill=\"#5B21B6\" font-weight=\"800\">الترانزستور</text>\n  <text x=\"572\" y=\"149\" text-anchor=\"middle\" fill=\"#6D28D9\" font-size=\"10\">E · B · C · مضخِّم</text>\n  <g stroke=\"#94A3B8\" stroke-width=\"1.6\" fill=\"none\"><path d=\"M572 164 V192\"/></g>\n  <rect x=\"455\" y=\"192\" width=\"235\" height=\"46\" rx=\"10\" fill=\"#EAF7FE\" stroke=\"#0284C7\" stroke-width=\"1.6\"/>\n  <text x=\"572\" y=\"214\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"800\" font-size=\"11\" style=\"direction:ltr;unicode-bidi:isolate\">IE = IC + IB</text>\n  <text x=\"572\" y=\"231\" text-anchor=\"middle\" fill=\"#0369A1\" font-size=\"10\">α = IC/IE · G = α × Av</text>\n</svg>"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📐",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>القانون</th><th>الصيغة</th><th>يُستعمل لـ</th></tr>\n  <tr><td class=\"right\">علاقة التيارات</td><td class=\"ltr\">IE = IC + IB</td><td class=\"right\">ربط تيارات الترانزستور</td></tr>\n  <tr><td class=\"right\">ربح التيار (قاعدة مشتركة)</td><td class=\"ltr\">α = IC / IE</td><td class=\"right\">أقلّ من الواحد</td></tr>\n  <tr><td class=\"right\">ربح التيار (باعث مشترك)</td><td class=\"ltr\">α = IC / IB</td><td class=\"right\">كبير (عالٍ)</td></tr>\n  <tr><td class=\"right\">ربح الفولطية</td><td class=\"ltr\">Av = Vout / Vin</td><td class=\"right\">تكبير الجهد</td></tr>\n  <tr><td class=\"right\">ربح القدرة</td><td class=\"ltr\">G = α × Av</td><td class=\"right\">تكبير القدرة</td></tr>\n  <tr><td class=\"right\">فولطية الدخول والخروج</td><td class=\"ltr\">Vin = IE·Rin ، Vout = IC·Rout</td><td class=\"right\">حساب الفولطية</td></tr>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — الثنائي والترانزستور (2017–2024)",
+   "icon": "🏛",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">سبب تولّد منطقة الاستنزاف في الثنائي pn</td><td class=\"right\">تعليل ★ متكرّر</td><td class=\"right\">التمهيدي 2017 · التمهيدي 2019 · الدور الأول 2022</td></tr>\n  <tr><td class=\"right\">علامَ يعتمد مقدار حاجز الجهد</td><td class=\"right\">مفاهيمي متكرّر</td><td class=\"right\">الدور الثالث 2019 · الدور الثالث 2022–2023 · التمهيدي 2022–2023</td></tr>\n  <tr><td class=\"right\">عرض الاستنزاف/حاجز الجهد في الانحياز الأمامي</td><td class=\"right\">تعليل/سؤال</td><td class=\"right\">الدور الأول 2023–2024 · الدور الثاني 2017 · الدور الثالث 2019</td></tr>\n  <tr><td class=\"right\">الفرق بين LED والثنائي المتحسّس للضوء</td><td class=\"right\">مقارنة متكرّرة</td><td class=\"right\">التمهيدي 2017 · التمهيدي 2018 · الدور الأول 2018</td></tr>"
+    },
+    {
+     "type": "html",
+     "html": "<tr><th>الفكرة</th><th>نوع السؤال</th><th>السنوات والأدوار</th></tr>\n  <tr><td class=\"right\">مسألة مضخّم قاعدة مشتركة: IE,IC,Rin,Rout → α,Av</td><td class=\"right\">مسألة ★ (=مثال الكتاب ١)</td><td class=\"right\">التمهيدي 2023–2024</td></tr>\n  <tr><td class=\"right\">مسألة مضخّم: G,Av,IE → IB</td><td class=\"right\">مسألة (=مثال الكتاب ٢)</td><td class=\"right\">التمهيدي 2017</td></tr>\n  <tr><td class=\"right\">مسألة مضخّم: IC,IB,Av → G</td><td class=\"right\">مسألة</td><td class=\"right\">الدور الأول 2023–2024</td></tr>\n  <tr><td class=\"right\">مسألة باعث مشترك: Rout,ربح التيار,V → IE</td><td class=\"right\">مسألة</td><td class=\"right\">الدور الأول 2018</td></tr>\n  <tr><td class=\"right\">علّل ممانعة (الجامع–قاعدة) عالية و(الباعث–قاعدة) واطئة</td><td class=\"right\">تعليل</td><td class=\"right\">الدور الأول 2017 · الدور الأول 2018</td></tr>\n  <tr><td class=\"right\">تيار الباعث أكبر من القاعدة والجامع</td><td class=\"right\">صح/خطأ · اختيار</td><td class=\"right\">التمهيدي 2019 · الدور الثالث 2018</td></tr>\n  <tr><td class=\"right\">ربح التيار في الباعث المشترك = IC/IB</td><td class=\"right\">اختيار</td><td class=\"right\">الدور الثالث 2017</td></tr>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك</span>\n  <p>② في مضخّم قاعدة مشتركة: <span class=\"im\">I<sub>E</sub> = 4 mA</span>، <span class=\"im\">I<sub>B</sub> = 40 μA</span>، <span class=\"im\">R<sub>in</sub> = 100 Ω</span>، <span class=\"im\">R<sub>out</sub> = 50 kΩ</span>. احسب: ربح التيار α، ربح الفولطية A<sub>v</sub>، ربح القدرة G.</p>\n  <p>③ في مضخّم قاعدة مشتركة: تيار القاعدة <span class=\"im\">I<sub>B</sub> = 50 μA</span> وتيار الجامع <span class=\"im\">I<sub>C</sub> = 3.65 mA</span>. احسب ربح التيار α وتيار الباعث <span class=\"im\">I<sub>E</sub></span>. <span class=\"tnum\">(الأجوبة آخر الدرس)</span></p>"
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✔",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div>① في الانحياز العكسي <b>تتّسع</b> منطقة الاستنزاف ويزداد حاجز الجهد وتزداد مقاومة الثنائي، لأن المجال المسلّط باتجاه مجال حاجز الجهد فيسحب الحاملات بعيداً عن الملتقى → ينساب <b>تيارٌ عكسي صغير جداً</b> (يُهمَل).</div></div>\n  <div class=\"a\"><div>② <span class=\"im\">α = I<sub>C</sub>/I<sub>E</sub></span>؛ و<span class=\"im\">I<sub>C</sub> = I<sub>E</sub> − I<sub>B</sub> = 4 − 0.04 = 3.96 mA</span> ⟹ <span class=\"im\">α = 3.96/4 = 0.99</span>. و<span class=\"im\">V<sub>in</sub> = I<sub>E</sub>R<sub>in</sub> = 4×10⁻³×100 = 0.4 V</span>، <span class=\"im\">V<sub>out</sub> = I<sub>C</sub>R<sub>out</sub> = 3.96×10⁻³×50000 = 198 V</span> ⟹ <span class=\"im\">A<sub>v</sub> = 198/0.4 = 495</span>، و<span class=\"im\">G = α×A<sub>v</sub> = 0.99×495 ≈ 490</span>.</div></div>\n  <div class=\"a\"><div>③ <span class=\"im\">I<sub>E</sub> = I<sub>C</sub> + I<sub>B</sub> = 3.65 + 0.05 = 3.7 mA</span> ⟹ <span class=\"im\">α = I<sub>C</sub>/I<sub>E</sub> = 3.65/3.7 ≈ 0.986</span>.</div></div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ٣ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>عن أصغر جهازٍ غيّر التاريخ، وعن مصباحٍ لا يسخن نال نوبل بعد نصف قرن</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">📜 قصة اكتشاف: LED الأزرق الذي انتظره العالم ثلاثين عاماً</span>\n    <p>صنع الإنسان مصابيح LED حمراء وخضراء منذ الستينيات، لكن <b>الأزرق</b> استعصى ثلاثة عقود. ودون الأزرق لا يمكن صنع الضوء الأبيض (الذي يحتاج الألوان الثلاثة). ظلّ كثيرون يعتقدون أنه مستحيل، حتى نجح ثلاثة علماء يابانيين — أكاساكي وأمانو وناكامورا — في صناعته من مادة نيتريد الغاليوم في التسعينيات. أحدث اختراعهم ثورةً: مصابيح LED البيضاء التي تضيء بيوت العالم اليوم تستهلك عُشر طاقة المصابيح القديمة. نالوا جائزة نوبل عام <span class=\"im\">2014</span>. تأمّل: كل هذا يقوم على الفكرة نفسها التي درستها — إعادة التحام إلكترونٍ بفجوةٍ يحرّر طاقةً على شكل ضوء.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>أول ترانزستور صُنع عام 1947 كان بحجم راحة اليد. أما اليوم فأحدث الترانزستورات أصغر من <b>فيروس</b>! ولو عُدّ الترانزستورات في هاتفك، لوجدت أكثر من <b>خمسة عشر ملياراً</b> — أي أكثر من عدد سكّان الأرض بمرّتين، في جهازٍ يسع جيبك.</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🤔 هل تعلم؟</span>\n      <p>الخلايا الشمسية على متن المركبات الفضائية والأقمار الصناعية هي ثنائيات pn تعمل بالانحياز العكسي. ومحطّة الفضاء الدولية تحمل ألواحاً شمسية بمساحة ملعب كرة قدم تقريباً، تجهّزها بكل طاقتها من ضوء الشمس — وكل ذلك بالمبدأ الذي في هذا الدرس.</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>ثنائي pn يمرّر تياراً كبيراً في اتجاهٍ واحد فقط. فكيف نستفيد من هذه الخاصية «الاتجاه الواحد» لتحويل التيار المتناوب (الذي يعكس اتجاهه 50 مرة في الثانية) إلى تيارٍ مستمر باتجاهٍ واحد؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">نضع الثنائي في الدائرة كـ«مُعدِّل (Rectifier)». حين يأتي النصف الموجب من موجة التيار المتناوب، يكون الثنائي محيّزاً أمامياً فيمرّر التيار. وحين يأتي النصف السالب، ينقلب انحيازه إلى عكسي فيمنع التيار تماماً. النتيجة: يمرّ نصفٌ ويُحجب نصف، فنحصل على <b>تيارٍ معدَّل بنصف موجة</b> يسير باتجاهٍ واحد فقط. وبأربعة ثنائيات (قنطرة) نمرّر النصفين معاً في الاتجاه نفسه فنحصل على تعديل موجةٍ كاملة.</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-7-3.html",
+ "compiledAt": "2026-09-01"
+}

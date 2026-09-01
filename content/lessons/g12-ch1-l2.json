@@ -1,0 +1,378 @@
+{
+ "id": "g12-ch1-l2",
+ "grade": "g12",
+ "format": "phy6-v1",
+ "title": "ربط المتسعات (التوازي والتوالي)",
+ "subtitle": "متسعة واحدة لا تكفي دائماً: أحياناً نريد سعة أكبر، وأحياناً جهد تشغيل أعلى. كيف نربط المتسعات لنحقق كلا الهدفين؟ وكيف نحلل أي دائرة مهما تعقدت؟",
+ "hook": {
+  "html": "<p>عندك بطارية <span class=\"im\">12V</span> ومتسعة مكتوب عليها «أقصى جهد <span class=\"im\">8V</span>» — إن ربطتها مباشرة انهار عازلها وتلفت (تذكر الدرس الأول!). وعندك مشروع آخر يحتاج سعة <span class=\"im\">30μF</span> ولا يتوفر في السوق إلا <span class=\"im\">10μF</span>. المصنع لا يصنع متسعة لكل حاجة… فماذا نفعل؟</p><p>الجواب: <span class=\"term\">الربط</span>. نربط المتسعات <b>على التوالي</b> فيتوزع الجهد الكبير بينها ولا تتحمل الواحدة إلا جزءاً منه، أو نربطها <b>على التوازي</b> فتتجمع سعاتها وكأنها متسعة عملاقة واحدة — تماماً مثل خزانات الماء: خزانان متجاوران بنفس المنسوب يعطيانك <b>حجماً أكبر</b> (توازٍ)، وسدود متتابعة على نهر واحد تتقاسم <b>الارتفاع الكلي</b> للمنحدر (توالٍ).</p>"
+ },
+ "sections": [
+  {
+   "title": "ربط التوازي: فرق الجهد واحد للجميع",
+   "icon": "١",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "في ربط <span class=\"term\">التوازي</span> يُربط الطرف الأول من كل متسعة بنقطة مشتركة والطرف الثاني بنقطة مشتركة أخرى، ثم تُربط النقطتان بقطبي البطارية. النتيجة المباشرة: كل متسعة «ترى» البطارية نفسها، أي أن:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"eq\">ΔV₁ = ΔV₂ = ΔV<sub>battery</sub> = ΔV</span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"620\" height=\"250\" viewBox=\"0 0 620 250\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"13\">\n  <!-- سكة علوية وسفلية -->\n  <line x1=\"70\" y1=\"50\" x2=\"560\" y2=\"50\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"70\" y1=\"200\" x2=\"560\" y2=\"200\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <!-- بطارية يسار -->\n  <line x1=\"70\" y1=\"50\" x2=\"70\" y2=\"112\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"70\" y1=\"138\" x2=\"70\" y2=\"200\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"52\" y1=\"112\" x2=\"88\" y2=\"112\" stroke=\"#B91C1C\" stroke-width=\"3.4\"/>\n  <line x1=\"60\" y1=\"138\" x2=\"80\" y2=\"138\" stroke=\"#152238\" stroke-width=\"2.4\"/>\n  <text x=\"96\" y=\"112\" fill=\"#B91C1C\" font-size=\"14\">+</text>\n  <text x=\"96\" y=\"146\" fill=\"#152238\" font-size=\"14\">−</text>\n  <text x=\"36\" y=\"130\" fill=\"#0B3B5E\" font-weight=\"700\">ΔV</text>\n  <!-- C1 -->\n  <line x1=\"200\" y1=\"50\" x2=\"200\" y2=\"108\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"176\" y1=\"108\" x2=\"224\" y2=\"108\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"176\" y1=\"126\" x2=\"224\" y2=\"126\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"200\" y1=\"126\" x2=\"200\" y2=\"200\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <text x=\"232\" y=\"122\" fill=\"#0B3B5E\" font-weight=\"700\">C₁</text>\n  <!-- C2 -->\n  <line x1=\"360\" y1=\"50\" x2=\"360\" y2=\"108\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"336\" y1=\"108\" x2=\"384\" y2=\"108\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"336\" y1=\"126\" x2=\"384\" y2=\"126\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"360\" y1=\"126\" x2=\"360\" y2=\"200\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <text x=\"392\" y=\"122\" fill=\"#0B3B5E\" font-weight=\"700\">C₂</text>\n  <!-- C3 -->\n  <line x1=\"510\" y1=\"50\" x2=\"510\" y2=\"108\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"486\" y1=\"108\" x2=\"534\" y2=\"108\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"486\" y1=\"126\" x2=\"534\" y2=\"126\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"510\" y1=\"126\" x2=\"510\" y2=\"200\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <text x=\"542\" y=\"122\" fill=\"#0B3B5E\" font-weight=\"700\">C₃</text>\n  <!-- شحنات -->\n  <text x=\"188\" y=\"98\" fill=\"#B91C1C\" font-size=\"11\">+Q₁</text><text x=\"188\" y=\"146\" fill=\"#0369A1\" font-size=\"11\">−Q₁</text>\n  <text x=\"348\" y=\"98\" fill=\"#B91C1C\" font-size=\"11\">+Q₂</text><text x=\"348\" y=\"146\" fill=\"#0369A1\" font-size=\"11\">−Q₂</text>\n  <text x=\"498\" y=\"98\" fill=\"#B91C1C\" font-size=\"11\">+Q₃</text><text x=\"498\" y=\"146\" fill=\"#0369A1\" font-size=\"11\">−Q₃</text>\n  <text x=\"310\" y=\"236\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"11.5\">كل متسعة مربوطة مباشرة بين قطبي البطارية ⟸ الجهد نفسه، والشحنات تتجمع</text>\n</svg>",
+     "caption": "الشكل (١) · ربط المتسعات على التوازي — فرق الجهد مشترك والشحنة الكلية هي المجموع"
+    },
+    {
+     "type": "html",
+     "html": "<b>الاشتقاق</b> (بخطوتين فقط): الشحنة الكلية المسحوبة من البطارية تساوي مجموع شحنات المتسعات، وبما أن <span class=\"im\">Q = CΔV</span> لكل واحدة:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"eq\"><span style=\"white-space:nowrap\">Q<sub>total</sub> = Q₁ + Q₂ + Q₃ ⟹</span> <span style=\"white-space:nowrap\">C<sub>eq</sub>ΔV = C₁ΔV + C₂ΔV + C₃ΔV</span></span>"
+    },
+    {
+     "type": "html",
+     "html": "وبقسمة الطرفين على <span class=\"im\">ΔV</span> (المشترك بين الجميع) نحصل على:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"fname\">السعة المكافئة — التوازي</span>\n  <span class=\"eq\">C<sub>eq</sub> = C₁ + C₂ + C₃ + ⋯ + C<sub>n</sub></span>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · التوازي</span>\n  <p class=\"rule-line\">«في التوازي: الجهد مشترك، والشحنات تُجمع، والسعة المكافئة أكبر من أكبر سعة في المجموعة»</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تعليل التوازي</span><span class=\"badge\">2017 · الدور الأول</span><span class=\"badge\">2023 · الدور الثالث</span>\n  <p><b>علّل / أعط السبب:</b> ازدياد مقدار السعة المكافئة لمجموعة المتسعات المربوطة على التوازي. <span style=\"font-size:10pt;color:var(--muted)\">(ورد بلفظ «علّل» عام 2017 وبلفظ «أعط السبب» عام 2023)</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>لأن ربط المتسعات على التوازي يكافئ <b>زيادة المساحة السطحية المتقابلة</b> لصفيحتي المتسعة المكافئة (الصفائح الموصولة بالقطب نفسه تعمل عمل صفيحة واحدة كبيرة)، وبما أن السعة تتناسب طردياً مع المساحة فإن <span class=\"im\">C<sub>eq</sub> = C₁+C₂+⋯</span> تكون أكبر من أكبر سعة في المجموعة.</p>\n  </div>"
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متسعتان <span class=\"im\">3μF</span> و <span class=\"im\">7μF</span> على التوازي — هل يمكن أن تكون السعة المكافئة <span class=\"im\">7μF</span>؟ مستحيل؛ يجب أن تكون أكبر من <span class=\"im\">7μF</span>، وهي هنا <span class=\"im\">10μF</span>.</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "حسابات التوازي: مثال الكتاب الذي صار وزارياً مرتين!",
+   "icon": "٢",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ١</span>\n    <span class=\"q\">أربع متسعات سعاتها بالترتيب <span class=\"im\">(6μF, 12μF, 8μF, 4μF)</span> مربوطة مع بعضها على التوازي، رُبطت المجموعة بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">12V</span>. احسب مقدار: ١) السعة المكافئة. ٢) الشحنة المختزنة في كل متسعة. ٣) الشحنة الكلية.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">المعطيات:</span> توازٍ ⟹ <span class=\"im\">ΔV = 12V</span> على كل متسعة\n      <span class=\"why\">لماذا نبدأ هنا؟ تحديد «مَن المشترك» هو مفتاح كل مسألة ربط: في التوازي المشترك هو الجهد.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">السعة المكافئة:</span> <span class=\"im\">C<sub>eq</sub> = 4+8+12+6 = 30μF</span>\n      <span class=\"why\">لماذا الجمع المباشر؟ لأن الصفائح المشتركة تكافئ صفيحة أكبر مساحة.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">شحنة كل متسعة:</span> <span class=\"im\">Q = C×ΔV</span> ⟹ <span class=\"im\">Q₁ = 4×12 = 48μC</span> ، <span class=\"im\">Q₂ = 8×12 = 96μC</span> ، <span class=\"im\">Q₃ = 12×12 = 144μC</span> ، <span class=\"im\">Q₄ = 6×12 = 72μC</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">الشحنة الكلية:</span> <span class=\"im\">Q<sub>total</sub> = C<sub>eq</sub>×ΔV = 30×12 = 360μC</span>\n      <span class=\"why\">تحقق ذكي: 48+96+144+72 = 360 ✓ — في التوازي الشحنات تُجمع، فإن لم يتطابق المجموع فراجع حساباتك.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — مثال الكتاب حرفياً!</span><span class=\"badge\">2021 · التمهيدي</span><span class=\"badge\">2020 · التمهيدي</span>\n  <p>أربع متسعات سعاتها حسب الترتيب <span class=\"im\">(6μF, 12μF, 8μF, 4μF)</span> مربوطة مع بعضها على التوازي، رُبطت المجموعة بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">(12V)</span>، احسب مقدار: ١) السعة المكافئة للمجموعة. ٢) الشحنة المختزنة في أيٍّ من صفيحتي كل متسعة. ٣) الشحنة الكلية المختزنة في المجموعة.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>هو <b>المثال المحلول ١ نفسه بأرقامه</b>: <span class=\"im\">C<sub>eq</sub> = 30μF</span> ، الشحنات <span class=\"im\">(48, 96, 144, 72)μC</span> ، <span class=\"im\">Q<sub>total</sub> = 360μC</span>.<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ تكرر السؤال نفسه في التمهيديين 2020 و2021 — أمثلة الكتاب تأتي كما هي، فلا تهملها أبداً!</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — توازٍ مع طاقة</span><span class=\"badge\">2018 · الدور الثالث</span>\n  <p>متسعات سعاتها <span class=\"im\">(4μF, 8μF, 12μF)</span> مربوطة مع بعضها على التوازي، رُبطت المجموعة بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">(24V)</span>، احسب مقدار: ١) السعة المكافئة للمجموعة. ٢) الشحنة المختزنة في أيٍّ من صفيحتي المتسعة الأولى فقط. ٣) الشحنة الكلية المختزنة في المجموعة. ٤) الطاقة الكلية المختزنة في المجموعة.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <span class=\"im\">C<sub>eq</sub> = 4+8+12 = 24μF</span><br>\n    ٢) <span class=\"im\">Q₁ = C₁×ΔV = 4×24 = 96μC</span><br>\n    ٣) <span class=\"im\">Q<sub>total</sub> = 24×24 = 576μC</span><br>\n    ٤) <span class=\"im\">PE = ½C<sub>eq</sub>(ΔV)² = ½ × 24×10<sup>-6</sup> × (24)² = 6912×10<sup>-6</sup> J ≈ 6.9×10<sup>-3</sup> J</span> — لاحظ أن قوانين الطاقة من الدرس الأول تعمل على المجموعة كلها باستعمال <span class=\"im\">C<sub>eq</sub></span>.</p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(١)</span></span>\n  <p>ثلاث متسعات <span class=\"im\">(2μF, 3μF, 5μF)</span> مربوطة على التوازي مع بطارية <span class=\"im\">6V</span>. احسب السعة المكافئة والشحنة الكلية المختزنة في المجموعة. <i>(الأجوبة نهاية الدرس)</i></p>"
+    }
+   ]
+  },
+  {
+   "title": "ربط التوالي: الشحنة واحدة للجميع",
+   "icon": "٣",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "في ربط <span class=\"term\">التوالي</span> تُربط المتسعات في سلسلة واحدة: نهاية الأولى ببداية الثانية وهكذا، ولا يتصل بالبطارية إلا طرفا السلسلة. البطارية تدفع شحنة <span class=\"im\">+Q</span> إلى الصفيحة الأولى، فتحث <span class=\"im\">−Q</span> على الصفيحة المقابلة، التي تدفع بدورها <span class=\"im\">+Q</span> إلى المتسعة التالية… وهكذا تنتقل الشحنة نفسها عبر السلسلة كلها:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"eq\">Q<sub>total</sub> = Q₁ = Q₂ = Q₃ = Q</span>"
+    },
+    {
+     "type": "figure",
+     "html": "<svg width=\"620\" height=\"230\" viewBox=\"0 0 620 230\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"13\">\n  <!-- سلك -->\n  <line x1=\"50\" y1=\"70\" x2=\"170\" y2=\"70\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <!-- C1 -->\n  <line x1=\"170\" y1=\"40\" x2=\"170\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"192\" y1=\"40\" x2=\"192\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <text x=\"160\" y=\"28\" fill=\"#0B3B5E\" font-weight=\"700\">C₁</text>\n  <text x=\"148\" y=\"62\" fill=\"#B91C1C\" font-size=\"12\">+Q</text><text x=\"198\" y=\"62\" fill=\"#0369A1\" font-size=\"12\">−Q</text>\n  <line x1=\"192\" y1=\"70\" x2=\"330\" y2=\"70\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <!-- C2 -->\n  <line x1=\"330\" y1=\"40\" x2=\"330\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"352\" y1=\"40\" x2=\"352\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <text x=\"320\" y=\"28\" fill=\"#0B3B5E\" font-weight=\"700\">C₂</text>\n  <text x=\"308\" y=\"62\" fill=\"#B91C1C\" font-size=\"12\">+Q</text><text x=\"358\" y=\"62\" fill=\"#0369A1\" font-size=\"12\">−Q</text>\n  <line x1=\"352\" y1=\"70\" x2=\"490\" y2=\"70\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <!-- C3 -->\n  <line x1=\"490\" y1=\"40\" x2=\"490\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <line x1=\"512\" y1=\"40\" x2=\"512\" y2=\"100\" stroke=\"#0284C7\" stroke-width=\"4.4\"/>\n  <text x=\"480\" y=\"28\" fill=\"#0B3B5E\" font-weight=\"700\">C₃</text>\n  <text x=\"468\" y=\"62\" fill=\"#B91C1C\" font-size=\"12\">+Q</text><text x=\"518\" y=\"62\" fill=\"#0369A1\" font-size=\"12\">−Q</text>\n  <line x1=\"512\" y1=\"70\" x2=\"580\" y2=\"70\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <!-- نزول للبطارية -->\n  <line x1=\"50\" y1=\"70\" x2=\"50\" y2=\"180\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"580\" y1=\"70\" x2=\"580\" y2=\"180\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"50\" y1=\"180\" x2=\"296\" y2=\"180\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"322\" y1=\"180\" x2=\"580\" y2=\"180\" stroke=\"#152238\" stroke-width=\"2.5\"/>\n  <line x1=\"296\" y1=\"162\" x2=\"296\" y2=\"198\" stroke=\"#B91C1C\" stroke-width=\"3.4\"/>\n  <line x1=\"322\" y1=\"170\" x2=\"322\" y2=\"190\" stroke=\"#152238\" stroke-width=\"2.4\"/>\n  <text x=\"286\" y=\"216\" fill=\"#0B3B5E\" font-weight=\"700\">ΔV</text>\n  <text x=\"310\" y=\"132\" text-anchor=\"middle\" fill=\"#64748B\" font-size=\"11.5\">ΔV<tspan font-size=\"9\">total</tspan> = ΔV₁ + ΔV₂ + ΔV₃ &nbsp;·&nbsp; الشحنة Q نفسها تمر بالسلسلة كلها</text>\n</svg>",
+     "caption": "الشكل (٢) · ربط المتسعات على التوالي — الشحنة مشتركة وفرق الجهد الكلي هو المجموع"
+    },
+    {
+     "type": "html",
+     "html": "<b>الاشتقاق:</b> فرق الجهد الكلي يتوزع على السلسلة: <span class=\"im\">ΔV<sub>total</sub> = ΔV₁ + ΔV₂ + ΔV₃</span>، وبما أن <span class=\"im\">ΔV = Q/C</span> لكل متسعة والشحنة <span class=\"im\">Q</span> مشتركة:"
+    },
+    {
+     "type": "law",
+     "html": "<span class=\"eq\"><span class=\"frac\"><span>Q</span><span class=\"den\">C<sub>eq</sub></span></span> = <span class=\"frac\"><span>Q</span><span class=\"den\">C₁</span></span> + <span class=\"frac\"><span>Q</span><span class=\"den\">C₂</span></span> + <span class=\"frac\"><span>Q</span><span class=\"den\">C₃</span></span></span>"
+    },
+    {
+     "type": "html",
+     "html": "وبقسمة الطرفين على <span class=\"im\">Q</span> نحصل على قانون التوالي، وله صيغة مختصرة سريعة <b>للمتسعتين فقط</b>:"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"formula\" style=\"max-width:100%\"><span class=\"fname\">السعة المكافئة — توالي</span>\n    <span class=\"eq\"><span class=\"frac\"><span>1</span><span class=\"den\">C<sub>eq</sub></span></span> = <span class=\"frac\"><span>1</span><span class=\"den\">C₁</span></span> + <span class=\"frac\"><span>1</span><span class=\"den\">C₂</span></span> + ⋯ + <span class=\"frac\"><span>1</span><span class=\"den\">C<sub>n</sub></span></span></span>\n  </div>\n  <div class=\"formula\" style=\"max-width:100%\"><span class=\"fname\">لمتسعتين فقط (الضرب على الجمع)</span>\n    <span class=\"eq\">C<sub>eq</sub> = <span class=\"frac\"><span>C₁ × C₂</span><span class=\"den\">C₁ + C₂</span></span></span>\n  </div>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية · التوالي</span>\n  <p class=\"rule-line\">«في التوالي: الشحنة مشتركة، والجهود تُجمع، والسعة المكافئة أصغر من أصغر سعة في المجموعة»</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تعليل التوالي</span><span class=\"badge\">2018 · الدور الأول</span><span class=\"badge\">2024 · التمهيدي</span>\n  <p><b>ما السبب:</b> نقصان السعة المكافئة لمجموعة المتسعات المربوطة على التوالي؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>لأن ربط المتسعات على التوالي يكافئ <b>زيادة البعد بين صفيحتي المتسعة المكافئة</b> (الصفيحتان الخارجيتان فقط تتصلان بالبطارية والبعد الفعلي بينهما هو مجموع الأبعاد)، وبما أن السعة تتناسب عكسياً مع البعد <span class=\"im\">C ∝ 1/d</span> فإن السعة المكافئة تنقص وتكون أصغر من أصغر سعة في المجموعة.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — الغرض من التوالي</span><span class=\"badge\">2019 · التمهيدي</span><span class=\"badge\">2020 · الدور الثاني</span>\n  <p><b>ما الغرض من / ما الفائدة العملية من:</b> ربط مجموعة من المتسعات على التوالي؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p><b>تقليل السعة المكافئة</b> ليكون بالإمكان وضع فرق جهد كهربائي <b>أكبر</b> على طرفي المجموعة قد لا تتحمله أي متسعة منفردة، لأن فرق الجهد الكلي يتوزع بين المتسعات فلا يقع على الواحدة إلا جزء منه.</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٢</span>\n    <span class=\"q\">ثلاث متسعات سعاتها بالترتيب <span class=\"im\">(18μF, 9μF, 6μF)</span> مربوطة على التوالي، شُحنت المجموعة بشحنة كلية <span class=\"im\">300μC</span>. احسب: ١) السعة المكافئة. ٢) الشحنة في كل متسعة. ٣) فرق الجهد الكلي. ٤) فرق الجهد بين صفيحتي كل متسعة.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">السعة المكافئة:</span> <span class=\"im\">1/C<sub>eq</sub> = 1/6 + 1/9 + 1/18 = (3+2+1)/18 = 6/18 = 1/3</span> ⟹ <span class=\"ans\">C<sub>eq</sub> = 3μF</span>\n      <span class=\"why\">لماذا وحّدنا المقامات على 18؟ أصغر مضاعف مشترك يجعل الجمع بلا كسور عشرية — ولا تنسَ قلب الناتج في النهاية!</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">شحنة كل متسعة:</span> توالٍ ⟹ <span class=\"ans\">Q₁ = Q₂ = Q₃ = Q<sub>total</sub> = 300μC</span>\n      <span class=\"why\">لماذا؟ الشحنة تنتقل بالحث عبر السلسلة — لا يوجد مسار آخر لها.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">الجهد الكلي:</span> <span class=\"im\">ΔV<sub>total</sub> = Q/C<sub>eq</sub> = 300/3 = 100V</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">جهد كل متسعة:</span> <span class=\"im\">ΔV₁ = 300/6 = 50V</span> ، <span class=\"im\">ΔV₂ = 300/9 = (100/3)V</span> ، <span class=\"im\">ΔV₃ = 300/18 = (50/3)V</span>\n      <span class=\"why\">لاحظ: أصغر سعة أخذت أكبر جهد! لأن ΔV = Q/C والشحنة واحدة — علاقة عكسية مهمة جداً في الاختيارات.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — توالٍ مع طاقة</span><span class=\"badge\">2020 · الدور الثالث</span>\n  <p>متسعتان <span class=\"im\">(C₁ = 3μF ، C₂ = 6μF)</span> من ذوات الصفائح المتوازية مربوطتان مع بعضهما على التوالي، ورُبطت مجموعتهما بين قطبي بطارية فرق الجهد الكهربائي بين قطبيها <span class=\"im\">(24V)</span>. احسب مقدار فرق الجهد الكهربائي بين صفيحتي كل متسعة، والطاقة الكلية المختزنة في المجموعة.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p><span class=\"im\">C<sub>eq</sub> = (3×6)/(3+6) = 2μF</span> ⟹ <span class=\"im\">Q = C<sub>eq</sub>×ΔV = 2×24 = 48μC</span> (مشتركة)<br>\n    <span class=\"im\">ΔV₁ = 48/3 = 16V</span> ، <span class=\"im\">ΔV₂ = 48/6 = 8V</span> &nbsp;(تحقق: 16+8 = 24 ✓)<br>\n    <span class=\"im\">PE = ½C<sub>eq</sub>(ΔV)² = ½ × 2×10<sup>-6</sup> × (24)² = 576×10<sup>-6</sup> J</span></p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٢)</span></span>\n  <p>متسعتان <span class=\"im\">4μF</span> و <span class=\"im\">12μF</span> مربوطتان على التوالي مع مصدر <span class=\"im\">16V</span>. احسب بصيغة (الضرب على الجمع) السعة المكافئة، ثم فرق الجهد بين صفيحتي كل متسعة.</p>"
+    }
+   ]
+  },
+  {
+   "title": "وجهاً لوجه: متى أستعمل أياً منهما؟",
+   "icon": "٤",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<caption>المقارنة الشاملة بين طريقتي الربط — استظهرها كصورة واحدة</caption>\n  <thead><tr><th>وجه المقارنة</th><th>التوازي</th><th>التوالي</th></tr></thead>\n  <tbody>\n    <tr><td><b>المقدار المشترك</b></td><td class=\"right\">فرق الجهد ΔV نفسه على الجميع</td><td class=\"right\">الشحنة Q نفسها في الجميع</td></tr>\n    <tr><td><b>المقدار الذي يُجمع</b></td><td class=\"ltr\" style=\"direction:rtl\">الشحنات: Q<sub>t</sub> = Q₁+Q₂+…</td><td class=\"ltr\" style=\"direction:rtl\">الجهود: ΔV<sub>t</sub> = ΔV₁+ΔV₂+…</td></tr>\n    <tr><td><b>السعة المكافئة</b></td><td class=\"ltr\">C<sub>eq</sub> = C₁+C₂+…</td><td class=\"ltr\">1/C<sub>eq</sub> = 1/C₁+1/C₂+…</td></tr>\n    <tr><td><b>مقدارها</b></td><td class=\"right\">أكبر من أكبر سعة</td><td class=\"right\">أصغر من أصغر سعة</td></tr>\n    <tr><td><b>يكافئ هندسياً</b></td><td class=\"right\">زيادة المساحة A</td><td class=\"right\">زيادة البعد d</td></tr>\n    <tr><td><b>الغرض العملي</b></td><td class=\"right\">الحصول على سعة (وشحنة) أكبر</td><td class=\"right\">تحمّل فرق جهد أكبر (يتوزع الجهد)</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه! ثلاثة أفخاخ حسابية تكرر رسوب أصحابها</span>\n  <p>١) <b>قلب القانونين:</b> قانون جمع المقلوبات هو للمتسعات على <b>التوالي</b> — عكس المقاومات تماماً كما ستدرس لاحقاً، فلا تخلط بينهما.<br>\n  ٢) <b>نسيان القلب الأخير:</b> إذا حصلت على <span class=\"im\">1/C<sub>eq</sub> = 1/3</span> فالجواب <span class=\"im\">C<sub>eq</sub> = 3μF</span> وليس <span class=\"im\">1/3</span>! اختم دائماً بقلب الكسر.<br>\n  ٣) <b>جمع ما لا يُجمع:</b> في التوالي لا تجمع الشحنات (كلها واحدة!)، وفي التوازي لا تجمع الجهود (كلها واحدة!). اسأل نفسك أولاً: «مَن المشترك في هذا الربط؟»</p>",
+     "private": true
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> متسعتان متماثلتان سعة كل منهما <span class=\"im\">C</span> — كم نسبة سعة توازيهما إلى سعة تواليهما؟ <span class=\"im\">2C ÷ (C/2) = 4</span>.</div>",
+     "a": ""
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٣)</span></span>\n  <p>متسعة <span class=\"im\">6μF</span> رُبطت مع متسعة <span class=\"im\">3μF</span> على التوالي، ثم رُبطت المجموعة على التوازي مع متسعة <span class=\"im\">4μF</span>. احسب السعة المكافئة الكلية.</p>"
+    }
+   ]
+  },
+  {
+   "title": "الدوائر المركبة: بسّطها خطوة… خطوة",
+   "icon": "٥",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "الوزاري يحب دمج الربطين في دائرة واحدة. لا تحاول رؤية الدائرة كلها دفعة واحدة، بل اتبع <span class=\"hl\">منهجية التبسيط التدريجي</span>: ابحث عن أبسط مجموعة صافية (توالٍ صرف أو توازٍ صرف)، استبدلها بمتسعة مكافئة واحدة، وأعد رسم الدائرة — وكرر حتى تبقى متسعة واحدة. ثم عُد بالاتجاه المعاكس لتوزيع الشحنات والجهود."
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٣</span>\n    <span class=\"q\">متسعتان <span class=\"im\">C₁ = 20μF</span> و <span class=\"im\">C₂ = 30μF</span> مربوطتان على التوالي، وناتجهما مربوط على التوازي مع <span class=\"im\">C₃ = 18μF</span>، والمصدر <span class=\"im\">ΔV = 12V</span>. احسب: ١) السعة المكافئة. ٢) الشحنة الكلية. ٣) الشحنة في أيٍّ من صفيحتي كل متسعة.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">بسّط التوالي أولاً:</span> <span class=\"im\">C′ = (20×30)/(20+30) = 600/50 = 12μF</span>\n      <span class=\"why\">لماذا بدأنا بها؟ لأنها المجموعة «الصافية» الوحيدة — C₃ ليست على التوالي مع C₁ وحدها ولا مع C₂ وحدها.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">ثم التوازي:</span> <span class=\"im\">C<sub>eq</sub> = C′ + C₃ = 12 + 18 = 30μF</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">الشحنة الكلية:</span> <span class=\"im\">Q<sub>total</sub> = C<sub>eq</sub>×ΔV = 30×12 = 360μC</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">عُد للتفاصيل:</span> فرعا التوازي عليهما جهد المصدر نفسه <span class=\"im\">12V</span>: <span class=\"im\">Q₃ = 18×12 = 216μC</span> ، وفرع التوالي: <span class=\"im\">Q′ = 12×12 = 144μC = Q₁ = Q₂</span>\n      <span class=\"why\">لماذا Q₁ = Q₂؟ لأنهما داخل فرع توالٍ واحد — الشحنة المشتركة صفة الفرع لا الدائرة كلها. تحقق: 216+144 = 360 ✓</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة الشكل)</span><span class=\"badge\">2022 · الدور الأول</span>\n  <p>من المعلومات المثبتة في الشكل المجاور <span style=\"font-size:10pt;color:var(--muted)\">(متسعتان <span class=\"im\">C₁ = 9μF</span> و <span class=\"im\">C₂ = 18μF</span> على التوالي، وفرعهما مربوط على التوازي مع <span class=\"im\">C₃ = 4μF</span> بين قطبي مصدر <span class=\"im\">ΔV = 24V</span>)</span>، احسب مقدار: ١) السعة المكافئة للمجموعة. ٢) الشحنة الكلية المختزنة في المجموعة. ٣) فرق الجهد بين صفيحتي المتسعة <span class=\"im\">(C₁)</span>.</p>\n  <figure class=\"figure\" style=\"margin:6px auto\">\n  <svg width=\"380\" height=\"150\" viewBox=\"0 0 380 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"12\">\n    <line x1=\"40\" y1=\"30\" x2=\"340\" y2=\"30\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"40\" y1=\"120\" x2=\"180\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"205\" y1=\"120\" x2=\"340\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"40\" y1=\"30\" x2=\"40\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"340\" y1=\"30\" x2=\"340\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <!-- فرع التوالي العلوي: C1 ثم C2 على الخط العلوي -->\n    <line x1=\"118\" y1=\"16\" x2=\"118\" y2=\"44\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <line x1=\"134\" y1=\"16\" x2=\"134\" y2=\"44\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <text x=\"108\" y=\"62\" fill=\"#0B3B5E\" font-weight=\"700\">C₁=9μF</text>\n    <line x1=\"228\" y1=\"16\" x2=\"228\" y2=\"44\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <line x1=\"244\" y1=\"16\" x2=\"244\" y2=\"44\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <text x=\"218\" y=\"62\" fill=\"#0B3B5E\" font-weight=\"700\">C₂=18μF</text>\n    <!-- C3 فرع وسطي موازٍ -->\n    <line x1=\"40\" y1=\"75\" x2=\"172\" y2=\"75\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"205\" y1=\"75\" x2=\"340\" y2=\"75\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <line x1=\"172\" y1=\"60\" x2=\"172\" y2=\"90\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <line x1=\"205\" y1=\"60\" x2=\"205\" y2=\"90\" stroke=\"#0284C7\" stroke-width=\"4\"/>\n    <text x=\"162\" y=\"106\" fill=\"#0B3B5E\" font-weight=\"700\">C₃=4μF</text>\n    <!-- بطارية -->\n    <line x1=\"180\" y1=\"106\" x2=\"180\" y2=\"134\" stroke=\"#B91C1C\" stroke-width=\"3.2\"/>\n    <line x1=\"205\" y1=\"112\" x2=\"205\" y2=\"128\" stroke=\"#152238\" stroke-width=\"2.2\"/>\n    <text x=\"164\" y=\"147\" fill=\"#0B3B5E\" font-weight=\"700\">24V</text>\n  </svg>\n  </figure>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) فرع التوالي: <span class=\"im\">C′ = (9×18)/(9+18) = 6μF</span> ⟹ <span class=\"im\">C<sub>eq</sub> = 6+4 = 10μF</span><br>\n    ٢) <span class=\"im\">Q<sub>total</sub> = 10×24 = 240μC</span><br>\n    ٣) فرع التوالي عليه <span class=\"im\">24V</span> كاملة: <span class=\"im\">Q′ = 6×24 = 144μC = Q₁</span> ⟹ <span class=\"im\">ΔV₁ = Q₁/C₁ = 144/9 = 16V</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (المسألة الشاملة: ربط + مجال + طاقة)</span><span class=\"badge\">2024 · الدور الأول</span>\n  <p>المتسعة <span class=\"im\">(C₁)</span> موصولة على التوالي مع المتسعة الثانية <span class=\"im\">(C₂ = 20μF)</span> والبعد بين صفيحتي المتسعة الثانية <span class=\"im\">(0.6mm)</span>، والمجموعة المتوالية رُبطت على التوازي مع متسعة <span class=\"im\">(C₃ = 6μF)</span>، شُحن الجميع بمصدر للفولتية فأصبح مقدار المجال الكهربائي بين صفيحتي المتسعة الثانية <span class=\"im\">(5×10³ V/m)</span> ومقدار الطاقة المختزنة في المجال الكهربائي للمتسعة الأولى <span class=\"im\">(360×10<sup>-6</sup> J)</span>. احسب: ١) مقدار سعة المتسعة المجهولة <span class=\"im\">(C₁)</span>. ٢) شحنة وفرق جهد كل متسعة. ٣) فرق جهد المصدر.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) جهد الثانية من انحدار الجهد (الدرس الأول!): <span class=\"im\">ΔV₂ = E×d = 5×10³ × 0.6×10<sup>-3</sup> = 3V</span> ⟹ <span class=\"im\">Q₂ = C₂×ΔV₂ = 20×3 = 60μC</span><br>\n    توالٍ ⟹ <span class=\"im\">Q₁ = Q₂ = 60μC</span>. ومن طاقة الأولى: <span class=\"im\">PE₁ = ½Q₁ΔV₁</span> ⟹ <span class=\"im\">360×10<sup>-6</sup> = ½ × 60×10<sup>-6</sup> × ΔV₁</span> ⟹ <span class=\"im\">ΔV₁ = 12V</span> ⟹ <span class=\"ans\">C₁ = 60/12 = 5μF</span><br>\n    ٢) <span class=\"im\">Q₁ = Q₂ = 60μC</span> بجهدي <span class=\"im\">12V</span> و <span class=\"im\">3V</span>. ٣) <span class=\"im\">ΔV<sub>source</sub> = 12+3 = 15V</span> (وهو نفسه على <span class=\"im\">C₃</span> الموازية) ⟹ <span class=\"im\">Q₃ = 6×15 = 90μC</span><br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ لاحظ كيف جمعت مسألة واحدة: E = ΔV/d + صيغ الطاقة (الدرس الأول) + قانوني الربط (هذا الدرس) — الوزاري الحديث يمزج الدرسين.</span></p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "اربطها بالمنهج</span>\n  <p><b>بما قبلها:</b> كل أدوات هذا الدرس من الدرس الأول: <span class=\"im\">C = Q/ΔV</span> ، <span class=\"im\">C<sub>k</sub> = kC</span> ، <span class=\"im\">E = ΔV/d</span> ، وصيغ الطاقة الثلاث.<br>\n  <b>بما بعدها:</b> فكرة «المشترك والمجموع» ستعود حرفياً في ربط المقاومات (لكن بقوانين معكوسة!)، والمتسعة كمفتاح مفتوح ستفسر دائرة <span class=\"im\">RC</span> وشحن المتسعة وتفريغها، ثم رادة السعة في التيار المتناوب.</p>"
+    }
+   ]
+  },
+  {
+   "title": "النمط الذهبي الأول: توازٍ مشحون ثم يُفصل ويُدخل عازل",
+   "icon": "٦",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "هذا أكثر نمط مسائل تكراراً في تاريخ الفصل كله: <b>٨ مرات</b> بين 2017 و2024! السيناريو ثابت: متسعتان على التوازي تُشحنان بشحنة كلية معلومة، <b>تُفصل</b> المجموعة عن المصدر، ثم يُدخل عازل في إحداهما. المفتاحان:"
+    },
+    {
+     "type": "html",
+     "html": "<li><b>المجموعة مفصولة</b> ⟹ الشحنة الكلية <span class=\"im\">Q<sub>total</sub></span> <span class=\"hl\">محفوظة لا تتغير</span> (لا مسار لهروبها) — لكنها <b>تعيد توزيع نفسها</b> بين المتسعتين!</li>\n  <li><b>الربط توازٍ</b> ⟹ فرق الجهد يبقى <span class=\"hl\">مشتركاً</span> بينهما (قيمته الجديدة <span class=\"im\">ΔV′ = Q<sub>total</sub>/C′<sub>eq</sub></span> بعد إدخال العازل).</li>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٤ (وزاري 2017 · الدور الثاني بالخطوات)</span>\n    <span class=\"q\">متسعتان <span class=\"im\">(C₁ = 3μF ، C₂ = 6μF)</span> مربوطتان مع بعضهما على التوازي، شُحنت مجموعتهما بشحنة كلية <span class=\"im\">(900μC)</span> بواسطة مصدر للفولطية المستمرة ثم فُصلت عنه: ١) احسب لكل متسعة مقدار الشحنة المختزنة في أيٍّ من صفيحتيها والطاقة المختزنة بين صفيحتيها. ٢) أُدخل لوح من مادة عازلة كهربائياً ثابت عزلها <span class=\"im\">(3)</span> بين صفيحتي المتسعة الأولى، فما مقدار الشحنة المختزنة وفرق الجهد لكل متسعة بعد إدخال العازل؟</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">قبل العازل:</span> <span class=\"im\">C<sub>eq</sub> = 3+6 = 9μF</span> ⟹ <span class=\"im\">ΔV = Q<sub>total</sub>/C<sub>eq</sub> = 900/9 = 100V</span>\n      <span class=\"why\">لماذا؟ في التوازي المشترك هو الجهد — نحسبه أولاً لنوزع الشحنات به.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">الشحنات والطاقات:</span> <span class=\"im\">Q₁ = 3×100 = 300μC</span> ، <span class=\"im\">Q₂ = 6×100 = 600μC</span> ؛ <span class=\"im\">PE₁ = ½×300×10<sup>-6</sup>×100 = 15×10<sup>-3</sup>J</span> ، <span class=\"im\">PE₂ = 30×10<sup>-3</sup>J</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">بعد العازل:</span> <span class=\"im\">C<sub>1k</sub> = kC₁ = 3×3 = 9μF</span> ⟹ <span class=\"im\">C′<sub>eq</sub> = 9+6 = 15μF</span>\n      <span class=\"why\">لماذا تتغير المكافئة؟ العازل رفع سعة الأولى فقط، والثانية بقيت 6μF.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">الجهد الجديد المشترك:</span> مفصولة ⟹ <span class=\"im\">Q<sub>total</sub> = 900μC</span> ثابتة ⟹ <span class=\"im\">ΔV′ = 900/15 = 60V</span>\n      <span class=\"why\">هنا قلب المسألة: الشحنة الكلية محفوظة، فالجهد الجديد يُحسب منها لا من المصدر (الذي فُصل).</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٥</span><div class=\"sc\"><span class=\"slabel\">التوزيع الجديد:</span> <span class=\"ans\">Q′₁ = 9×60 = 540μC ، Q′₂ = 6×60 = 360μC</span> (تحقق: 540+360 = 900 ✓)\n      <span class=\"why\">لاحظ الفخ الجميل: شحنة الثانية نقصت من 600 إلى 360 رغم أن أحداً لم يلمسها! الشحنة هاجرت نحو المتسعة ذات السعة الأكبر.</span></div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — النمط نفسه بثابت عزل مجهول</span><span class=\"badge\">2019 · التمهيدي</span><span class=\"badge\">2022 · الدور الثاني</span>\n  <p><b>(2019 تمهيدي):</b> متسعتان <span class=\"im\">(C₁ = 12μF ، C₂ = 8μF)</span> وُصلتا على التوازي وشُحنت مجموعتهما بشحنة كلية <span class=\"im\">(400μC)</span> ثم فُصلت عن المصدر. ١) احسب لكل متسعة الشحنة والطاقة المختزنة. ٢) أُدخل لوح عازل ثابت عزله <span class=\"im\">(K)</span> بين صفيحتي المتسعة الأولى فانخفض فرق جهد المجموعة إلى <span class=\"im\">(5V)</span> — ما مقدار <span class=\"im\">(K)</span>؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p><span class=\"im\">C<sub>eq</sub> = 20μF</span> ⟹ <span class=\"im\">ΔV = 400/20 = 20V</span> ⟹ <span class=\"im\">Q₁ = 240μC ، Q₂ = 160μC</span> ؛ <span class=\"im\">PE₁ = ½×240μ×20 = 2.4×10<sup>-3</sup>J ، PE₂ = 1.6×10<sup>-3</sup>J</span><br>\n    بعد العازل: <span class=\"im\">C′<sub>eq</sub> = Q<sub>total</sub>/ΔV′ = 400/5 = 80μF</span> ⟹ <span class=\"im\">12K + 8 = 80</span> ⟹ <span class=\"ans\">K = 6</span><br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ نظيره <b>2022 د2</b>: متسعتان (2μF، 6μF) بشحنة 80μC، عازل k على الأولى هبط الجهد إلى 5V ⟹ C′<sub>eq</sub> = 16μF ⟹ 2k+6 = 16 ⟹ k = 5.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — النمط نفسه بشحنة معلومة بعد العازل</span><span class=\"badge\">2021 · الدور الأول</span><span class=\"badge\">2023 · الدور الثاني</span>\n  <p><b>(2021 د١):</b> متسعتان <span class=\"im\">(C₁ = 4μF ، C₂ = 8μF)</span> مربوطتان على التوازي، شُحنت مجموعتهما بشحنة كلية <span class=\"im\">(600μC)</span> ثم فُصلت عن المصدر. ١) احسب شحنة كل متسعة. ٢) أُدخل لوح عازل ثابت عزله <span class=\"im\">(k)</span> بين صفيحتي المتسعة الثانية فأصبحت شحنتها <span class=\"im\">(480μC)</span> — فما مقدار <span class=\"im\">(k)</span>؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>قبل: <span class=\"im\">ΔV = 600/12 = 50V</span> ⟹ <span class=\"im\">Q₁ = 200μC ، Q₂ = 400μC</span><br>\n    بعد: <span class=\"im\">Q′₂ = 480μC</span> ⟹ <span class=\"im\">Q′₁ = 600−480 = 120μC</span> ⟹ <span class=\"im\">ΔV′ = Q′₁/C₁ = 120/4 = 30V</span> ⟹ <span class=\"im\">C<sub>2k</sub> = 480/30 = 16μF</span> ⟹ <span class=\"ans\">k = 16/8 = 2</span><br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ نظيره <b>2023 د2</b>: متسعتان (2μF، 4μF) على التوازي مع بطارية 20V ثم فُصلتا وأُدخل عازل في الثانية فأصبحت شحنتها 96μC: Q<sub>total</sub> = 120μC ⟹ Q′₁ = 24μC ⟹ ΔV′ = 12V ⟹ C<sub>2k</sub> = 8μF ⟹ k = 2.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — أحدث نسختين من النمط</span><span class=\"badge\">2023 · الدور الأول</span><span class=\"badge\">2024 · التمهيدي</span>\n  <p><b>(2023 د١):</b> متسعتان <span class=\"im\">(C₁ = 8μF ، C₂ = 12μF)</span> مربوطتان على التوازي شُحنتا بشحنة كلية <span class=\"im\">(640μC)</span> ثم فُصلتا عن المصدر، أُدخل لوح عازل ثابت عزله <span class=\"im\">(k)</span> بين صفيحتي الثانية فانخفض جهد المجموعة إلى <span class=\"im\">(20V)</span>. احسب: ١) ثابت العزل. ٢) شحنة وطاقة كل متسعة بعد إدخال العازل.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>قبل: <span class=\"im\">ΔV = 640/20 = 32V</span>. بعد: <span class=\"im\">C′<sub>eq</sub> = 640/20 = 32μF = 8 + 12k</span> ⟹ <span class=\"ans\">k = 2</span><br>\n    <span class=\"im\">Q′₁ = 8×20 = 160μC ، Q′₂ = 24×20 = 480μC</span> ؛ <span class=\"im\">PE′₁ = ½×160μ×20 = 1.6×10<sup>-3</sup>J ، PE′₂ = 4.8×10<sup>-3</sup>J</span><br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ <b>2024 تمهيدي</b>: متسعتان (9μF، 3μF) بشحنة كلية 288μC ثم فصل + عازل (5) في الثانية: قبل ΔV = 24V (216μC، 72μC)؛ بعد: C<sub>2k</sub> = 15μF ⟹ C′<sub>eq</sub> = 24μF ⟹ ΔV′ = 12V ⟹ Q′₁ = 108μC ، Q′₂ = 180μC.</span></p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٤)</span></span>\n  <p>متسعتان <span class=\"im\">5μF</span> و <span class=\"im\">10μF</span> على التوازي شُحنتا بشحنة كلية <span class=\"im\">300μC</span> ثم فُصلتا عن المصدر. جد فرق جهد المجموعة وشحنة كل متسعة.</p>"
+    }
+   ]
+  },
+  {
+   "title": "النمط الذهبي الثاني: المجموعة ما زالت موصولة بالبطارية",
+   "icon": "٧",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "النمط المقابل: يُدخل العازل <b>والمجموعة ما زالت متصلة بالمصدر</b>. هنا ينقلب الثابت: <span class=\"hl\">فرق الجهد الكلي يبقى ثابتاً</span> (تفرضه البطارية)، أما الشحنات فتتغير — البطارية تضخ شحنة إضافية أو تسحبها. قارن بجدول «مَن الثابت؟» من الدرس الأول: هو نفسه، لكن على مستوى المجموعة."
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"ex-head\"><span class=\"tag\">مثال محلول ٥ (مثال الكتاب)</span>\n    <span class=\"q\">متسعتان <span class=\"im\">(C₁ = 3μF ، C₂ = 6μF)</span> مربوطتان على التوالي بين قطبي بطارية فرق جهدها <span class=\"im\">24V</span> والعازل بينهما هواء. أُدخل بين صفيحتي كلٍّ منهما لوح مادة عازلة ثابت عزلها <span class=\"im\">(2)</span> والمجموعة ما زالت متصلة بالبطارية. جد فرق الجهد والطاقة لكل متسعة: ١) قبل إدخال العازل. ٢) بعده.</span>\n  </div>\n  <div class=\"ex-body\">\n    <div class=\"mstep\"><span class=\"sn\">١</span><div class=\"sc\"><span class=\"slabel\">قبل:</span> <span class=\"im\">C<sub>eq</sub> = (3×6)/9 = 2μF</span> ⟹ <span class=\"im\">Q = 2×24 = 48μC</span> ⟹ <span class=\"im\">ΔV₁ = 48/3 = 16V ، ΔV₂ = 48/6 = 8V</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٢</span><div class=\"sc\"><span class=\"slabel\">طاقتا القبل:</span> <span class=\"im\">PE₁ = ½×3×10<sup>-6</sup>×(16)² = 384×10<sup>-6</sup>J</span> ، <span class=\"im\">PE₂ = ½×6×10<sup>-6</sup>×(8)² = 192×10<sup>-6</sup>J</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٣</span><div class=\"sc\"><span class=\"slabel\">بعد:</span> <span class=\"im\">C<sub>1k</sub> = 6μF ، C<sub>2k</sub> = 12μF</span> ⟹ <span class=\"im\">C<sub>keq</sub> = (6×12)/18 = 4μF</span> ⟹ <span class=\"im\">Q<sub>k</sub> = 4×24 = 96μC</span>\n      <span class=\"why\">لماذا حسبنا الشحنة من جديد؟ لأن الجهد الكلي (24V) هو الثابت هنا، والشحنة تضاعفت بضخ البطارية.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٤</span><div class=\"sc\"><span class=\"slabel\">الجهود بعد:</span> <span class=\"im\">ΔV<sub>k1</sub> = 96/6 = 16V ، ΔV<sub>k2</sub> = 96/12 = 8V</span> — <b>لم تتغير!</b>\n      <span class=\"why\">لماذا؟ لأن العازل نفسه (k=2) دخل في المتسعتين معاً فبقيت نسبة سعتيهما ثابتة، والجهد يتوزع بنسبة معكوسة للسعة.</span></div></div>\n    <div class=\"mstep\"><span class=\"sn\">٥</span><div class=\"sc\"><span class=\"slabel\">الطاقات بعد:</span> <span class=\"im\">PE<sub>1k</sub> = ½×6×10<sup>-6</sup>×(16)² = 768×10<sup>-6</sup>J</span> ، <span class=\"im\">PE<sub>2k</sub> = ½×12×10<sup>-6</sup>×(8)² = 384×10<sup>-6</sup>J</span> — تضاعفت (موصولة ⟹ <span class=\"im\">PE<sub>k</sub> = k·PE</span>).</div></div>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — مثال الكتاب بأرقام مخففة</span><span class=\"badge\">2017 · التمهيدي</span><span class=\"badge\">2022 · التمهيدي</span>\n  <p><b>(2017 تمهيدي):</b> متسعتان من ذوات الصفيحتين المتوازيتين سعتاهما <span class=\"im\">(C₁ = 3μF ، C₂ = 6μF)</span> مربوطتان مع بعضهما على التوالي، رُبطت مجموعتهما بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">(12V)</span>: ١) احسب مقدار فرق الجهد بين صفيحتي كل متسعة. ٢) أُدخل بين صفيحتي كلٍّ منهما لوح من مادة عازلة ثابت عزلها <span class=\"im\">(2)</span> يملأ الحيّز (وما زالت المجموعة متصلة بالبطارية) — جد فرق الجهد بين صفيحتي كل متسعة بعد إدخال العازل.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>١) <span class=\"im\">C<sub>eq</sub> = 2μF ⟹ Q = 24μC ⟹ ΔV₁ = 8V ، ΔV₂ = 4V</span><br>\n    ٢) <span class=\"im\">C<sub>keq</sub> = 4μF ⟹ Q<sub>k</sub> = 48μC ⟹ ΔV<sub>k1</sub> = 48/6 = 8V ، ΔV<sub>k2</sub> = 48/12 = 4V</span> — الجهود لا تتغير والشحنة تتضاعف.<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ السؤال نفسه بأرقام (9μF، 18μF مع 12V) ورد في <b>وزاري 2022 – التمهيدي</b>: ΔV₁ = 8V ، ΔV₂ = 4V قبل وبعد العازل أيضاً.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — عازل في إحداهما فقط وثابته مجهول</span><span class=\"badge\">2018 · الدور الأول</span><span class=\"badge\">2020 · الدور الأول</span>\n  <p><b>(2018 د١):</b> متسعتان من ذوات الصفيحتين المتوازيتين <span class=\"im\">(C₁ = 9μF ، C₂ = 18μF)</span> مربوطتان مع بعضهما على التوالي ورُبطت مجموعتهما بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">(24V)</span>. إذا أُدخل لوح من مادة عازلة ثابت عزلها <span class=\"im\">(k)</span> بين صفيحتي المتسعة الأولى وما زالت المجموعة متصلة بالبطارية، فكانت الشحنة الكلية للمجموعة <span class=\"im\">(288μC)</span>، ما مقدار: ١) ثابت العزل <span class=\"im\">(k)</span>. ٢) فرق الجهد بين صفيحتي كل متسعة قبل وبعد إدخال المادة العازلة؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>قبل: <span class=\"im\">C<sub>eq</sub> = (9×18)/27 = 6μF ⟹ Q = 144μC ⟹ ΔV₁ = 16V ، ΔV₂ = 8V</span><br>\n    بعد: <span class=\"im\">C′<sub>eq</sub> = Q′/ΔV = 288/24 = 12μF</span> ومن قانون التوالي: <span class=\"im\">1/(9k) = 1/12 − 1/18 = 1/36</span> ⟹ <span class=\"ans\">k = 4</span><br>\n    الجهود بعد: <span class=\"im\">ΔV′₂ = 288/18 = 16V ، ΔV′₁ = 288/36 = 8V</span> — انقلب التوزيع لصالح الثانية!<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ نظيره حرفياً <b>2020 د١</b> بأرقام (9μF، 18μF مع 12V والشحنة الجديدة 144μC): C′<sub>eq</sub> = 12μF ⟹ k = 4 ، ΔV′₁ = 4V ، ΔV′₂ = 8V.</span></p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — النمط الموصول في التوازي أيضاً</span><span class=\"badge\">2019 · الدور الثاني</span><span class=\"badge\">2023 · الدور الثالث</span>\n  <p><b>(2023 د٣):</b> متسعتان من ذوات الصفيحتين المتوازيتين <span class=\"im\">(C₁ = 5μF ، C₂ = 15μF)</span> مربوطتان على التوازي، ومجموعتهما رُبطت بين قطبي بطارية فرق الجهد بين قطبيها <span class=\"im\">(60V)</span>. أُدخل لوح من مادة عازلة ثابت عزلها <span class=\"im\">(k)</span> بين صفيحتي المتسعة الأولى (وما زالت المجموعة متصلة بالبطارية) فكانت الشحنة الكلية للمجموعة <span class=\"im\">(3000μC)</span>. ما مقدار: ١) ثابت العزل <span class=\"im\">(k)</span>. ٢) الشحنة المختزنة في كل متسعة قبل وبعد إدخال المادة العازلة؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>قبل: <span class=\"im\">Q₁ = 5×60 = 300μC ، Q₂ = 15×60 = 900μC</span><br>\n    بعد (الجهد ثابت 60V): <span class=\"im\">C′<sub>eq</sub> = 3000/60 = 50μF = 5k + 15</span> ⟹ <span class=\"ans\">k = 7</span> ⟹ <span class=\"im\">Q′₁ = 35×60 = 2100μC ، Q′₂ = 900μC</span> (لا تتغير شحنة الثانية لأن جهدها وسعتها لم يتغيرا).<br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ نظيره <b>2019 د2</b>: متسعتان (4μF، 6μF) على التوازي مع 50V، أُدخل عازل (3) في الثانية والمجموعة موصولة: Q₁ = 200μC تبقى، وQ′₂ = 18μF×50 = 900μC.</span></p>\n  </div>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "انتبه! سؤال واحد… وقلبان مختلفان</span>\n  <p>قبل أي مسألة عازل في مجموعة اسأل: <b>«مفصولة أم موصولة؟»</b><br>\n  • <b>مفصولة</b> ⟹ <span class=\"im\">Q<sub>total</sub></span> ثابتة والجهد الجديد <span class=\"im\">ΔV′ = Q<sub>total</sub>/C′<sub>eq</sub></span>.<br>\n  • <b>موصولة</b> ⟹ <span class=\"im\">ΔV</span> ثابت والشحنة الجديدة <span class=\"im\">Q′ = C′<sub>eq</sub>×ΔV</span>.<br>\n  الخطأ الأشهر في الامتحان: استعمال شحنة «القبل» في حالة الموصولة، أو جهد «القبل» في حالة المفصولة.</p>",
+     "private": true
+    },
+    {
+     "type": "qa",
+     "q": "<span class=\"ic\">✔</span><div><b>نقطة تحقق:</b> في مثال 2023 د3 أعلاه، لماذا لم تتغير شحنة المتسعة الثانية بعد إدخال العازل في الأولى؟ لأن جهدها (تفرضه البطارية) وسعتها كليهما بقيا ثابتين ⟹ <span class=\"im\">Q₂ = C₂ΔV</span> ثابتة.</div>",
+     "a": ""
+    }
+   ]
+  },
+  {
+   "title": "سؤال التصميم + المتسعة في دائرة التيار المستمر",
+   "icon": "٨",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "أ · صمّم الربط بنفسك (سؤال الرسم)"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — التصميم</span><span class=\"badge\">2018 · الدور الثاني</span>\n  <p>لديك ثلاث متسعات <span class=\"im\">(C₁ = 9μF ، C₂ = 12μF ، C₃ = 18μF)</span> ومصدر للفولطية المستمرة فرق الجهد بين قطبيه <span class=\"im\">(25V)</span>. وضّح مع رسم مخطط للدائرة الكهربائية كيفية ربط المتسعات الثلاث مع بعضها للحصول على: <b>a)</b> أصغر مقدار للسعة المكافئة وما مقدار الشحنة المختزنة في كل متسعة وفي المجموعة؟ <b>b)</b> أكبر مقدار للسعة المكافئة وما مقدار الشحنة المختزنة في كل متسعة والشحنة الكلية؟</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p><b>a) أصغر سعة ⟹ التوالي:</b> <span class=\"im\">1/C<sub>eq</sub> = 1/9 + 1/12 + 1/18 = (4+3+2)/36 = 1/4</span> ⟹ <span class=\"im\">C<sub>eq</sub> = 4μF</span> ⟹ <span class=\"im\">Q = 4×25 = 100μC</span> وهي نفسها في كل متسعة وفي المجموعة.<br>\n    <b>b) أكبر سعة ⟹ التوازي:</b> <span class=\"im\">C<sub>eq</sub> = 9+12+18 = 39μF</span> ⟹ <span class=\"im\">Q₁ = 225μC ، Q₂ = 300μC ، Q₃ = 450μC</span> ، <span class=\"im\">Q<sub>total</sub> = 39×25 = 975μC</span></p>\n    <figure class=\"figure\" style=\"margin:6px auto\">\n    <svg width=\"520\" height=\"130\" viewBox=\"0 0 520 130\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n      <!-- توالي -->\n      <line x1=\"20\" y1=\"45\" x2=\"70\" y2=\"45\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"70\" y1=\"30\" x2=\"70\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"84\" y1=\"30\" x2=\"84\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/>\n      <line x1=\"84\" y1=\"45\" x2=\"130\" y2=\"45\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"130\" y1=\"30\" x2=\"130\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"144\" y1=\"30\" x2=\"144\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/>\n      <line x1=\"144\" y1=\"45\" x2=\"190\" y2=\"45\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"190\" y1=\"30\" x2=\"190\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"204\" y1=\"30\" x2=\"204\" y2=\"60\" stroke=\"#0284C7\" stroke-width=\"3.4\"/>\n      <line x1=\"204\" y1=\"45\" x2=\"240\" y2=\"45\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <text x=\"62\" y=\"22\">9μF</text><text x=\"120\" y=\"22\">12μF</text><text x=\"182\" y=\"22\">18μF</text>\n      <text x=\"128\" y=\"92\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"700\">(a) توالٍ ⟸ أصغر C<tspan font-size=\"8\">eq</tspan> = 4μF</text>\n      <!-- توازي -->\n      <line x1=\"310\" y1=\"20\" x2=\"490\" y2=\"20\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"310\" y1=\"88\" x2=\"490\" y2=\"88\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"340\" y1=\"20\" x2=\"340\" y2=\"42\" stroke=\"#152238\" stroke-width=\"2\"/><line x1=\"326\" y1=\"42\" x2=\"354\" y2=\"42\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"326\" y1=\"56\" x2=\"354\" y2=\"56\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"340\" y1=\"56\" x2=\"340\" y2=\"88\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"400\" y1=\"20\" x2=\"400\" y2=\"42\" stroke=\"#152238\" stroke-width=\"2\"/><line x1=\"386\" y1=\"42\" x2=\"414\" y2=\"42\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"386\" y1=\"56\" x2=\"414\" y2=\"56\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"400\" y1=\"56\" x2=\"400\" y2=\"88\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <line x1=\"460\" y1=\"20\" x2=\"460\" y2=\"42\" stroke=\"#152238\" stroke-width=\"2\"/><line x1=\"446\" y1=\"42\" x2=\"474\" y2=\"42\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"446\" y1=\"56\" x2=\"474\" y2=\"56\" stroke=\"#0284C7\" stroke-width=\"3.4\"/><line x1=\"460\" y1=\"56\" x2=\"460\" y2=\"88\" stroke=\"#152238\" stroke-width=\"2\"/>\n      <text x=\"322\" y=\"72\" font-size=\"10\">9μF</text><text x=\"380\" y=\"72\" font-size=\"10\">12μF</text><text x=\"442\" y=\"72\" font-size=\"10\">18μF</text>\n      <text x=\"400\" y=\"112\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-weight=\"700\">(b) توازٍ ⟸ أكبر C<tspan font-size=\"8\">eq</tspan> = 39μF</text>\n    </svg>\n    </figure>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — تصميم بأكبر طاقة</span><span class=\"badge\">2020 · الدور الأول</span>\n  <p>لديك ثلاث متسعات متماثلة سعة كل منها <span class=\"im\">(C)</span> ومصدر للفولطية المستمرة. ارسم مخططاً لدائرة كهربائية تبيّن فيه الطريقة المناسبة لربط المتسعات الثلاث جميعها للحصول على أكبر مقدار من الطاقة الكهربائية يمكن خزنه في المجموعة، ثم أثبت أن الترتيب الذي تختاره هو الأفضل.</p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>الربط الأفضل: <b>التوازي</b>. الإثبات: جهد المصدر <span class=\"im\">ΔV</span> ثابت في الحالتين، والطاقة <span class=\"im\">PE = ½C<sub>eq</sub>(ΔV)²</span> تتناسب طردياً مع <span class=\"im\">C<sub>eq</sub></span>:<br>\n    • توازٍ: <span class=\"im\">C<sub>eq</sub> = 3C</span> ⟹ <span class=\"im\">PE = (3/2)C(ΔV)²</span> &nbsp;&nbsp;• توالٍ: <span class=\"im\">C<sub>eq</sub> = C/3</span> ⟹ <span class=\"im\">PE = (1/6)C(ΔV)²</span><br>\n    فالتوازي يخزن <b>٩ أمثال</b> طاقة التوالي عند المصدر نفسه — وهو الأفضل. ∎</p>\n  </div>"
+    },
+    {
+     "type": "html",
+     "html": "ب · المتسعة في دائرة التيار المستمر: مفتاح مفتوح!"
+    },
+    {
+     "type": "html",
+     "html": "تذكّر من الثالث المتوسط قانون أوم <span class=\"im\">ΔV = I×R</span>. عند وضع متسعة في دائرة تيار مستمر، تُشحن المتسعة في لحظات ثم <b>ينقطع التيار في فرعها نهائياً</b> — فالعازل بين صفيحتيها لا يمرر تياراً، ويصبح جهدها معاكساً مساوياً لما يُسلَّط عليها. لذلك بعد الاستقرار:"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "قاعدة ذهبية</span>\n  <p class=\"rule-line\">«المتسعة المشحونة في دائرة التيار المستمر تعمل عمل مفتاح مفتوح: تيار فرعها صفر، وجهدها يساوي جهد العنصر الموازي لها»</p>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري — التعليل</span><span class=\"badge\">2017 · الدور الثالث</span><span class=\"badge\">2023 · الدور الثاني</span><span class=\"badge\">2024 · الدور الأول</span>\n  <p><b>علّل:</b> تُعدّ المتسعة (المشحونة) الموضوعة في دائرة التيار المستمر مفتاحاً مفتوحاً. <span style=\"font-size:10pt;color:var(--muted)\">(ورد تعليلاً في 2017 د3 و2023 د2، وعبارة «ضع صح مع التصحيح» في 2024 د1)</span></p>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي</span>\n    <p>لأن المتسعة بعد اكتمال شحنها يصبح فرق الجهد بين صفيحتيها مساوياً بالمقدار ومعاكساً لفرق الجهد المسلَّط عليها، والوسط بين صفيحتيها عازل لا يسمح بمرور الشحنات خلاله، <b>فينقطع التيار في فرعها</b> وتعمل عمل مفتاح مفتوح في الدائرة.</p>\n  </div>"
+    },
+    {
+     "type": "ministry",
+     "html": "سؤال وزاري (مسألة المصباح الشهيرة)</span><span class=\"badge\">2021 · الدور الثاني التكميلي</span><span class=\"badge\">2017 · الدور الأول</span>\n  <p><b>(2021 د٢ تكميلي):</b> دائرة كهربائية متوالية الربط تحتوي على مصباح كهربائي مقاومته <span class=\"im\">(r = 20Ω)</span> ومقاومة مقدارها <span class=\"im\">(R = 40Ω)</span> وبطارية فرق الجهد بين قطبيها <span class=\"im\">(ΔV = 12V)</span>، رُبطت في الدائرة متسعة سعتها <span class=\"im\">(5μF)</span>. ما مقدار الشحنة المختزنة فيها إذا رُبطت: ١) على التوازي مع المصباح. ٢) على التوالي مع المصباح والمقاومة (بعد إفراغها من شحنتها)؟</p>\n  <figure class=\"figure\" style=\"margin:6px auto\">\n  <svg width=\"440\" height=\"150\" viewBox=\"0 0 440 150\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\" font-size=\"11\">\n    <line x1=\"30\" y1=\"25\" x2=\"410\" y2=\"25\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <line x1=\"30\" y1=\"120\" x2=\"200\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <line x1=\"228\" y1=\"120\" x2=\"410\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <line x1=\"30\" y1=\"25\" x2=\"30\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <line x1=\"410\" y1=\"25\" x2=\"410\" y2=\"120\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <!-- مصباح -->\n    <circle cx=\"140\" cy=\"25\" r=\"15\" fill=\"#FEF6E7\" stroke=\"#D97706\" stroke-width=\"2\"/>\n    <path d=\"M130 15 L150 35 M150 15 L130 35\" stroke=\"#D97706\" stroke-width=\"1.6\"/>\n    <text x=\"118\" y=\"58\" fill=\"#7C2D12\">مصباح r=20Ω</text>\n    <!-- مقاومة -->\n    <path d=\"M270 25 l7 -8 14 16 14 -16 14 16 14 -16 14 16 7 -8\" fill=\"none\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <text x=\"284\" y=\"54\">R=40Ω</text>\n    <!-- متسعة موازية للمصباح -->\n    <line x1=\"105\" y1=\"25\" x2=\"105\" y2=\"72\" stroke=\"#0284C7\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/>\n    <line x1=\"175\" y1=\"25\" x2=\"175\" y2=\"72\" stroke=\"#0284C7\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/>\n    <line x1=\"105\" y1=\"72\" x2=\"130\" y2=\"72\" stroke=\"#0284C7\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/>\n    <line x1=\"150\" y1=\"72\" x2=\"175\" y2=\"72\" stroke=\"#0284C7\" stroke-width=\"1.8\" stroke-dasharray=\"4 3\"/>\n    <line x1=\"130\" y1=\"60\" x2=\"130\" y2=\"84\" stroke=\"#0284C7\" stroke-width=\"3.2\"/>\n    <line x1=\"150\" y1=\"60\" x2=\"150\" y2=\"84\" stroke=\"#0284C7\" stroke-width=\"3.2\"/>\n    <text x=\"112\" y=\"102\" fill=\"#0369A1\">C=5μF (توازٍ)</text>\n    <!-- بطارية -->\n    <line x1=\"200\" y1=\"104\" x2=\"200\" y2=\"136\" stroke=\"#B91C1C\" stroke-width=\"3\"/>\n    <line x1=\"228\" y1=\"112\" x2=\"228\" y2=\"128\" stroke=\"#152238\" stroke-width=\"2\"/>\n    <text x=\"188\" y=\"148\" fill=\"#0B3B5E\" font-weight=\"700\">12V</text>\n  </svg>\n  </figure>\n  <div class=\"msol\"><span class=\"stag\">الحل النموذجي بالخطوات</span>\n    <p>١) <b>التوازي مع المصباح:</b> فرع المتسعة مفتوح، فالتيار يمر بالمصباح والمقاومة فقط: <span class=\"im\">I = ΔV/(r+R) = 12/60 = 0.2A</span> ⟹ جهد المصباح <span class=\"im\">ΔV<sub>r</sub> = 0.2×20 = 4V</span> = جهد المتسعة ⟹ <span class=\"ans\">Q = 5μF × 4V = 20μC</span><br>\n    ٢) <b>التوالي في الدائرة:</b> المتسعة مفتاح مفتوح ⟹ <span class=\"im\">I = 0</span> ⟹ لا هبوط جهد على r وR ⟹ جهد المتسعة = جهد البطارية كاملاً <span class=\"im\">12V</span> ⟹ <span class=\"ans\">Q = 5×12 = 60μC</span><br>\n    <span style=\"font-size:10pt;color:var(--muted)\">✦ النسخة الأصلية <b>وزاري 2017 د١</b>: الدائرة نفسها (r=20Ω، R=40Ω، 12V) والمتسعة موازية للمصباح شحنتها 20μC والمطلوب سعتها وطاقتها: C = 20μC/4V = 5μF ، PE = ½×20×10⁻⁶×4 = 40×10⁻⁶J.</span></p>\n  </div>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٥)</span></span>\n  <p>في الدائرة أعلاه نفسها، لو رُبطت المتسعة <span class=\"im\">(5μF)</span> على التوازي مع المقاومة <span class=\"im\">R = 40Ω</span> بدلاً من المصباح — كم تصير شحنتها؟</p>"
+    },
+    {
+     "type": "try",
+     "html": "جرّب بنفسك <span class=\"tnum\">(٦)</span></span>\n  <p>متسعتان متماثلتان سعة كل منهما <span class=\"im\">8μF</span> ومصدر <span class=\"im\">20V</span>: احسب الطاقة الكلية المخزونة لو رُبطتا على التوازي، ثم لو رُبطتا على التوالي، وقارن.</p>"
+    }
+   ]
+  },
+  {
+   "title": "خريطة الدرس الذهنية",
+   "icon": "🗺",
+   "blocks": [
+    {
+     "type": "figure",
+     "html": "<svg width=\"820\" height=\"510\" viewBox=\"0 0 900 560\" xmlns=\"http://www.w3.org/2000/svg\" font-family=\"Tajawal,Segoe UI\">\n  <defs>\n    <marker id=\"mmar2\" markerWidth=\"8\" markerHeight=\"8\" refX=\"6\" refY=\"3\" orient=\"auto\"><path d=\"M0,0 L6,3 L0,6 z\" fill=\"#94A3B8\"/></marker>\n  </defs>\n  <!-- المركز -->\n  <g>\n    <rect x=\"360\" y=\"245\" width=\"180\" height=\"70\" rx=\"18\" fill=\"#0B3B5E\"/>\n    <text x=\"450\" y=\"275\" text-anchor=\"middle\" fill=\"#fff\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"19\">ربط المتسعات</text>\n    <text x=\"450\" y=\"298\" text-anchor=\"middle\" fill=\"#BAE3FA\" font-size=\"11\">مَن المشترك؟ ومَن يُجمع؟</text>\n  </g>\n  <!-- فروع -->\n  <g stroke=\"#94A3B8\" stroke-width=\"2\" fill=\"none\">\n    <path d=\"M360 265 C 300 230, 260 200, 205 178\" marker-end=\"url(#mmar2)\"/>\n    <path d=\"M360 295 C 290 330, 255 355, 200 382\" marker-end=\"url(#mmar2)\"/>\n    <path d=\"M540 265 C 600 225, 640 195, 695 172\" marker-end=\"url(#mmar2)\"/>\n    <path d=\"M540 295 C 605 335, 645 360, 700 385\" marker-end=\"url(#mmar2)\"/>\n    <path d=\"M450 245 V 130\" marker-end=\"url(#mmar2)\"/>\n    <path d=\"M450 315 V 435\" marker-end=\"url(#mmar2)\"/>\n  </g>\n  <!-- فرع: التوازي -->\n  <g>\n    <rect x=\"35\" y=\"115\" width=\"210\" height=\"85\" rx=\"14\" fill=\"#EAF7FE\" stroke=\"#38BDF8\" stroke-width=\"2\"/>\n    <text x=\"140\" y=\"140\" text-anchor=\"middle\" fill=\"#0B3B5E\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">التوازي</text>\n    <text x=\"140\" y=\"160\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">ΔV مشترك · الشحنات تُجمع</text>\n    <text x=\"140\" y=\"178\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\" direction=\"ltr\">C_eq = C₁+C₂+…</text>\n    <text x=\"140\" y=\"194\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">أكبر من أكبر سعة (زيادة A)</text>\n  </g>\n  <!-- فرع: التوالي -->\n  <g>\n    <rect x=\"650\" y=\"110\" width=\"215\" height=\"90\" rx=\"14\" fill=\"#E8F7F1\" stroke=\"#059669\" stroke-width=\"2\"/>\n    <text x=\"757\" y=\"135\" text-anchor=\"middle\" fill=\"#065F46\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">التوالي</text>\n    <text x=\"757\" y=\"155\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">Q مشتركة · الجهود تُجمع</text>\n    <text x=\"757\" y=\"173\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\" direction=\"ltr\">1/C_eq = 1/C₁+1/C₂+…</text>\n    <text x=\"757\" y=\"191\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">أصغر من أصغر سعة (زيادة d)</text>\n  </g>\n  <!-- فرع: الغرض -->\n  <g>\n    <rect x=\"350\" y=\"55\" width=\"200\" height=\"75\" rx=\"14\" fill=\"#FDF3E3\" stroke=\"#B45309\" stroke-width=\"2\"/>\n    <text x=\"450\" y=\"80\" text-anchor=\"middle\" fill=\"#7C2D12\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">لماذا نربط؟</text>\n    <text x=\"450\" y=\"100\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">توازٍ ⟸ سعة وشحنة أكبر</text>\n    <text x=\"450\" y=\"118\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">توالٍ ⟸ تحمّل جهد أكبر</text>\n  </g>\n  <!-- فرع: النمطان -->\n  <g>\n    <rect x=\"30\" y=\"345\" width=\"215\" height=\"95\" rx=\"14\" fill=\"#FDECEC\" stroke=\"#DC2626\" stroke-width=\"2\"/>\n    <text x=\"137\" y=\"370\" text-anchor=\"middle\" fill=\"#991B1B\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">النمطان الذهبيان</text>\n    <text x=\"137\" y=\"391\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">مفصولة ⟸ Q الكلية محفوظة</text>\n    <text x=\"137\" y=\"409\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">(تعيد توزيعها!)</text>\n    <text x=\"137\" y=\"427\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">موصولة ⟸ ΔV ثابت والشحنة تتغير</text>\n  </g>\n  <!-- فرع: المركبة -->\n  <g>\n    <rect x=\"345\" y=\"440\" width=\"210\" height=\"85\" rx=\"14\" fill=\"#F3EEFD\" stroke=\"#7C3AED\" stroke-width=\"2\"/>\n    <text x=\"450\" y=\"465\" text-anchor=\"middle\" fill=\"#5B21B6\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">الدوائر المركبة</text>\n    <text x=\"450\" y=\"486\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">بسّط أبسط مجموعة صافية أولاً</text>\n    <text x=\"450\" y=\"505\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">ثم عُد بالعكس لتوزيع Q وΔV</text>\n  </g>\n  <!-- فرع: مفتاح مفتوح -->\n  <g>\n    <rect x=\"655\" y=\"350\" width=\"210\" height=\"88\" rx=\"14\" fill=\"#FEF6E7\" stroke=\"#D97706\" stroke-width=\"2\"/>\n    <text x=\"760\" y=\"375\" text-anchor=\"middle\" fill=\"#92400E\" font-family=\"Cairo\" font-weight=\"800\" font-size=\"13\">في الدائرة المستمرة</text>\n    <text x=\"760\" y=\"397\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">بعد الشحن: مفتاح مفتوح، I = 0</text>\n    <text x=\"760\" y=\"415\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">جهدها = جهد العنصر الموازي</text>\n    <text x=\"760\" y=\"432\" text-anchor=\"middle\" fill=\"#3D4B63\" font-size=\"10.5\">توالٍ مع الكل ⟸ جهد المصدر كاملاً</text>\n  </g>\n</svg>",
+     "caption": "خريطة ذهنية تلخيصية — تتبع الأسهم من المركز وأعد بناء الدرس من ذاكرتك"
+    }
+   ]
+  },
+  {
+   "title": "قوانين الدرس ووحداتها",
+   "icon": "📋",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<thead><tr><th>القانون</th><th>يُستعمل لـ</th><th>ملاحظات الاستعمال</th></tr></thead>\n  <tbody>\n    <tr><td class=\"ltr\"><b>C<sub>eq</sub> = C₁+C₂+…+C<sub>n</sub></b></td><td class=\"right\">السعة المكافئة على التوازي</td><td class=\"right\">الجهد ΔV مشترك على الجميع</td></tr>\n    <tr><td class=\"ltr\"><b>1/C<sub>eq</sub> = 1/C₁+1/C₂+…+1/C<sub>n</sub></b></td><td class=\"right\">السعة المكافئة على التوالي</td><td class=\"right\">الشحنة Q مشتركة — لا تنسَ قلب الناتج!</td></tr>\n    <tr><td class=\"ltr\"><b>C<sub>eq</sub> = C₁C₂/(C₁+C₂)</b></td><td class=\"right\">اختصار لمتسعتين على التوالي فقط</td><td class=\"right\">«الضرب على الجمع»</td></tr>\n    <tr><td class=\"ltr\"><b>Q<sub>total</sub> = Q₁+Q₂+…</b></td><td class=\"right\">الشحنة الكلية في التوازي</td><td class=\"right\">في التوالي: Q<sub>total</sub> = Q₁ = Q₂</td></tr>\n    <tr><td class=\"ltr\"><b>ΔV<sub>total</sub> = ΔV₁+ΔV₂+…</b></td><td class=\"right\">الجهد الكلي في التوالي</td><td class=\"right\">في التوازي: ΔV<sub>total</sub> = ΔV₁ = ΔV₂</td></tr>\n    <tr><td class=\"ltr\"><b>ΔV<sub>i</sub> = Q/C<sub>i</sub></b></td><td class=\"right\">توزيع الجهد في التوالي</td><td class=\"right\">أصغر سعة تأخذ أكبر جهد</td></tr>\n    <tr><td class=\"ltr\"><b>C<sub>k</sub> = kC</b></td><td class=\"right\">عازل في إحدى متسعات المجموعة</td><td class=\"right\">ثم أعد حساب C<sub>eq</sub> الجديدة</td></tr>\n    <tr><td class=\"ltr\"><b>PE = ½C<sub>eq</sub>(ΔV)²</b></td><td class=\"right\">طاقة المجموعة كلها</td><td class=\"right\">تصح كل صيغ الطاقة باستعمال C<sub>eq</sub></td></tr>\n    <tr><td class=\"ltr\"><b>ΔV = I×R</b> (قانون أوم)</td><td class=\"right\">متسعة موازية لعنصر بدائرة مستمرة</td><td class=\"right\">جهد المتسعة = جهد العنصر الموازي لها</td></tr>\n  </tbody>"
+    }
+   ]
+  },
+  {
+   "title": "جدول تحليل الأسئلة الوزارية — ربط المتسعات (2017–2024)",
+   "icon": "🎯",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<thead><tr><th style=\"width:42%\">السؤال (مختصراً)</th><th>السنة · الدور</th><th>الفكرة المقاسة</th><th>النمط</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\">3،6μF توالٍ مع 12V ثم عازل (2) في كلتيهما (موصولة) → الجهود</td><td>2017 · تمهيدي</td><td class=\"right\">توالٍ + عازل موصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">علّل: ازدياد السعة المكافئة للمربوطة على التوازي</td><td>2017 · الدور الأول</td><td class=\"right\">التوازي يكافئ زيادة A</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">متسعة موازية لمصباح (r=20، R=40، 12V) شحنتها 20μC → C وPE</td><td>2017 · الدور الأول</td><td class=\"right\">متسعة بدائرة مستمرة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">3،6μF توازٍ بشحنة 900μC ثم فصل + عازل (3) في الأولى</td><td>2017 · الدور الثاني</td><td class=\"right\">مفصولة: Q الكلية محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">3،6μF توالٍ 12V (جهد + طاقة) ثم عازل (4) في C₁ (موصولة)</td><td>2017 · الدور الثالث</td><td class=\"right\">توالٍ + عازل موصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">علّل: المتسعة الموضوعة في دائرة التيار المستمر مفتاح مفتوح</td><td>2017 · الدور الثالث</td><td class=\"right\">مفتاح مفتوح</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">9،18μF توالٍ 24V + عازل k في C₁ → Q=288μC ⟹ k=4</td><td>2018 · الدور الأول</td><td class=\"right\">توالٍ + عازل k مجهول</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">ما السبب: نقصان السعة المكافئة للمربوطة على التوالي</td><td>2018 · الدور الأول</td><td class=\"right\">التوالي يكافئ زيادة d</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">تصميم: (9،12،18)μF و25V — أصغر وأكبر سعة مكافئة بالرسم</td><td>2018 · الدور الثاني</td><td class=\"right\">تصميم الربط</td><td>رسم + حل</td></tr>\n    <tr><td class=\"right\">(4،8،12)μF توازٍ مع 24V → C<sub>eq</sub> وQ₁ وQ الكلية والطاقة</td><td>2018 · الدور الثالث</td><td class=\"right\">توازٍ مباشر + طاقة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">12،8μF توازٍ بشحنة 400μC ثم فصل + عازل K → 5V ⟹ K=6</td><td>2019 · تمهيدي</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">ما الغرض من ربط مجموعة متسعات على التوالي؟</td><td>2019 · تمهيدي</td><td class=\"right\">غاية التوالي</td><td>سرد</td></tr>\n    <tr><td class=\"right\">4،6μF توازٍ موصولة 50V + عازل (3) في الثانية</td><td>2019 · الدور الثاني</td><td class=\"right\">موصولة: ΔV ثابت</td><td>حل مسألة</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "html",
+     "html": "<thead><tr><th style=\"width:42%\">السؤال (مختصراً) — تكملة ١</th><th>السنة · الدور</th><th>الفكرة المقاسة</th><th>النمط</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\">(4،8،12،6)μF توازٍ مع 12V — مثال الكتاب حرفياً</td><td>2020 · تمهيدي</td><td class=\"right\">توازٍ مباشر</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">9،18μF توالٍ 12V + عازل k في C₁ → Q=144μC ⟹ k=4</td><td>2020 · الدور الأول</td><td class=\"right\">توالٍ + عازل k مجهول</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">تصميم: ثلاث متماثلة — أكبر طاقة مخزونة + إثبات</td><td>2020 · الدور الأول</td><td class=\"right\">تصميم + طاقة</td><td>رسم + إثبات</td></tr>\n    <tr><td class=\"right\">الفائدة العملية من ربط المتسعات على التوالي</td><td>2020 · الدور الثاني</td><td class=\"right\">غاية التوالي</td><td>سرد</td></tr>\n    <tr><td class=\"right\">4،8μF توازٍ بشحنة 600μC ثم فصل + عازل K → 30V ⟹ K=2</td><td>2020 · الدور الثاني</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">3،6μF توالٍ مع 24V → جهد كل متسعة والطاقة الكلية</td><td>2020 · الدور الثالث</td><td class=\"right\">توالٍ مباشر + طاقة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">(6،12،8،4)μF توازٍ مع 12V — مثال الكتاب حرفياً</td><td>2021 · تمهيدي</td><td class=\"right\">توازٍ مباشر</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">4،8μF توازٍ بشحنة 600μC ثم فصل + عازل → Q₂=480μC ⟹ k=2</td><td>2021 · الدور الأول</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">متسعة 5μF مع مصباح: توازٍ (20μC) وتوالٍ (60μC)</td><td>2021 · د٢ التكميلي</td><td class=\"right\">متسعة بدائرة مستمرة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">9،18μF توالٍ 12V + عازل (2) في كلتيهما (موصولة) → الجهود لا تتغير</td><td>2022 · تمهيدي</td><td class=\"right\">توالٍ + عازل موصولة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">شكل: 9 توالٍ 18 ثم توازٍ 4 مع 24V → C<sub>eq</sub> وQ وجهد C₁</td><td>2022 · الدور الأول</td><td class=\"right\">دائرة مركبة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">2،6μF توازٍ بشحنة 80μC (طاقات) ثم فصل + عازل k → 5V ⟹ k=5</td><td>2022 · الدور الثاني</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "html",
+     "html": "<thead><tr><th style=\"width:42%\">السؤال (مختصراً) — تكملة ٢</th><th>السنة · الدور</th><th>الفكرة المقاسة</th><th>النمط</th></tr></thead>\n  <tbody>\n    <tr><td class=\"right\">8،12μF توازٍ بشحنة 640μC ثم فصل + عازل k → 20V ⟹ k=2 + الطاقات</td><td>2023 · الدور الأول</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">2،4μF توازٍ مع 20V ثم فصل + عازل → Q₂=96μC ⟹ k=2</td><td>2023 · الدور الثاني</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">علّل: المتسعة المشحونة في الدائرة المستمرة مفتاح مفتوح</td><td>2023 · الدور الثاني</td><td class=\"right\">مفتاح مفتوح</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">5،15μF توازٍ موصولة 60V + عازل k في C₁ → Q الكلية 3000μC ⟹ k=7</td><td>2023 · الدور الثالث</td><td class=\"right\">موصولة: ΔV ثابت</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">أعط السبب: ازدياد السعة المكافئة على التوازي</td><td>2023 · الدور الثالث</td><td class=\"right\">التوازي يكافئ زيادة A</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">9،3μF توازٍ بشحنة 288μC ثم فصل + عازل (5) في الثانية</td><td>2024 · تمهيدي</td><td class=\"right\">مفصولة: Q محفوظة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">ما السبب: نقصان السعة المكافئة على التوالي</td><td>2024 · تمهيدي</td><td class=\"right\">التوالي يكافئ زيادة d</td><td>تعليل</td></tr>\n    <tr><td class=\"right\">شكل: C₁ توالٍ C₂=20μF ثم توازٍ C₃=6μF مع E وPE₁ → C₁ وكل الشحنات</td><td>2024 · الدور الأول</td><td class=\"right\">مركبة + مجال + طاقة</td><td>حل مسألة</td></tr>\n    <tr><td class=\"right\">صح/خطأ: المتسعة في دائرة التيار المستمر تُعدّ مفتاحاً مفتوحاً</td><td>2024 · الدور الأول</td><td class=\"right\">مفتاح مفتوح</td><td>عبارة صح</td></tr>\n  </tbody>"
+    },
+    {
+     "type": "note",
+     "label": "أخطاء شائعة — انتبه",
+     "html": "قراءة المعلّم للجدول — أين يضرب الوزاري؟</span>\n  <p>٣٤ سؤالاً تتوزع على قلبين: <b>«توازٍ مشحون ثم فصل + عازل» (٨ مسائل — الأكثر تكراراً في الفصل كله!)</b> و<b>«عازل والمجموعة موصولة» (٥ مسائل)</b>. يليهما التوازي المباشر (٤ — منها مثال الكتاب مرتين حرفياً) والتعليلان المتقابلان: ازدياد التوازي / نقصان التوالي (٥ مرات). ولا تهمل «مفتاح مفتوح» — ظهر ٥ مرات بين تعليل ومسألة (أولها 2017 د٣ وآخرها 2024 د١). من أتقن سؤال «مَن الثابت؟ ومَن المشترك؟» حصد درجة هذا الدرس كاملة.</p>",
+     "private": true
+    }
+   ]
+  },
+  {
+   "title": "أجوبة «جرّب بنفسك»",
+   "icon": "✍",
+   "blocks": [
+    {
+     "type": "html",
+     "html": "<div class=\"a\"><div><span class=\"im\">C<sub>eq</sub> = 2+3+5 = 10μF</span> ، <span class=\"im\">Q<sub>total</sub> = C<sub>eq</sub>×ΔV = 10×6 = 60μC</span>.</div></div>\n  <div class=\"a\"><div><span class=\"im\">C<sub>eq</sub> = (4×12)/(4+12) = 3μF</span> ⟹ <span class=\"im\">Q = 3×16 = 48μC</span> ⟹ <span class=\"im\">ΔV₁ = 48/4 = 12V</span> ، <span class=\"im\">ΔV₂ = 48/12 = 4V</span> (تحقق: 12+4 = 16 ✓ — الأصغر سعةً أخذت الجهد الأكبر).</div></div>\n  <div class=\"a\"><div>التوالي أولاً: <span class=\"im\">(6×3)/(6+3) = 2μF</span>، ثم التوازي: <span class=\"im\">C<sub>eq</sub> = 2+4 = 6μF</span>.</div></div>\n  <div class=\"a\"><div><span class=\"im\">C<sub>eq</sub> = 15μF</span> ⟹ <span class=\"im\">ΔV = 300/15 = 20V</span> ⟹ <span class=\"im\">Q₁ = 5×20 = 100μC</span> ، <span class=\"im\">Q₂ = 10×20 = 200μC</span>.</div></div>\n  <div class=\"a\"><div>التيار نفسه <span class=\"im\">I = 0.2A</span> (فرع المتسعة مفتوح) ⟹ جهد المقاومة <span class=\"im\">ΔV<sub>R</sub> = 0.2×40 = 8V</span> ⟹ <span class=\"im\">Q = 5μF×8V = 40μC</span>.</div></div>\n  <div class=\"a\"><div>توازٍ: <span class=\"im\">C<sub>eq</sub> = 16μF ⟹ PE = ½×16×10<sup>-6</sup>×(20)² = 3200×10<sup>-6</sup>J</span>. توالٍ: <span class=\"im\">C<sub>eq</sub> = 4μF ⟹ PE = 800×10<sup>-6</sup>J</span>. التوازي يخزن ٤ أمثال — نسبة <span class=\"im\">(2C)/(C/2) = 4</span> دائماً لمتسعتين متماثلتين.</div></div>"
+    },
+    {
+     "type": "law",
+     "label": "قاعدة ذهبية · التعريف الوزاري",
+     "html": "رسالة الدرس الأخيرة</span>\n  <p class=\"rule-line\">«قبل أي مسألة ربط اسأل ثلاثة أسئلة: توازٍ أم توالٍ (مَن المشترك؟)، مفصولة أم موصولة (مَن الثابت؟)، وهل الدائرة تحتاج تبسيطاً تدريجياً؟»</p>"
+    },
+    {
+     "type": "html",
+     "html": "<div class=\"int-hero\">\n    <span class=\"int-kicker\">☕ فاصل رقم ٢ · ممنوع الحفظ هنا!</span>\n    <h2>استراحة فيزيائية</h2>\n    <p>من حافلات الصين إلى ذاكرة هاتفك — قواعد الربط التي حسبتَها اليوم تدير عالماً كاملاً</p>\n  </div>\n\n  <div class=\"int-card story\">\n    <span class=\"int-tab\">🚌 تقنية مذهلة · الحافلة التي تُشحن في ٣٠ ثانية</span>\n    <p>في شنغهاي الصينية تسير حافلات «كاباباص» بلا وقود وبلا بطارية تقريباً: على سطحها بنك ضخم من <b>المتسعات الفائقة</b> (Supercapacitors) مربوطة <span class=\"hl\">توالياً وتوازياً معاً</span> — التوالي كي تتحمل المجموعة جهداً أعلى، والتوازي كي تكبر السعة الكلية فتُخزن طاقة أكبر.</p>\n    <p>وبينما ينزل الركاب ويصعدون في المحطة، تُشحن الحافلة كاملة خلال <b>ثوانٍ معدودة</b> ثم تنطلق! البطارية تحتاج ساعات لشحنها، أما المتسعة فتُملأ دفعة واحدة — وهذه أعظم مزاياها. القواعد نفسها التي حللتَ بها مسائل هذا الدرس تُصمَّم بها حافلات مدينة بأكملها.</p>\n  </div>\n\n  <div class=\"int-facts\">\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">💾 هل تعلم؟</span>\n      <p>ذاكرة هاتفك (RAM) جيشٌ من المتسعات! كل «بِت» معلومات هو متسعة مجهرية: مشحونة = ١، مفرّغة = ٠. ذاكرة 8GB تعني نحو <b>٦٨ مليار متسعة</b>، ولأنها تسرّب شحنتها باستمرار يعيد الجهاز «إنعاشها» بالشحن عشرات المرات كل ثانية دون أن تشعر.</p>\n    </div>\n    <div class=\"int-card fact\">\n      <span class=\"int-tab\">🔌 هل تعلم؟</span>\n      <p>افتح أي جهاز إلكتروني وسترى أسطوانات صغيرة منتصبة قرب مصدر التغذية: متسعات مربوطة على <b>التوازي</b> عمداً — لأن التوازي يجمع السعات فتعمل كخزان واحد كبير «ينعّم» الجهد ويسدّ أي هبوط مفاجئ فيه.</p>\n    </div>\n  </div>\n\n  <div class=\"int-card quiz\">\n    <span class=\"int-tab\">🤔 تحدِّ نفسك</span>\n    <p>عندك ثلاث متسعات متماثلة سعة كل منها <span class=\"im\">3μF</span>، وعليك أن تستعمل الثلاث معاً في كل مرة. كم قيمةً <b>مختلفة</b> للسعة المكافئة يمكنك الحصول عليها؟</p>\n    <p class=\"int-flip-hint\">🙃 اقلب الملزمة لتقرأ الجواب:</p>\n    <div class=\"int-flip\">أربع قيم: التوازي الكلي 9μF، والتوالي الكلي 1μF، واثنتان توازياً مع الثالثة توالياً 2μF، واثنتان توالياً مع الثالثة توازياً 4.5μF — جرّب حسابها بنفسك بقانوني هذا الدرس!</div>\n  </div>"
+    }
+   ]
+  }
+ ],
+ "source": "../PHY6/lessons/lesson-1-2.html",
+ "compiledAt": "2026-09-01"
+}

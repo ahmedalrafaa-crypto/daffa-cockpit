@@ -1,0 +1,64 @@
+{
+  "_doc": "سجل الدروس: إضافة درس جديد = سطر هنا + node tools/compile.mjs — بلا لمس كود التطبيق",
+  "lessons": [
+    { "id": "g9-ch1-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch1/lesson1.html", "title": "ما الكهربائية الساكنة؟" },
+    { "id": "g9-ch1-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch1/lesson2.html", "title": "الشحنة الكهربائية والذرة" },
+    { "id": "g9-ch1-l3", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch1/lesson3.html", "title": "طرائق شحن الأجسام" },
+    { "id": "g9-ch1-l6", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch1/lesson6.html", "title": "قانون كولوم" },
+    { "id": "g9-ch1-l7", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch1/lesson7.html", "title": "المجال الكهربائي" },
+
+    { "id": "g9-ch2-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch2/lesson1.html", "title": "قصة اكتشاف المغناطيس" },
+    { "id": "g9-ch2-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch2/lesson2.html", "title": "المواد المغناطيسية" },
+    { "id": "g9-ch2-l3", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch2/lesson3.html", "title": "الأقطاب المغناطيسية" },
+    { "id": "g9-ch2-l4", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch2/lesson4.html", "title": "المجال المغناطيسي" },
+
+    { "id": "g9-ch3-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch3/lesson1.html", "title": "حركة الشحنات الكهربائية" },
+    { "id": "g9-ch3-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch3/lesson2.html", "title": "التيار الكهربائي والأمبير" },
+    { "id": "g9-ch3-l5", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch3/lesson5.html", "title": "فرق الجهد الكهربائي" },
+    { "id": "g9-ch3-l6", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch3/lesson6.html", "title": "المقاومة الكهربائية وقانون أوم" },
+    { "id": "g9-ch3-l7", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch3/lesson7.html", "title": "طرائق ربط المقاومات" },
+
+    { "id": "g9-ch5-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch5/lesson1.html", "title": "القدرة الكهربائية ووحداتها" },
+    { "id": "g9-ch5-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch5/lesson2.html", "title": "قوانين القدرة الثلاثة" },
+    { "id": "g9-ch5-l3", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch5/lesson3.html", "title": "مسائل القدرة الكهربائية" },
+    { "id": "g9-ch5-l5", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch5/lesson5.html", "title": "الطاقة الكهربائية" },
+
+    { "id": "g9-ch6-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson1.html", "title": "تجربة أورستد" },
+    { "id": "g9-ch6-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson2.html", "title": "المجال المغناطيسي لسلك مستقيم" },
+    { "id": "g9-ch6-l3", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson3.html", "title": "مجال الحلقة والملف المحلزن" },
+    { "id": "g9-ch6-l4", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson4.html", "title": "المغناطيس الكهربائي" },
+    { "id": "g9-ch6-l6", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson6.html", "title": "الحث الكهرومغناطيسي والتيار المحتث" },
+    { "id": "g9-ch6-l7", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson7.html", "title": "المولد الكهربائي" },
+    { "id": "g9-ch6-l8", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch6/lesson8.html", "title": "المحرك الكهربائي" },
+
+    { "id": "g9-ch7-l1", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch7/lesson1.html", "title": "التيار المحتث والمحولة الكهربائية" },
+    { "id": "g9-ch7-l2", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch7/lesson2.html", "title": "مبدأ عمل المحولة" },
+    { "id": "g9-ch7-l4", "grade": "g9", "format": "phy-v1", "source": "../sharara/chapters/ch7/lesson4.html", "title": "قانون المحولة ونسبة التحويل" },
+
+    { "id": "g12-ch1-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-1-1.html", "title": "المتسعة المنفردة" },
+    { "id": "g12-ch1-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-1-2.html", "title": "ربط المتسعات" },
+    { "id": "g12-ch1-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-1-3.html", "title": "أنواع المتسعات وتطبيقاتها" },
+
+    { "id": "g12-ch2-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-2-1.html", "title": "أساس الحث الكهرومغناطيسي" },
+    { "id": "g12-ch2-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-2-2.html", "title": "الفيض وقانونا فاراداي ولنز" },
+    { "id": "g12-ch2-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-2-3.html", "title": "المولدات والمحركات" },
+    { "id": "g12-ch2-l4", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-2-4.html", "title": "المحاثة والحث الذاتي والمتبادل" },
+
+    { "id": "g12-ch3-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-3-1.html", "title": "أساسيات التيار المتناوب" },
+    { "id": "g12-ch3-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-3-2.html", "title": "المحث والمتسعة والدائرة المتوالية" },
+    { "id": "g12-ch3-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-3-3.html", "title": "الاهتزاز الكهرومغناطيسي والرنين" },
+
+    { "id": "g12-ch6-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-6-1.html", "title": "النظرية الكمية والظاهرة الكهروضوئية" },
+
+    { "id": "g12-ch7-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-7-2.html", "title": "أشباه الموصلات النقية والمطعّمة" },
+    { "id": "g12-ch7-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-7-3.html", "title": "الثنائي pn والترانزستور" },
+
+    { "id": "g12-ch8-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-8-1.html", "title": "أنموذج بور وطيف الهيدروجين" },
+    { "id": "g12-ch8-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-8-2.html", "title": "أنواع الأطياف والأشعة السينية" },
+    { "id": "g12-ch8-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-8-3.html", "title": "الليزر" },
+
+    { "id": "g12-ch9-l1", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-9-1.html", "title": "تركيب النواة وطاقة الربط" },
+    { "id": "g12-ch9-l2", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-9-2.html", "title": "الانحلال الإشعاعي" },
+    { "id": "g12-ch9-l3", "grade": "g12", "format": "phy6-v1", "source": "../PHY6/lessons/lesson-9-3.html", "title": "التفاعلات النووية والانشطار والاندماج" }
+  ]
+}
