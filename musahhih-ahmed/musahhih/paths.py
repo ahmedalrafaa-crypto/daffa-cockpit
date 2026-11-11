@@ -12,8 +12,26 @@ DATA_ENV = "MUSAHHIH_DATA"
 DATA_FOLDER_NAME = "MusahhihAhmed"
 
 
+CONFIG_FILE = "data_location.txt"
+
+
+def app_root() -> Path:
+    return Path(__file__).resolve().parent.parent
+
+
+def configured_location() -> str:
+    """مكان البيانات من ملف data_location.txt بجانب البرنامج (سطر واحد، مثل D:\\MusahhihData)."""
+    try:
+        for line in (app_root() / CONFIG_FILE).read_text(encoding="utf-8-sig").splitlines():
+            if line.strip() and not line.lstrip().startswith("#"):
+                return line.strip().strip('"')
+    except OSError:
+        pass
+    return ""
+
+
 def data_dir() -> Path:
-    override = os.environ.get(DATA_ENV)
+    override = os.environ.get(DATA_ENV) or configured_location()
     base = Path(override) if override else Path.home() / DATA_FOLDER_NAME
     base.mkdir(parents=True, exist_ok=True)
     return base

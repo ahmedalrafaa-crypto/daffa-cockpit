@@ -95,6 +95,25 @@ MIGRATIONS: list[str] = [
     );
     CREATE INDEX idx_layout_exam ON layout_boxes(exam_id, page);
     """,
+    # 3 — المرحلة الثالثة: الأوراق الممسوحة
+    """
+    CREATE TABLE scan_pages (
+        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_id    INTEGER NOT NULL REFERENCES exams(id) ON DELETE RESTRICT,
+        seq        INTEGER NOT NULL,   -- ترتيب دخول الورقة = ترتيب الرزمة في الماسح
+        source     TEXT    NOT NULL,   -- اسم الملف ورقم الصفحة فيه
+        file       TEXT    NOT NULL,   -- مسار الصورة المحفوظة نسبةً لمجلد البيانات
+        status     TEXT    NOT NULL CHECK (status IN ('matched', 'duplicate', 'unknown')),
+        student_id INTEGER REFERENCES students(id) ON DELETE RESTRICT,
+        page       INTEGER,
+        aligned    INTEGER NOT NULL DEFAULT 0,  -- 1 = الصورة مقوَّمة على مقاس A4 بالعلامات المرجعية
+        note       TEXT    NOT NULL DEFAULT '',
+        created_at TEXT    NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX idx_scans_exam ON scan_pages(exam_id, status);
+    CREATE UNIQUE INDEX idx_scans_one_matched ON scan_pages(exam_id, student_id, page) WHERE status = 'matched';
+    ALTER TABLE exams ADD COLUMN import_confirmed_at TEXT;
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

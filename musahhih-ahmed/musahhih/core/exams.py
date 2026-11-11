@@ -314,6 +314,8 @@ class ExamStore:
 
     def unapprove(self, exam_id: int) -> None:
         """يعيد الامتحان مسودة. الأوراق المطبوعة سابقاً تصبح غير صالحة."""
+        if self.conn.execute("SELECT COUNT(*) FROM scan_pages WHERE exam_id = ?", (exam_id,)).fetchone()[0]:
+            raise AppError("لا يمكن إلغاء اعتماد امتحان استُوردت له أوراق ممسوحة.")
         with self.conn:
             self.conn.execute("DELETE FROM exam_students WHERE exam_id = ?", (exam_id,))
             self.conn.execute("DELETE FROM layout_boxes WHERE exam_id = ?", (exam_id,))
@@ -333,3 +335,9 @@ class ExamStore:
             LayoutBox(r["page"], r["kind"], r["question_id"], r["part_id"], r["x_mm"], r["y_mm"], r["w_mm"], r["h_mm"])
             for r in self.conn.execute("SELECT * FROM layout_boxes WHERE exam_id = ? ORDER BY page, id", (exam_id,))
         ]
+
+    def page_count(self, exam_id: int) -> int:
+        """عدد صفحات ورقة الطالب الواحد في الامتحان المعتمد."""
+        return self.conn.execute(
+            "SELECT COALESCE(MAX(page), 0) FROM layout_boxes WHERE exam_id = ?", (exam_id,)
+        ).fetchone()[0]

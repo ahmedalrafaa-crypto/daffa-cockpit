@@ -10,16 +10,17 @@ from PySide6.QtWidgets import (
 from .. import APP_NAME, APP_SUBTITLE, __version__
 from ..core.exams import ExamStore
 from ..core.roster import Roster
+from ..core.scans import ScanStore
 from ..core.settings import Settings
 from .classes_page import ClassesPage
 from .exam_editor_page import ExamEditorPage
 from .exams_page import ExamsPage
 from .home_page import HomePage
+from .scan_page import ScanPage
 from .students_page import StudentsPage
 
 # أقسام لم تُنفَّذ بعد: تظهر معطّلة مع رقم مرحلتها، حتى لا يوجد زر شكلي.
 UPCOMING = [
-    ("استيراد الأوراق", 3),
     ("تصحيح الامتحانات", 4),
     ("سجل الدرجات", 5),
     ("إعدادات الطباعة", 6),
@@ -43,7 +44,8 @@ class MainWindow(QMainWindow):
         self.exams = ExamsPage(self.store, self.roster, self.settings)
         self.editor = ExamEditorPage(self.store, self.roster, self.settings)
         # محرّر الامتحان صفحة داخلية تُفتح من قائمة الامتحانات وليس لها زر في الشريط
-        self.pages = [self.home, self.classes, self.students, self.exams, self.editor]
+        self.scan = ScanPage(self.store, ScanStore(conn))
+        self.pages = [self.home, self.classes, self.students, self.exams, self.editor, self.scan]
 
         central = QWidget()
         layout = QHBoxLayout(central)
@@ -65,12 +67,12 @@ class MainWindow(QMainWindow):
         side.addWidget(subtitle)
 
         self.nav = QButtonGroup(self)
-        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات")):
+        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات", "استيراد الأوراق")):
             button = QPushButton(text)
             button.setCheckable(True)
             self.nav.addButton(button, index)
             side.addWidget(button)
-        self.nav.idClicked.connect(self.show_page)
+        self.nav.idClicked.connect(lambda i: self.show_page(self.NAV_PAGES[i]))
         new_exam = QPushButton("＋ إنشاء امتحان جديد")
         new_exam.clicked.connect(self._new_exam)
         side.addWidget(new_exam)
@@ -98,10 +100,15 @@ class MainWindow(QMainWindow):
         self.classes.open_section.connect(self._open_section)
         self.exams.open_exam.connect(self._open_exam)
         self.editor.back.connect(lambda: self.show_page(3))
+        self.editor.import_requested.connect(lambda: (self.scan.select_exam(self.editor.exam_id), self.show_page(5)))
         self.show_page(0)
 
+    # زر الشريط ← رقم الصفحة (المحرّر صفحة داخلية بلا زر، ويُضاء زر «الامتحانات» عند فتحه)
+    NAV_PAGES = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5}
+    PAGE_NAV = {0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4}
+
     def show_page(self, index: int) -> None:
-        self.nav.button(min(index, 3)).setChecked(True)
+        self.nav.button(self.PAGE_NAV[index]).setChecked(True)
         self.pages[index].refresh()
         self.stack.setCurrentIndex(index)
 

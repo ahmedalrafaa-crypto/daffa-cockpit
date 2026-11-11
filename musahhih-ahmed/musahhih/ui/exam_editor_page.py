@@ -38,6 +38,7 @@ def _button(text: str, slot, name: str = "") -> QPushButton:
 
 class ExamEditorPage(QWidget):
     back = Signal()
+    import_requested = Signal()
 
     def __init__(self, store: ExamStore, roster: Roster, settings: Settings):
         super().__init__()
@@ -95,8 +96,9 @@ class ExamEditorPage(QWidget):
         self.approve = _button("اعتماد الامتحان وإنشاء أوراق الطلاب", self._approve, "primary")
         self.open_sheets = _button("فتح أوراق الطلاب للطباعة", self._open_sheets, "primary")
         self.alignment = _button("اختبار محاذاة الطباعة", self._alignment)
+        self.import_scans = _button("استيراد الأوراق الممسوحة", self.import_requested.emit)
         self.unapprove = _button("إلغاء الاعتماد", self._unapprove, "danger")
-        for b in (self.preview, self.approve, self.open_sheets, self.alignment):
+        for b in (self.preview, self.approve, self.open_sheets, self.alignment, self.import_scans):
             row.addWidget(b)
         row.addStretch()
         row.addWidget(self.unapprove)
@@ -181,6 +183,7 @@ class ExamEditorPage(QWidget):
         self.approve.setVisible(draft)
         self.open_sheets.setVisible(not draft)
         self.alignment.setVisible(not draft)
+        self.import_scans.setVisible(not draft)
         self.unapprove.setVisible(not draft)
 
     def _question_id(self) -> int | None:

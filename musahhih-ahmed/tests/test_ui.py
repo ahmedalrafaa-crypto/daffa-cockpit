@@ -60,3 +60,14 @@ def test_exam_editor_flow(qapp, conn, data_dir, store, exam):
     assert editor.approve.isHidden() and not editor.open_sheets.isHidden() and not editor.alignment.isHidden()
     window.show_page(3)
     assert window.exams.table.item(0, 5).text() == "معتمد"
+
+
+def test_scan_page_lists_only_approved_exams(qapp, conn, data_dir, store, exam):
+    window = MainWindow(conn)
+    window.show_page(5)
+    assert window.scan.exam.count() == 0 and not window.scan.import_button.isEnabled()
+    from musahhih.sheet import workflow
+    workflow.approve(store, window.roster, exam)
+    window.scan.select_exam(exam)
+    assert window.scan.exam.count() == 1 and window.scan.import_button.isEnabled()
+    assert "الأوراق المستوردة: 0" in window.scan.summary.text()
