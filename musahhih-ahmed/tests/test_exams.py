@@ -109,3 +109,14 @@ def test_settings(conn):
     assert settings.get_float("x") == -0.5
     settings.set("x", "abc")
     assert settings.get_float("x", 7) == 7
+
+
+def test_add_question_with_part_is_atomic(store, section):
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 10)
+    question_id, part_id = store.add_question_with_part(exam_id, "عرّف الكثافة.", 4, 3)
+    assert [(q.id, [p.id for p in q.parts]) for q in store.questions(exam_id)] == [(question_id, [part_id])]
+    with pytest.raises(AppError):
+        store.add_question_with_part(exam_id, "س", 0)          # درجة غير صالحة
+    with pytest.raises(AppError):
+        store.add_question_with_part(exam_id, "س", 5, 999)      # أسطر غير صالحة
+    assert len(store.questions(exam_id)) == 1                   # لا سؤال فارغ متبقٍّ

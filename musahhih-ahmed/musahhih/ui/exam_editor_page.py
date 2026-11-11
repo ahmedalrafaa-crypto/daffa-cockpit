@@ -214,12 +214,13 @@ class ExamEditorPage(QWidget):
                 return
 
     def _add_question(self) -> None:
-        dialog = IntroDialog(self, "إضافة سؤال")
-        if dialog.exec() != QDialog.DialogCode.Accepted:
-            return
-        new: list[int] = []
-        if self._try(lambda: new.append(self.store.add_question(self.exam_id, dialog.edit.toPlainText()))):
-            self.refresh(("question", new[0]))
+        """سؤال جديد بنصه ودرجته في خطوة واحدة؛ يُضاف له فرع ثانٍ (ب، ج…) لاحقاً عند الحاجة."""
+        dialog = PartDialog(self, "إضافة سؤال", label="نص السؤال:")
+        while dialog.exec() == QDialog.DialogCode.Accepted:
+            new: list[tuple[int, int]] = []
+            if self._try(lambda: new.append(self.store.add_question_with_part(self.exam_id, **dialog.values()))):
+                self.refresh(("part", new[0][1]))
+                return
 
     def _add_part(self) -> None:
         question_id = self._question_id()

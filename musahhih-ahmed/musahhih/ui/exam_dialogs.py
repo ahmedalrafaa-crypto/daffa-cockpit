@@ -156,13 +156,14 @@ class IntroDialog(QDialog):
 
 
 class PartDialog(QDialog):
-    def __init__(self, parent: QWidget | None, title: str, part: Part | None = None, default_marks: float = 5):
+    def __init__(self, parent: QWidget | None, title: str, part: Part | None = None, default_marks: float = 5,
+                 label: str = "نص الفرع:"):
         super().__init__(parent)
         self.setWindowTitle(title)
         self.setMinimumWidth(600)
         self.image: bytes | None = part.image if part else None
         layout = QVBoxLayout(self)
-        layout.addWidget(QLabel("نص الفرع:"))
+        layout.addWidget(QLabel(label))
         self.text = QPlainTextEdit(part.text if part else "")
         self.text.setMinimumHeight(120)
         layout.addWidget(self.text)

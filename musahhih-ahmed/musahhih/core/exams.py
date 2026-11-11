@@ -204,6 +204,18 @@ class ExamStore:
             )
         return cur.lastrowid
 
+    def add_question_with_part(self, exam_id: int, text: str, max_marks: float, answer_lines: int = 5,
+                               image: bytes | None = None) -> tuple[int, int]:
+        """يضيف سؤالاً مع فرعه الأول معاً؛ إن رُفض الفرع (درجة غير صالحة مثلاً) لا يبقى سؤال فارغ."""
+        self._require_draft(exam_id)
+        self._validate_part(max_marks, answer_lines)
+        question_id = self.add_question(exam_id)
+        try:
+            return question_id, self.add_part(question_id, text, max_marks, answer_lines, image)
+        except Exception:
+            self.delete_question(question_id)
+            raise
+
     def update_question(self, question_id: int, intro: str) -> None:
         self._require_draft(self._exam_of_question(question_id))
         with self.conn:
