@@ -95,3 +95,29 @@ def test_completing_a_text_only_question(qapp, conn, data_dir, store, exam, monk
     editor._complete_question(question)
     done = next(x for x in store.questions(exam) if x.id == q)
     assert done.intro == "" and [(p.text, p.max_marks) for p in done.parts] == [("سؤال قديم بلا درجة", 7.0)]
+
+
+def test_editing_single_part_question_edits_its_marks(qapp, conn, data_dir, store, section, monkeypatch):
+    from PySide6.QtWidgets import QDialog
+
+    from musahhih.ui import exam_editor_page as page_module
+
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 10)
+    q, part = store.add_question_with_part(exam_id, "عرّف الكثافة.", 4, 3)
+    window = MainWindow(conn)
+    window._open_exam(exam_id)
+    shown = []
+
+    class AutoDialog(page_module.PartDialog):
+        def exec(self):
+            shown.append(self.windowTitle())
+            self.marks.setValue(10)
+            return QDialog.DialogCode.Accepted
+
+    monkeypatch.setattr(page_module, "PartDialog", AutoDialog)
+    window.editor.tree.setCurrentItem(window.editor.tree.topLevelItem(0))
+    window.editor._edit()
+    assert shown == ["تعديل السؤال"]
+    assert store.questions(exam_id)[0].parts[0].max_marks == 10
+    window.editor.refresh()
+    assert "10 من 10" in window.editor.sum_label.text()

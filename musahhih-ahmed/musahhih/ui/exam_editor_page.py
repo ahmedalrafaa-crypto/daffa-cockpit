@@ -257,16 +257,23 @@ class ExamEditorPage(QWidget):
             if not question.parts:
                 self._complete_question(question)
                 return
+            if len(question.parts) == 1 and not question.intro.strip():
+                # سؤال بلا فروع في نظر المستخدم: التعديل عليه هو تعديل نصه ودرجته
+                self._edit_part(question.parts[0], "تعديل السؤال", "نص السؤال:")
+                return
             dialog = IntroDialog(self, "تعديل السؤال", question.intro)
             if dialog.exec() == QDialog.DialogCode.Accepted:
                 if self._try(lambda: self.store.update_question(item_id, dialog.edit.toPlainText())):
                     self.refresh()
             return
         part = next(p for q in self.store.questions(self.exam_id) for p in q.parts if p.id == item_id)
-        dialog = PartDialog(self, "تعديل الفرع", part)
+        self._edit_part(part, "تعديل الفرع", "نص الفرع:")
+
+    def _edit_part(self, part, title: str, label: str) -> None:
+        dialog = PartDialog(self, title, part, label=label)
         while dialog.exec() == QDialog.DialogCode.Accepted:
-            if self._try(lambda: self.store.update_part(item_id, **dialog.values())):
-                self.refresh()
+            if self._try(lambda: self.store.update_part(part.id, **dialog.values())):
+                self.refresh(("part", part.id))
                 return
 
     def _move(self, step: int) -> None:
