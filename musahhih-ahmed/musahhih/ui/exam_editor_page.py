@@ -222,6 +222,20 @@ class ExamEditorPage(QWidget):
                 self.refresh(("part", new[0][1]))
                 return
 
+    def _complete_question(self, question) -> None:
+        """سؤال بلا درجة (أُضيف نصه فقط): يُدخل له الآن درجته وأسطر إجابته فيصير سؤالاً كاملاً."""
+        dialog = PartDialog(self, "درجة السؤال", label="نص السؤال:")
+        dialog.text.setPlainText(question.intro)
+        while dialog.exec() == QDialog.DialogCode.Accepted:
+            def convert() -> None:
+                part_id = self.store.add_part(question.id, **dialog.values())
+                self.store.update_question(question.id, "")  # النص صار نص الفرع الوحيد
+                self._converted = part_id
+
+            if self._try(convert):
+                self.refresh(("part", self._converted))
+                return
+
     def _add_part(self) -> None:
         question_id = self._question_id()
         if question_id is None:
@@ -240,6 +254,9 @@ class ExamEditorPage(QWidget):
         kind, item_id = current
         if kind == "question":
             question = next(q for q in self.store.questions(self.exam_id) if q.id == item_id)
+            if not question.parts:
+                self._complete_question(question)
+                return
             dialog = IntroDialog(self, "تعديل السؤال", question.intro)
             if dialog.exec() == QDialog.DialogCode.Accepted:
                 if self._try(lambda: self.store.update_question(item_id, dialog.edit.toPlainText())):

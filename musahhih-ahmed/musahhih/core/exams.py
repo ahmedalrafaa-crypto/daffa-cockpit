@@ -295,7 +295,9 @@ class ExamStore:
             raise AppError("أضف سؤالاً واحداً على الأقل.")
         for i, q in enumerate(questions):
             if not q.parts:
-                raise AppError(f"{question_title(i)} بلا فروع. أضف له فرعاً واحداً على الأقل أو احذفه.")
+                raise AppError(
+                    f"{question_title(i)} بلا فروع ولا درجة. حدّده واضغط «تعديل» لإدخال درجته، أو احذفه."
+                )
         total = sum(q.total for q in questions)
         if abs(total - exam.total_marks) > 1e-9:
             raise AppError(

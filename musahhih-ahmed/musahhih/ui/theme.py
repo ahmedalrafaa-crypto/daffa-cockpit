@@ -5,6 +5,8 @@ FONT_SIZE_PT = 12
 
 STYLE = """
 QWidget { color: #1f2d3a; }
+QDialog, QMessageBox { background: #f4f6f8; }
+QMessageBox QLabel, QDialog QLabel { color: #1f2d3a; }
 QMainWindow, #page { background: #f4f6f8; }
 #sidebar { background: #1f3a4d; }
 #appTitle { color: white; font-size: 20pt; font-weight: bold; padding: 18px 16px 0 16px; }

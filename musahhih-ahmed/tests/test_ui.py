@@ -71,3 +71,27 @@ def test_scan_page_lists_only_approved_exams(qapp, conn, data_dir, store, exam):
     window.scan.select_exam(exam)
     assert window.scan.exam.count() == 1 and window.scan.import_button.isEnabled()
     assert "الأوراق المستوردة: 0" in window.scan.summary.text()
+
+
+def test_completing_a_text_only_question(qapp, conn, data_dir, store, exam, monkeypatch):
+    from PySide6.QtWidgets import QDialog
+
+    from musahhih.ui import exam_editor_page as page_module
+
+    q = store.add_question(exam, "سؤال قديم بلا درجة")
+    window = MainWindow(conn)
+    window._open_exam(exam)
+    editor = window.editor
+    with pytest.raises(Exception, match="بلا فروع ولا درجة"):
+        store.check_ready(exam)
+
+    class AutoDialog(page_module.PartDialog):
+        def exec(self):
+            self.marks.setValue(7)
+            return QDialog.DialogCode.Accepted
+
+    monkeypatch.setattr(page_module, "PartDialog", AutoDialog)
+    question = next(x for x in store.questions(exam) if x.id == q)
+    editor._complete_question(question)
+    done = next(x for x in store.questions(exam) if x.id == q)
+    assert done.intro == "" and [(p.text, p.max_marks) for p in done.parts] == [("سؤال قديم بلا درجة", 7.0)]
