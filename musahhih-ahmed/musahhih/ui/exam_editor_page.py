@@ -15,6 +15,7 @@ from ..core.exams import ExamStore, format_marks, part_letter, question_title
 from ..core.roster import Roster
 from ..core.settings import Settings
 from ..sheet import workflow
+from ..sheet.text import isolate_formulas
 from . import dialogs
 from .exam_dialogs import AlignmentDialog, ExamDialog, IntroDialog, PartDialog
 from .exams_page import ui_date
@@ -25,7 +26,8 @@ ROLE_ID = Qt.ItemDataRole.UserRole + 1
 
 def _snippet(text: str, limit: int = 70) -> str:
     text = " ".join(text.split())
-    return text if len(text) <= limit else text[: limit - 1] + "…"
+    text = text if len(text) <= limit else text[: limit - 1] + "…"
+    return isolate_formulas(text)  # حتى لا ينعكس ترتيب المعادلات داخل الجملة العربية
 
 
 def _button(text: str, slot, name: str = "") -> QPushButton:

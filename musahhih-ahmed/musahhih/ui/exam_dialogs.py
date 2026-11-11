@@ -1,7 +1,7 @@
 """نوافذ إدخال بيانات الامتحان والأسئلة والفروع واختبار المحاذاة."""
 from __future__ import annotations
 
-from PySide6.QtCore import QBuffer, QByteArray, QDate, QIODevice, Qt
+from PySide6.QtCore import QBuffer, QByteArray, QDate, QIODevice, Qt, QTimer
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import (
     QComboBox, QDateEdit, QDialog, QDialogButtonBox, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout,
@@ -14,6 +14,22 @@ from . import dialogs
 
 SYMBOLS = "² ³ ⁻¹ ½ ₀ ₁ ₂ × ÷ ± √ ≈ ≠ ≤ ≥ ∞ → ° Δ α β γ θ λ μ π ρ σ ε ω Ω".split()
 MAX_IMAGE_SIDE = 1600
+
+
+class _SelectAllMixin:
+    """عند الدخول للحقل يُحدَّد كل ما فيه، فلا تُلحق الكتابة الجديدة بالقيمة القديمة (5 ثم 20 ← 520)."""
+
+    def focusInEvent(self, event):
+        super().focusInEvent(event)
+        QTimer.singleShot(0, self.lineEdit().selectAll)
+
+
+class MarksSpin(_SelectAllMixin, QDoubleSpinBox):
+    pass
+
+
+class CountSpin(_SelectAllMixin, QSpinBox):
+    pass
 
 
 def _buttons(dialog: QDialog, save_text: str = "حفظ") -> QDialogButtonBox:
@@ -64,11 +80,11 @@ class ExamDialog(QDialog):
         self.date.setCalendarPopup(True)
         self.date.setDisplayFormat("dd/MM/yyyy")
         self.date.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
-        self.total = QDoubleSpinBox()
+        self.total = MarksSpin()
         self.total.setRange(1, 1000)
         self.total.setDecimals(1)
         self.total.setValue(exam.total_marks if exam else 100)
-        self.duration = QSpinBox()
+        self.duration = CountSpin()
         self.duration.setRange(0, 600)
         self.duration.setSuffix(" دقيقة")
         self.duration.setSpecialValueText("غير محددة")
@@ -83,7 +99,7 @@ class ExamDialog(QDialog):
         form.addRow("مدة الامتحان:", self.duration)
         self.count = None
         if exam is None:
-            self.count = QSpinBox()
+            self.count = CountSpin()
             self.count.setRange(1, 20)
             self.count.setValue(2)
             form.addRow("عدد الأسئلة:", self.count)
@@ -154,7 +170,7 @@ class PartDialog(QDialog):
 
         row = QHBoxLayout()
         row.addWidget(QLabel("الدرجة:"))
-        self.marks = QDoubleSpinBox()
+        self.marks = MarksSpin()
         self.marks.setRange(0.5, 1000)
         self.marks.setDecimals(1)
         self.marks.setSingleStep(0.5)
@@ -162,7 +178,7 @@ class PartDialog(QDialog):
         row.addWidget(self.marks)
         row.addSpacing(24)
         row.addWidget(QLabel("أسطر الإجابة:"))
-        self.lines = QSpinBox()
+        self.lines = CountSpin()
         self.lines.setRange(0, MAX_ANSWER_LINES)
         self.lines.setValue(part.answer_lines if part else 5)
         self.lines.setToolTip("مساحة الإجابة المحجوزة على الورقة، كل سطر 9 ملم")
@@ -251,7 +267,7 @@ class AlignmentDialog(QDialog):
 
     @staticmethod
     def _spin(value: float) -> QDoubleSpinBox:
-        spin = QDoubleSpinBox()
+        spin = MarksSpin()
         spin.setRange(-15, 15)
         spin.setDecimals(1)
         spin.setSingleStep(0.5)
