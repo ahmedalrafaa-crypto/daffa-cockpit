@@ -42,6 +42,59 @@ MIGRATIONS: list[str] = [
         value TEXT NOT NULL
     );
     """,
+    # 2 — المرحلة الثانية: الامتحانات والأسئلة والفروع وتخطيط الورقة المعتمدة
+    """
+    CREATE TABLE exams (
+        id               INTEGER PRIMARY KEY AUTOINCREMENT,
+        name             TEXT    NOT NULL,
+        subject          TEXT    NOT NULL,
+        section_id       INTEGER NOT NULL REFERENCES sections(id) ON DELETE RESTRICT,
+        exam_date        TEXT    NOT NULL,
+        total_marks      REAL    NOT NULL,
+        duration_minutes INTEGER NOT NULL DEFAULT 0,
+        school_name      TEXT    NOT NULL DEFAULT '',
+        status           TEXT    NOT NULL DEFAULT 'draft' CHECK (status IN ('draft', 'approved')),
+        sheets_file      TEXT,
+        created_at       TEXT    NOT NULL DEFAULT (datetime('now')),
+        approved_at      TEXT
+    );
+    CREATE TABLE questions (
+        id       INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_id  INTEGER NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+        position INTEGER NOT NULL,
+        intro    TEXT    NOT NULL DEFAULT ''
+    );
+    CREATE INDEX idx_questions_exam ON questions(exam_id, position);
+    CREATE TABLE parts (
+        id           INTEGER PRIMARY KEY AUTOINCREMENT,
+        question_id  INTEGER NOT NULL REFERENCES questions(id) ON DELETE CASCADE,
+        position     INTEGER NOT NULL,
+        text         TEXT    NOT NULL DEFAULT '',
+        image        BLOB,
+        max_marks    REAL    NOT NULL,
+        answer_lines INTEGER NOT NULL DEFAULT 5
+    );
+    CREATE INDEX idx_parts_question ON parts(question_id, position);
+    -- لقطة من طلاب الشعبة لحظة اعتماد الامتحان: الأرشيف لا يتغير بتعديل لاحق.
+    CREATE TABLE exam_students (
+        exam_id    INTEGER NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+        student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE RESTRICT,
+        full_name  TEXT    NOT NULL,
+        position   INTEGER NOT NULL,
+        PRIMARY KEY (exam_id, student_id)
+    );
+    -- مواضع مناطق الإجابة وخانات الدرجات بالمليمتر من الزاوية العليا اليسرى للصفحة.
+    CREATE TABLE layout_boxes (
+        id          INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_id     INTEGER NOT NULL REFERENCES exams(id) ON DELETE CASCADE,
+        page        INTEGER NOT NULL,
+        kind        TEXT    NOT NULL CHECK (kind IN ('answer', 'part_mark', 'question_mark', 'final_mark')),
+        question_id INTEGER REFERENCES questions(id) ON DELETE CASCADE,
+        part_id     INTEGER REFERENCES parts(id) ON DELETE CASCADE,
+        x_mm REAL NOT NULL, y_mm REAL NOT NULL, w_mm REAL NOT NULL, h_mm REAL NOT NULL
+    );
+    CREATE INDEX idx_layout_exam ON layout_boxes(exam_id, page);
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

@@ -42,14 +42,20 @@ QLineEdit, QComboBox {
     background: white; border: 1px solid #c5ced6; border-radius: 8px; padding: 7px 10px; min-height: 22px;
 }
 QPushButton#icon { padding: 8px 10px; }
+QSpinBox, QDoubleSpinBox, QDateEdit { min-height: 30px; min-width: 90px; }
+QPushButton#symbol { padding: 3px 0; min-width: 30px; font-size: 13pt; }
+QPlainTextEdit {
+    background: white; border: 1px solid #c5ced6; border-radius: 8px; padding: 6px 8px;
+}
 QComboBox::drop-down { border: none; width: 26px; }
 QLineEdit:focus, QComboBox:focus { border-color: #2f8f83; }
-QListWidget, QTableWidget {
+QListWidget, QTableWidget, QTreeWidget {
     background: white; border: 1px solid #dde3e8; border-radius: 10px;
     alternate-background-color: #f7f9fb; outline: none;
 }
 QListWidget::item { padding: 10px 12px; }
-QListWidget::item:selected, QTableWidget::item:selected { background: #d6ece9; color: #1f2d3a; }
+QTreeWidget::item { padding: 7px 4px; }
+QListWidget::item:selected, QTableWidget::item:selected, QTreeWidget::item:selected { background: #d6ece9; color: #1f2d3a; }
 QHeaderView::section {
     background: #eaf0f3; border: none; border-bottom: 1px solid #dde3e8; padding: 8px; font-weight: bold;
 }

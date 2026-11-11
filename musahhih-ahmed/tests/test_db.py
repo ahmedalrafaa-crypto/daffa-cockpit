@@ -26,13 +26,14 @@ def test_upgrade_keeps_data_and_makes_backup(tmp_path, monkeypatch):
     Roster(conn).add_grade("السادس العلمي")
     conn.close()
 
+    old = db.SCHEMA_VERSION
     monkeypatch.setattr(db, "MIGRATIONS", db.MIGRATIONS + ["CREATE TABLE extra (id INTEGER PRIMARY KEY);"])
     monkeypatch.setattr(db, "SCHEMA_VERSION", db.SCHEMA_VERSION + 1)
     conn = db.open_db(path)
     assert [g.name for g in Roster(conn).list_grades()] == ["السادس العلمي"]
     conn.execute("SELECT * FROM extra")
     conn.close()
-    assert len(list((tmp_path / "backups").glob("before-upgrade-v1-*.db"))) == 1
+    assert len(list((tmp_path / "backups").glob(f"before-upgrade-v{old}-*.db"))) == 1
 
 
 def test_newer_database_is_refused(tmp_path):

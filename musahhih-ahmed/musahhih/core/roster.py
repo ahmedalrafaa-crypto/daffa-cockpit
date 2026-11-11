@@ -180,8 +180,11 @@ class Roster:
         count = self.conn.execute("SELECT COUNT(*) FROM students WHERE section_id = ?", (section_id,)).fetchone()[0]
         if count:
             raise AppError(f"لا يمكن حذف شعبة فيها طلاب ({count}). احذف طلابها أولاً.")
-        with self.conn:
-            self.conn.execute("DELETE FROM sections WHERE id = ?", (section_id,))
+        try:
+            with self.conn:
+                self.conn.execute("DELETE FROM sections WHERE id = ?", (section_id,))
+        except sqlite3.IntegrityError:
+            raise AppError("لا يمكن حذف شعبة لها امتحانات محفوظة.") from None
 
     def _ensure_section_name_free(self, grade_id: int, name: str, exclude_id: int | None = None) -> None:
         key = name_key(name)
@@ -258,8 +261,13 @@ class Roster:
             )
 
     def delete_students(self, student_ids: list[int]) -> None:
-        with self.conn:
-            self.conn.executemany("DELETE FROM students WHERE id = ?", [(i,) for i in student_ids])
+        try:
+            with self.conn:
+                self.conn.executemany("DELETE FROM students WHERE id = ?", [(i,) for i in student_ids])
+        except sqlite3.IntegrityError:
+            raise AppError(
+                "لا يمكن حذف طالب له أوراق في امتحان معتمد، حتى لا تضيع نتائجه. لم يُحذف أي طالب."
+            ) from None
 
     # ---------- إحصاءات ----------
     def totals(self) -> tuple[int, int, int]:

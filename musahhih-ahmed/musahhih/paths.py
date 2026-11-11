@@ -33,3 +33,13 @@ def logs_dir() -> Path:
     d = data_dir() / "logs"
     d.mkdir(parents=True, exist_ok=True)
     return d
+
+
+def exam_dir(exam_id: int) -> Path:
+    d = data_dir() / "exams" / f"{exam_id:05d}"
+    d.mkdir(parents=True, exist_ok=True)
+    return d
+
+
+def assets_dir() -> Path:
+    return Path(__file__).resolve().parent / "assets"

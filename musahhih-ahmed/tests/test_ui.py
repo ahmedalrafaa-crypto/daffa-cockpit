@@ -7,8 +7,8 @@ from musahhih.ui.main_window import MainWindow
 
 
 @pytest.fixture(scope="module")
-def app():
-    return QApplication.instance() or create_app([])
+def app(qapp):
+    return qapp
 
 
 def test_navigation_and_live_data(app, conn, roster, section, tmp_path, monkeypatch):
@@ -40,3 +40,23 @@ def test_empty_database_disables_actions(app, conn, tmp_path, monkeypatch):
     assert not window.students.import_button.isEnabled()
     window.show_page(1)
     assert not window.classes.section_add.isEnabled()
+
+
+def test_exam_editor_flow(qapp, conn, data_dir, store, exam):
+    window = MainWindow(conn)
+    window.show_page(3)
+    assert window.exams.table.rowCount() == 1
+    window._open_exam(exam)
+    editor = window.editor
+    assert window.stack.currentWidget() is editor
+    assert editor.tree.topLevelItemCount() == 2 and editor.tree.topLevelItem(0).childCount() == 2
+    assert "25 من 25" in editor.sum_label.text() and "✓" in editor.sum_label.text()
+    assert editor.add_part.isEnabled() and not editor.approve.isHidden() and editor.open_sheets.isHidden()
+
+    from musahhih.sheet import workflow
+    workflow.approve(store, window.roster, exam)
+    editor.refresh()
+    assert not editor.add_question.isEnabled() and not editor.delete.isEnabled()
+    assert editor.approve.isHidden() and not editor.open_sheets.isHidden() and not editor.alignment.isHidden()
+    window.show_page(3)
+    assert window.exams.table.item(0, 5).text() == "معتمد"

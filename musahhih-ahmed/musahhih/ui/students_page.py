@@ -209,7 +209,10 @@ class StudentsPage(QWidget):
         else:
             question = f"هل تريد حذف {len(ids)} طلاب؟"
         if dialogs.confirm(self, question + "\nلا يمكن التراجع عن الحذف.", yes="حذف"):
-            self.roster.delete_students(ids)
+            try:
+                self.roster.delete_students(ids)
+            except AppError as exc:
+                dialogs.error(self, str(exc))
             self._load_students()
 
     def _import(self) -> None:
