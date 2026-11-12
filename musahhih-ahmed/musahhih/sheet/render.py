@@ -89,6 +89,7 @@ def _add_marks(text: str, marks: float) -> str:
 
 @dataclass
 class _Block:
+    fixed: float
     before: str
     before_h: float
     after: str
@@ -119,13 +120,18 @@ class SheetRenderer:
             self.instructions_h = text_height(painter, self.exam.instructions, font(3.6), g.CONTENT_R - g.GUTTER_X - 4) + 4
         self.first_top = g.FIRST_PAGE_TOP + (self.instructions_h + 3 if self.instructions_h else 0)
         self._y = self.first_top
+        self._page_top = self.first_top
         box_x = g.GUTTER_X + (g.GUTTER_W - g.MARK_BOX_W) / 2
 
         for qi, question in enumerate(self.questions):
             single = len(question.parts) == 1
+            if self.exam.page_per_question:
+                self._break_page()  # كل سؤال يبدأ صفحة جديدة
             intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
             blocks = [self._measure_part(painter, part, body, single) for part in question.parts]
             head_h = g.QUESTION_BAND_H + 2 + intro_h
+            if self.exam.page_per_question:
+                blocks = self._stretch(blocks, head_h)
             self._ensure(head_h + (blocks[0].height if blocks else 0))
 
             # شريط عنوان السؤال + خانة مجموع السؤال في عمود الدرجات
@@ -189,12 +195,35 @@ class SheetRenderer:
         capacity = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 4
         wanted = min(part.answer_lines, int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0))
         lines = max(0, min(wanted, int((capacity - fixed) // g.LINE_STEP)))
-        return _Block(before, before_h, after, after_h, image, image_w, image_h, lines, fixed + lines * g.LINE_STEP)
+        return _Block(fixed, before, before_h, after, after_h, image, image_w, image_h, lines,
+                      fixed + lines * g.LINE_STEP)
+
+    def _break_page(self) -> None:
+        """يبدأ صفحة جديدة إلا إذا كانت الحالية فارغة أصلاً."""
+        if self._y > self._page_top + 0.01:
+            self.pages.append(_Page())
+            self._y = self._page_top = g.NEXT_PAGE_TOP
+
+    def _stretch(self, blocks: list[_Block], head_h: float) -> list[_Block]:
+        """نمط «سؤال في صفحة»: الفرع الأول ربع الارتفاع المتاح وبقية الفروع تتقاسم الباقي؛
+        وإن لم يتسع نص فرع في حصته يأخذ ما يحتاجه (ويأخذ الباقي من الفروع التي بعده)."""
+        available = g.CONTENT_BOTTOM - self._y - head_h - 3
+        n = len(blocks)
+        if n == 1:
+            shares = [available]
+        else:
+            first = available * g.FIRST_PART_SHARE
+            shares = [first] + [(available - first) / (n - 1)] * (n - 1)
+        for block, share in zip(blocks, shares):
+            height = max(share, block.fixed)
+            block.lines = max(0, int((height - block.fixed) // g.LINE_STEP))
+            block.height = height
+        return blocks
 
     def _ensure(self, height: float) -> None:
-        if self._y + height > g.CONTENT_BOTTOM and self._y > g.NEXT_PAGE_TOP + 0.01:
+        if self._y + height > g.CONTENT_BOTTOM and self._y > self._page_top + 0.01:
             self.pages.append(_Page())
-            self._y = g.NEXT_PAGE_TOP
+            self._y = self._page_top = g.NEXT_PAGE_TOP
 
     def _add(self, command: Callable[[QPainter], None]) -> None:
         self.pages[-1].draw.append(command)

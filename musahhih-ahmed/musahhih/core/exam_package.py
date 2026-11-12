@@ -20,6 +20,7 @@ def from_store(store: ExamStore, exam_id: int) -> dict:
         "name": exam.name, "subject": exam.subject, "total_marks": exam.total_marks,
         "duration_minutes": exam.duration_minutes, "answer_count": exam.answer_count,
         "instructions": exam.instructions, "label_style": exam.label_style, "target_pages": exam.target_pages,
+        "page_per_question": exam.page_per_question,
         "questions": [
             {"intro": q.intro, "parts": [
                 {"text": p.text, "max_marks": p.max_marks, "answer_lines": p.answer_lines,
@@ -68,7 +69,7 @@ def import_exam(store: ExamStore, data: dict, section_id: int, exam_date: str, s
                 name: str | None = None, subject: str | None = None, total_marks: float | None = None,
                 duration_minutes: int | None = None, answer_count: int | None = None,
                 instructions: str | None = None, label_style: str | None = None,
-                target_pages: int | None = None) -> int:
+                target_pages: int | None = None, page_per_question: bool | None = None) -> int:
     """ينشئ امتحاناً مسودة من الملف. القيم الممررة تتقدم على ما في الملف (عدّلها المستخدم في النافذة)."""
     exam_id = store.create_exam(
         name if name is not None else data["name"],
@@ -81,6 +82,8 @@ def import_exam(store: ExamStore, data: dict, section_id: int, exam_date: str, s
         instructions=instructions if instructions is not None else data.get("instructions", ""),
         label_style=label_style if label_style is not None else data.get("label_style", "ar"),
         target_pages=target_pages if target_pages is not None else int(data.get("target_pages", 0)),
+        page_per_question=(page_per_question if page_per_question is not None
+                           else bool(data.get("page_per_question", False))),
     )
     try:
         for q in data["questions"]:

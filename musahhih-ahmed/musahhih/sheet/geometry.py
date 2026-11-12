@@ -35,6 +35,7 @@ FINAL_BOX = (40.0, 21.0, 24.0, 12.0)  # x, y, w, h لخانة الدرجة ال�
 
 LINE_STEP = 8.0         # المسافة بين أسطر الإجابة
 QUESTION_BAND_H = 8.0
+FIRST_PART_SHARE = 0.25   # نمط «سؤال في صفحة»: حصة الفرع الأول من ارتفاع الصفحة المتاح
 
 
 def corner_marks() -> list[tuple[float, float]]:

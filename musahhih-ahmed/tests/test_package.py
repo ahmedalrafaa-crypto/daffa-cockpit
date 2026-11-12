@@ -154,3 +154,26 @@ def test_sheet_pages_matches_actual_sheets(qapp, data_dir, store, conn, section)
     estimate = workflow.sheet_pages(store, exam_id)
     path = workflow.approve(store, Roster(conn), exam_id)
     assert estimate == len(pymupdf.open(path)) >= 2
+
+
+def test_page_per_question_layout(qapp, data_dir, store, conn, section):
+    Roster(conn).add_student(section, "طالبة")
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 80, page_per_question=True)
+    for _ in range(4):
+        q = store.add_question(exam_id)
+        store.add_part(q, "أسئلة كلامية\n١. بند\n٢. بند", 10, 3)
+        store.add_part(q, "مسألة\nنص المسألة\n١. بند أول\n٢. بند ثانٍ", 10, 3)
+    workflow.approve(store, Roster(conn), exam_id)
+    boxes = store.layout(exam_id)
+    assert max(b.page for b in boxes) == 4
+    bands = sorted((b for b in boxes if b.kind == "question_mark"), key=lambda b: b.page)
+    assert [b.page for b in bands] == [1, 2, 3, 4]                      # سؤال في كل صفحة
+    for page in (2, 3, 4):
+        a, b = [x for x in boxes if x.kind == "answer" and x.page == page]
+        available = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 2 - 3
+        assert abs(a.h - available * g.FIRST_PART_SHARE) < 0.01          # الفرع الأول ربع الصفحة
+        assert abs((b.y + b.h) - (g.CONTENT_BOTTOM - 3)) < 0.01          # الثاني يملأ الباقي حتى نهاية الصفحة
+    back = store.get_exam(exam_id)
+    assert back.page_per_question
+    from musahhih.core import exam_package
+    assert exam_package.from_store(store, exam_id)["page_per_question"] is True
