@@ -141,7 +141,7 @@ class ExamEditorPage(QWidget):
                 chosen = q_item
             for pi, p in enumerate(q.parts):
                 text = _snippet(p.text) or "(بلا نص)"
-                item = QTreeWidgetItem([f"      {part_letter(pi)})  {text}", format_marks(p.max_marks),
+                item = QTreeWidgetItem([f"      {part_letter(pi, exam.label_style)})  {text}", format_marks(p.max_marks),
                                         str(p.answer_lines), "نعم" if p.image else ""])
                 item.setData(0, ROLE_KIND, "part")
                 item.setData(0, ROLE_ID, p.id)

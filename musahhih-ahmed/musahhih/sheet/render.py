@@ -106,6 +106,8 @@ class SheetRenderer:
         self.questions = questions
         self.pages: list[_Page] = []
         self.boxes: list[LayoutBox] = []
+        self.scale = 1.0   # معامل تصغير أسطر الإجابة لملاءمة عدد الصفحات المستهدف
+        self.extra: dict[int, int] = {}   # أسطر إضافية لكل فرع بعد الضبط الدقيق
 
     # ---------- التخطيط ----------
     def _layout(self, painter: QPainter) -> None:
@@ -141,7 +143,7 @@ class SheetRenderer:
             for pi, (part, b) in enumerate(zip(question.parts, blocks)):
                 self._ensure(b.height)
                 top = self._y
-                label = "" if single else f"{part_letter(pi)})"
+                label = "" if single else f"{part_letter(pi, self.exam.label_style)})"
                 self._add(lambda p, top=top, label=label, b=b: self._draw_part_text(p, top, label, b.before, b.before_h, body))
                 if not single:
                     caption = f"من {format_marks(part.max_marks)}"
@@ -185,7 +187,8 @@ class SheetRenderer:
         after_h = text_height(painter, after, body, width) if after else 0.0
         fixed = before_h + 1 + (image_h + 2 if image is not None else 0) + (after_h + 1 if after else 0) + 2
         capacity = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 4
-        lines = max(0, min(part.answer_lines, int((capacity - fixed) // g.LINE_STEP)))
+        wanted = min(part.answer_lines, int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0))
+        lines = max(0, min(wanted, int((capacity - fixed) // g.LINE_STEP)))
         return _Block(before, before_h, after, after_h, image, image_w, image_h, lines, fixed + lines * g.LINE_STEP)
 
     def _ensure(self, height: float) -> None:
@@ -304,12 +307,47 @@ class SheetRenderer:
                 if dark:
                     p.drawRect(QRectF(x0 + edges[c], y0 + edges[r], edges[c + 1] - edges[c], edges[r + 1] - edges[r]))
 
+    def _fit(self, painter: QPainter) -> None:
+        """يرتّب الصفحات؛ وإن حُدّد عدد صفحات مستهدف يصغّر أسطر الإجابة تدريجياً حتى يتسع الامتحان فيه."""
+        target = self.exam.target_pages
+        self.scale, self.extra = 1.0, {}
+        self._layout(painter)
+        step = 0
+        while target and len(self.pages) > target:
+            step += 1
+            self.scale = max(0.0, 1.0 - 0.05 * step)
+            self._layout(painter)
+            if self.scale == 0.0 and len(self.pages) > target:
+                raise AppError(
+                    f"لا يتسع الامتحان في {target} صفحات حتى بلا أسطر إجابة ({len(self.pages)} صفحات). "
+                    "زد عدد الصفحات أو قلّل النصوص والصور."
+                )
+        if target and self.scale < 1.0:
+            self._grow(painter, target)
+
+    def _grow(self, painter: QPainter, target: int) -> None:
+        """ضبط دقيق: يضيف سطراً سطراً لكل فرع بالتناوب ما دام الامتحان يتسع في الصفحات المستهدفة."""
+        grew = True
+        while grew:
+            grew = False
+            for question in self.questions:
+                for part in question.parts:
+                    if int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0) >= part.answer_lines:
+                        continue
+                    self.extra[part.id] = self.extra.get(part.id, 0) + 1
+                    self._layout(painter)
+                    if len(self.pages) <= target:
+                        grew = True
+                    else:
+                        self.extra[part.id] -= 1
+        self._layout(painter)
+
     # ---------- الواجهة العامة ----------
     def render(self, path: Path | str, students: list[ExamStudent],
                progress: Callable[[int, int], None] | None = None) -> list[LayoutBox]:
         writer, painter = open_pdf(path, f"{self.exam.name} — {self.exam.subject}")
         try:
-            self._layout(painter)
+            self._fit(painter)
             first = True
             for index, student in enumerate(students):
                 for number, page in enumerate(self.pages, start=1):

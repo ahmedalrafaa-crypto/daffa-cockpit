@@ -25,6 +25,15 @@ def _replace(tmp: Path, final: Path) -> None:
         raise AppError(f"تعذر حفظ الملف:\n{final}\nأغلقه إن كان مفتوحاً في برنامج آخر ثم أعد المحاولة.") from None
 
 
+def _render(renderer: SheetRenderer, tmp: Path, students, progress=None):
+    """يرسم الملف المؤقت، ولا يترك ملفاً ناقصاً إن فشل الرسم."""
+    try:
+        return renderer.render(tmp, students, progress)
+    except Exception:
+        tmp.unlink(missing_ok=True)
+        raise
+
+
 def preview(store: ExamStore, exam_id: int) -> Path:
     """ورقة معاينة بطالب افتراضي؛ لا تُعتمد ولا تُحفظ مواضعها."""
     exam = store.get_exam(exam_id)
@@ -33,7 +42,7 @@ def preview(store: ExamStore, exam_id: int) -> Path:
         raise AppError("أضف سؤالاً فيه فرع واحد على الأقل لمعاينة الورقة.")
     final = paths.exam_dir(exam_id) / "preview.pdf"
     tmp = final.with_suffix(".tmp")
-    SheetRenderer(exam, questions).render(tmp, [ExamStudent(0, "(معاينة — ليست ورقة طالب)")])
+    _render(SheetRenderer(exam, questions), tmp, [ExamStudent(0, "(معاينة — ليست ورقة طالب)")])
     _replace(tmp, final)
     return final
 
@@ -50,7 +59,7 @@ def approve(store: ExamStore, roster: Roster, exam_id: int,
         raise AppError("لا يوجد طلاب في شعبة هذا الامتحان. أضف الطلاب أولاً.")
     final = paths.exam_dir(exam_id) / "sheets.pdf"
     tmp = final.with_suffix(".tmp")
-    boxes = SheetRenderer(exam, store.questions(exam_id)).render(tmp, students, progress)
+    boxes = _render(SheetRenderer(exam, store.questions(exam_id)), tmp, students, progress)
     _replace(tmp, final)
     store.approve(exam_id, students, boxes, final.relative_to(paths.data_dir()).as_posix())
     return final

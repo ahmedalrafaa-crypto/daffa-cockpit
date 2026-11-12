@@ -8,7 +8,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSpinBox, QVBoxLayout, QWidget,
 )
 
-from ..core.exams import MAX_ANSWER_LINES, Exam, Part
+from ..core.exams import LABEL_STYLES, MAX_ANSWER_LINES, MAX_TARGET_PAGES, Exam, Part
 from ..core.roster import Roster
 from . import dialogs
 
@@ -98,6 +98,17 @@ class ExamDialog(QDialog):
         self.answer_count.setSpecialValueText("جميع الأسئلة")
         self.answer_count.setToolTip("إن كان المطلوب الإجابة عن بعض الأسئلة فقط (مثل 4 من 5) فاكتب العدد المطلوب")
         self.answer_count.setValue(exam.answer_count if exam else defaults.get("answer_count", 0))
+        self.label_style = QComboBox()
+        for key, sample in LABEL_STYLES.items():
+            self.label_style.addItem(f"{sample}", key)
+        current = exam.label_style if exam else defaults.get("label_style", "ar")
+        self.label_style.setCurrentIndex(max(self.label_style.findData(current), 0))
+        self.target_pages = CountSpin()
+        self.target_pages.setRange(0, MAX_TARGET_PAGES)
+        self.target_pages.setSpecialValueText("حسب المحتوى")
+        self.target_pages.setSuffix(" صفحات")
+        self.target_pages.setToolTip("يضبط البرنامج أسطر الإجابة تلقائياً ليتسع الامتحان كله في هذا العدد من الصفحات")
+        self.target_pages.setValue(exam.target_pages if exam else defaults.get("target_pages", 0))
         self.instructions = QPlainTextEdit(exam.instructions if exam else defaults.get("instructions", ""))
         self.instructions.setPlaceholderText("تعليمات تُطبع أعلى الورقة (اختياري)")
         self.instructions.setFixedHeight(80)
@@ -110,6 +121,8 @@ class ExamDialog(QDialog):
         form.addRow("الدرجة الكلية:", self.total)
         form.addRow("مدة الامتحان:", self.duration)
         form.addRow("الأسئلة المطلوبة:", self.answer_count)
+        form.addRow("ترقيم الفروع:", self.label_style)
+        form.addRow("عدد صفحات الورقة:", self.target_pages)
         form.addRow("تعليمات الورقة:", self.instructions)
         self.count = None
         if exam is None and not defaults:
@@ -151,6 +164,7 @@ class ExamDialog(QDialog):
             exam_date=self.date.date().toString("yyyy-MM-dd"), total_marks=self.total.value(),
             duration_minutes=self.duration.value(), school_name=self.school.text(),
             answer_count=self.answer_count.value(), instructions=self.instructions.toPlainText(),
+            label_style=self.label_style.currentData(), target_pages=self.target_pages.value(),
         )
 
 

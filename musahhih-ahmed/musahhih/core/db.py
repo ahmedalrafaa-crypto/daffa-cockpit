@@ -119,6 +119,11 @@ MIGRATIONS: list[str] = [
     ALTER TABLE exams ADD COLUMN answer_count INTEGER NOT NULL DEFAULT 0;
     ALTER TABLE exams ADD COLUMN instructions TEXT NOT NULL DEFAULT '';
     """,
+    # 5 — ترقيم الفروع (أ ب ج / A B C) وعدد صفحات الورقة المستهدف
+    """
+    ALTER TABLE exams ADD COLUMN label_style TEXT NOT NULL DEFAULT 'ar' CHECK (label_style IN ('ar', 'en'));
+    ALTER TABLE exams ADD COLUMN target_pages INTEGER NOT NULL DEFAULT 0;
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

@@ -13,6 +13,9 @@ ORDINALS = [
     "السادس عشر", "السابع عشر", "الثامن عشر", "التاسع عشر", "العشرون",
 ]
 PART_LETTERS = ["أ", "ب", "ج", "د", "هـ", "و", "ز", "ح", "ط", "ي", "ك", "ل"]
+LATIN_LETTERS = list("ABCDEFGHIJKL")
+LABEL_STYLES = {"ar": "أ  ب  ج", "en": "A  B  C"}
+MAX_TARGET_PAGES = 20
 MAX_ANSWER_LINES = 25
 
 
@@ -20,8 +23,9 @@ def question_title(index: int) -> str:
     return f"السؤال {ORDINALS[index]}" if index < len(ORDINALS) else f"السؤال {index + 1}"
 
 
-def part_letter(index: int) -> str:
-    return PART_LETTERS[index] if index < len(PART_LETTERS) else str(index + 1)
+def part_letter(index: int, style: str = "ar") -> str:
+    letters = LATIN_LETTERS if style == "en" else PART_LETTERS
+    return letters[index] if index < len(letters) else str(index + 1)
 
 
 def format_marks(value: float) -> str:
@@ -70,6 +74,8 @@ class Exam:
     sheets_file: str | None
     answer_count: int = 0        # 0 = الإجابة عن كل الأسئلة؛ N = أجب عن N من الأسئلة فقط
     instructions: str = ""
+    label_style: str = "ar"      # ترقيم الفروع: ar = أ ب ج ، en = A B C
+    target_pages: int = 0        # 0 = حسب المحتوى؛ N = اضبط أسطر الإجابة ليتسع الامتحان في N صفحات
 
     @property
     def approved(self) -> bool:
@@ -104,7 +110,7 @@ def _exam(r: sqlite3.Row) -> Exam:
     return Exam(
         r["id"], r["name"], r["subject"], r["section_id"], r["section_name"], r["grade_name"], r["exam_date"],
         r["total_marks"], r["duration_minutes"], r["school_name"], r["status"], r["sheets_file"],
-        r["answer_count"], r["instructions"],
+        r["answer_count"], r["instructions"], r["label_style"], r["target_pages"],
     )
 
 
@@ -114,7 +120,12 @@ class ExamStore:
 
     # ---------- الامتحان ----------
     @staticmethod
-    def _validate(name: str, subject: str, total_marks: float, answer_count: int = 0) -> tuple[str, str]:
+    def _validate(name: str, subject: str, total_marks: float, answer_count: int = 0,
+                  label_style: str = "ar", target_pages: int = 0) -> tuple[str, str]:
+        if label_style not in LABEL_STYLES:
+            raise AppError("نمط ترقيم الفروع غير معروف.")
+        if not 0 <= target_pages <= MAX_TARGET_PAGES:
+            raise AppError(f"عدد صفحات الورقة يجب أن يكون بين 0 و {MAX_TARGET_PAGES}.")
         if answer_count < 0:
             raise AppError("عدد الأسئلة المطلوب الإجابة عنها لا يمكن أن يكون سالباً.")
         name, subject = clean_name(name), clean_name(subject)
@@ -128,14 +139,15 @@ class ExamStore:
 
     def create_exam(self, name: str, subject: str, section_id: int, exam_date: str, total_marks: float,
                     duration_minutes: int = 0, school_name: str = "", question_count: int = 0,
-                    answer_count: int = 0, instructions: str = "") -> int:
-        name, subject = self._validate(name, subject, total_marks, answer_count)
+                    answer_count: int = 0, instructions: str = "", label_style: str = "ar",
+                    target_pages: int = 0) -> int:
+        name, subject = self._validate(name, subject, total_marks, answer_count, label_style, target_pages)
         with self.conn:
             cur = self.conn.execute(
                 "INSERT INTO exams (name, subject, section_id, exam_date, total_marks, duration_minutes, school_name,"
-                " answer_count, instructions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                " answer_count, instructions, label_style, target_pages) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
-                 answer_count, instructions.strip()),
+                 answer_count, instructions.strip(), label_style, target_pages),
             )
             for position in range(question_count):
                 self.conn.execute("INSERT INTO questions (exam_id, position) VALUES (?, ?)", (cur.lastrowid, position))
@@ -143,15 +155,16 @@ class ExamStore:
 
     def update_exam(self, exam_id: int, name: str, subject: str, section_id: int, exam_date: str,
                     total_marks: float, duration_minutes: int, school_name: str,
-                    answer_count: int = 0, instructions: str = "") -> None:
+                    answer_count: int = 0, instructions: str = "", label_style: str = "ar",
+                    target_pages: int = 0) -> None:
         self._require_draft(exam_id)
-        name, subject = self._validate(name, subject, total_marks, answer_count)
+        name, subject = self._validate(name, subject, total_marks, answer_count, label_style, target_pages)
         with self.conn:
             self.conn.execute(
                 "UPDATE exams SET name=?, subject=?, section_id=?, exam_date=?, total_marks=?, duration_minutes=?,"
-                " school_name=?, answer_count=?, instructions=? WHERE id=?",
+                " school_name=?, answer_count=?, instructions=?, label_style=?, target_pages=? WHERE id=?",
                 (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
-                 answer_count, instructions.strip(), exam_id),
+                 answer_count, instructions.strip(), label_style, target_pages, exam_id),
             )
 
     def get_exam(self, exam_id: int) -> Exam:

@@ -101,3 +101,45 @@ def _png() -> bytes:
     buffer.open(QIODevice.OpenModeFlag.WriteOnly)
     image.save(buffer, "PNG")
     return bytes(data)
+
+
+def test_target_pages_fits_and_reports_impossible(qapp, data_dir, store, conn, section):
+    import pymupdf
+    Roster(conn).add_student(section, "طالبة")
+
+    def make(target, lines=14, style="ar"):
+        exam_id = store.create_exam("x", "م", section, "2026-01-01", 50, label_style=style, target_pages=target)
+        for _ in range(5):
+            q = store.add_question(exam_id)
+            store.add_part(q, "عنوان\n١. بند أول\n٢. بند ثانٍ", 5, lines)
+            store.add_part(q, "عنوان\n١. بند أول\n٢. بند ثانٍ\n٣. ثالث", 5, lines)
+        return exam_id
+
+    free = make(0)
+    workflow.approve(store, Roster(conn), free)
+    free_pages = max(b.page for b in store.layout(free))
+    assert free_pages > 4
+    fitted = make(4)
+    path = workflow.approve(store, Roster(conn), fitted)
+    assert max(b.page for b in store.layout(fitted)) <= 4 and len(pymupdf.open(path)) == max(b.page for b in store.layout(fitted))
+    answers = [b.h for b in store.layout(fitted) if b.kind == "answer"]
+    assert min(answers) > 20                                         # بقيت مساحة إجابة حقيقية
+    impossible = make(1)
+    with pytest.raises(AppError, match="لا يتسع"):
+        workflow.approve(store, Roster(conn), impossible)
+    assert not store.get_exam(impossible).approved
+    assert not list((data_dir / "exams").glob("*/*.tmp"))             # لا ملفات مؤقتة متبقية
+    with pytest.raises(AppError):
+        store.create_exam("x", "م", section, "2026-01-01", 5, label_style="xx")
+    with pytest.raises(AppError):
+        store.create_exam("x", "م", section, "2026-01-01", 5, target_pages=99)
+
+
+def test_part_label_styles(store, section):
+    from musahhih.core.exams import part_letter
+    assert [part_letter(i, "en") for i in range(3)] == ["A", "B", "C"]
+    assert [part_letter(i) for i in range(2)] == ["أ", "ب"]
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 5, label_style="en", target_pages=4)
+    from musahhih.core import exam_package
+    data = exam_package.from_store(store, exam_id)
+    assert (data["label_style"], data["target_pages"]) == ("en", 4)
