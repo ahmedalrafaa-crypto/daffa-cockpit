@@ -73,9 +73,31 @@ def display_date(iso: str) -> str:
     return f"{LRI}{int(parts[2])}/{int(parts[1])}/{parts[0]}{PDI}"
 
 
+IMAGE_MARKER = "{صورة}"   # يوضع في نص الفرع ليحدد مكان الصورة بين جزأيه
+
+
 def _marks_suffix(marks: float) -> str:
-    # علامة RLM تفصل عبارة الدرجة عن أي معادلة في آخر نص الفرع
+    # علامة RLM تفصل عبارة الدرجة عن أي معادلة في آخر السطر
     return f" \u200f({format_marks(marks)} {marks_word(marks)})"
+
+
+def _add_marks(text: str, marks: float) -> str:
+    """تُلحق عبارة الدرجة بالسطر الأول (عنوان المجموعة مثل «أسئلة كلامية»)."""
+    first, newline, rest = text.partition("\n")
+    return (first + _marks_suffix(marks)).strip() + newline + rest
+
+
+@dataclass
+class _Block:
+    before: str
+    before_h: float
+    after: str
+    after_h: float
+    image: QImage | None
+    image_w: float
+    image_h: float
+    lines: int
+    height: float
 
 
 class SheetRenderer:
@@ -89,8 +111,12 @@ class SheetRenderer:
     def _layout(self, painter: QPainter) -> None:
         self.pages = [_Page()]
         self.boxes = [LayoutBox(1, "final_mark", None, None, *g.FINAL_BOX)]
-        self._y = g.FIRST_PAGE_TOP
         body = font(4.2)
+        self.instructions_h = 0.0
+        if self.exam.instructions.strip():
+            self.instructions_h = text_height(painter, self.exam.instructions, font(3.6), g.CONTENT_R - g.GUTTER_X - 4) + 4
+        self.first_top = g.FIRST_PAGE_TOP + (self.instructions_h + 3 if self.instructions_h else 0)
+        self._y = self.first_top
         box_x = g.GUTTER_X + (g.GUTTER_W - g.MARK_BOX_W) / 2
 
         for qi, question in enumerate(self.questions):
@@ -98,7 +124,7 @@ class SheetRenderer:
             intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
             blocks = [self._measure_part(painter, part, body, single) for part in question.parts]
             head_h = g.QUESTION_BAND_H + 2 + intro_h
-            self._ensure(head_h + (blocks[0][0] if blocks else 0))
+            self._ensure(head_h + (blocks[0].height if blocks else 0))
 
             # شريط عنوان السؤال + خانة مجموع السؤال في عمود الدرجات
             y = self._y
@@ -112,37 +138,33 @@ class SheetRenderer:
                 self._add(lambda p, y=y, t=question.intro, h=intro_h: draw_text(p, t, body, g.CONTENT_X, y, g.CONTENT_W, h))
                 self._y += intro_h
 
-            for pi, (part, (block_h, text_h, image, image_w, image_h, lines)) in enumerate(zip(question.parts, blocks)):
-                self._ensure(block_h)
+            for pi, (part, b) in enumerate(zip(question.parts, blocks)):
+                self._ensure(b.height)
                 top = self._y
                 label = "" if single else f"{part_letter(pi)})"
-                text = part.text
-                if not single:
-                    text = (text + _marks_suffix(part.max_marks)).strip()
-                self._add(lambda p, top=top, label=label, text=text, text_h=text_h:
-                          self._draw_part_text(p, top, label, text, text_h, body))
+                self._add(lambda p, top=top, label=label, b=b: self._draw_part_text(p, top, label, b.before, b.before_h, body))
                 if not single:
                     caption = f"من {format_marks(part.max_marks)}"
                     self._add(lambda p, top=top, caption=caption: self._draw_part_box(p, box_x, top, caption))
                     self._box("part_mark", question.id, part.id, box_x, top, g.MARK_BOX_W, g.MARK_BOX_H)
-                y = top + text_h + 1
-                if image is not None:
-                    ix = g.CONTENT_X + (g.CONTENT_W - image_w) / 2
-                    self._add(lambda p, ix=ix, y=y, image=image, w=image_w, h=image_h:
-                              p.drawImage(rect(ix, y, w, h), image))
-                    y += image_h + 2
-                if lines:
-                    self._add(lambda p, y=y, lines=lines: self._draw_lines(p, y, lines))
-                self._box("answer", question.id, part.id, g.CONTENT_X - 1, top, g.CONTENT_W + 2, block_h)
-                self._y = top + block_h
+                y = top + b.before_h + 1
+                if b.image is not None:
+                    ix = g.CONTENT_X + (g.CONTENT_W - b.image_w) / 2
+                    self._add(lambda p, ix=ix, y=y, b=b: p.drawImage(rect(ix, y, b.image_w, b.image_h), b.image))
+                    y += b.image_h + 2
+                if b.after:
+                    width = g.CONTENT_W - (0 if single else 8)
+                    self._add(lambda p, y=y, b=b, width=width: (p.setPen(BLACK),
+                              draw_text(p, b.after, body, g.CONTENT_X, y, width, b.after_h + 2)))
+                    y += b.after_h + 1
+                if b.lines:
+                    self._add(lambda p, y=y, lines=b.lines: self._draw_lines(p, y, lines))
+                self._box("answer", question.id, part.id, g.CONTENT_X - 1, top, g.CONTENT_W + 2, b.height)
+                self._y = top + b.height
             self._y += 3
 
-    def _measure_part(self, painter: QPainter, part, body, single: bool):
-        suffix = "" if single else _marks_suffix(part.max_marks)
-        text_w = g.CONTENT_W - (0 if single else 8)
-        text_h = text_height(painter, part.text + suffix, body, text_w) if (part.text or suffix) else 0
-        if not single:
-            text_h = max(text_h, g.MARK_BOX_H + 4.5)  # مكان الخانة وعبارة «من ..» تحتها
+    def _measure_part(self, painter: QPainter, part, body, single: bool) -> _Block:
+        text = part.text if single else _add_marks(part.text, part.max_marks)
         image, image_w, image_h = None, 0.0, 0.0
         if part.image:
             image = QImage.fromData(part.image)
@@ -151,10 +173,20 @@ class SheetRenderer:
             else:
                 scale = min(IMAGE_MAX_W / image.width(), IMAGE_MAX_H / image.height(), 25.4 / IMAGE_DPI)
                 image_w, image_h = image.width() * scale, image.height() * scale
-        fixed = text_h + 1 + (image_h + 2 if image is not None else 0) + 2
+        if image is not None and IMAGE_MARKER in text:
+            before, after = text.split(IMAGE_MARKER, 1)
+        else:
+            before, after = text.replace(IMAGE_MARKER, ""), ""
+        before, after = before.strip(), after.strip()
+        width = g.CONTENT_W - (0 if single else 8)
+        before_h = text_height(painter, before, body, width) if before else 0.0
+        if not single:
+            before_h = max(before_h, g.MARK_BOX_H + 4.5)  # مكان الخانة وعبارة «من ..» تحتها
+        after_h = text_height(painter, after, body, width) if after else 0.0
+        fixed = before_h + 1 + (image_h + 2 if image is not None else 0) + (after_h + 1 if after else 0) + 2
         capacity = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 4
         lines = max(0, min(part.answer_lines, int((capacity - fixed) // g.LINE_STEP)))
-        return fixed + lines * g.LINE_STEP, text_h, image, image_w, image_h, lines
+        return _Block(before, before_h, after, after_h, image, image_w, image_h, lines, fixed + lines * g.LINE_STEP)
 
     def _ensure(self, height: float) -> None:
         if self._y + height > g.CONTENT_BOTTOM and self._y > g.NEXT_PAGE_TOP + 0.01:
@@ -232,7 +264,14 @@ class SheetRenderer:
             draw_text(p, f"اسم الطالب: {student.full_name}", font(4.4, True), text_x, 39, text_w, 7, RIGHT, wrap=False)
             p.setPen(_pen(0.4))
             p.drawLine(int(px(g.GUTTER_X)), int(px(48)), int(px(g.CONTENT_R)), int(px(48)))
-            top = g.FIRST_PAGE_TOP
+            if self.instructions_h:
+                p.setPen(_pen(0.25, GREY))
+                p.setBrush(Qt.BrushStyle.NoBrush)
+                p.drawRect(rect(g.GUTTER_X, 50, g.CONTENT_R - g.GUTTER_X, self.instructions_h))
+                p.setPen(BLACK)
+                draw_text(p, exam.instructions, font(3.6), g.GUTTER_X + 2, 52, g.CONTENT_R - g.GUTTER_X - 4,
+                          self.instructions_h)
+            top = self.first_top
         else:
             draw_text(p, f"{exam.name} — {exam.subject}", font(4.0, True), text_x, 18, text_w, 6, RIGHT, wrap=False)
             draw_text(p, f"اسم الطالب: {student.full_name}", font(4.0), text_x, 26, text_w, 6, RIGHT, wrap=False)

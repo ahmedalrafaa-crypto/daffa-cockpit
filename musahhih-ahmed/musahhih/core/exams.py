@@ -68,6 +68,8 @@ class Exam:
     school_name: str
     status: str
     sheets_file: str | None
+    answer_count: int = 0        # 0 = الإجابة عن كل الأسئلة؛ N = أجب عن N من الأسئلة فقط
+    instructions: str = ""
 
     @property
     def approved(self) -> bool:
@@ -102,6 +104,7 @@ def _exam(r: sqlite3.Row) -> Exam:
     return Exam(
         r["id"], r["name"], r["subject"], r["section_id"], r["section_name"], r["grade_name"], r["exam_date"],
         r["total_marks"], r["duration_minutes"], r["school_name"], r["status"], r["sheets_file"],
+        r["answer_count"], r["instructions"],
     )
 
 
@@ -111,7 +114,9 @@ class ExamStore:
 
     # ---------- الامتحان ----------
     @staticmethod
-    def _validate(name: str, subject: str, total_marks: float) -> tuple[str, str]:
+    def _validate(name: str, subject: str, total_marks: float, answer_count: int = 0) -> tuple[str, str]:
+        if answer_count < 0:
+            raise AppError("عدد الأسئلة المطلوب الإجابة عنها لا يمكن أن يكون سالباً.")
         name, subject = clean_name(name), clean_name(subject)
         if not name:
             raise AppError("يرجى كتابة اسم الامتحان.")
@@ -122,27 +127,31 @@ class ExamStore:
         return name, subject
 
     def create_exam(self, name: str, subject: str, section_id: int, exam_date: str, total_marks: float,
-                    duration_minutes: int = 0, school_name: str = "", question_count: int = 0) -> int:
-        name, subject = self._validate(name, subject, total_marks)
+                    duration_minutes: int = 0, school_name: str = "", question_count: int = 0,
+                    answer_count: int = 0, instructions: str = "") -> int:
+        name, subject = self._validate(name, subject, total_marks, answer_count)
         with self.conn:
             cur = self.conn.execute(
-                "INSERT INTO exams (name, subject, section_id, exam_date, total_marks, duration_minutes, school_name)"
-                " VALUES (?, ?, ?, ?, ?, ?, ?)",
-                (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name)),
+                "INSERT INTO exams (name, subject, section_id, exam_date, total_marks, duration_minutes, school_name,"
+                " answer_count, instructions) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)",
+                (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
+                 answer_count, instructions.strip()),
             )
             for position in range(question_count):
                 self.conn.execute("INSERT INTO questions (exam_id, position) VALUES (?, ?)", (cur.lastrowid, position))
         return cur.lastrowid
 
     def update_exam(self, exam_id: int, name: str, subject: str, section_id: int, exam_date: str,
-                    total_marks: float, duration_minutes: int, school_name: str) -> None:
+                    total_marks: float, duration_minutes: int, school_name: str,
+                    answer_count: int = 0, instructions: str = "") -> None:
         self._require_draft(exam_id)
-        name, subject = self._validate(name, subject, total_marks)
+        name, subject = self._validate(name, subject, total_marks, answer_count)
         with self.conn:
             self.conn.execute(
                 "UPDATE exams SET name=?, subject=?, section_id=?, exam_date=?, total_marks=?, duration_minutes=?,"
-                " school_name=? WHERE id=?",
-                (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name), exam_id),
+                " school_name=?, answer_count=?, instructions=? WHERE id=?",
+                (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
+                 answer_count, instructions.strip(), exam_id),
             )
 
     def get_exam(self, exam_id: int) -> Exam:
@@ -192,6 +201,12 @@ class ExamStore:
 
     def marks_sum(self, exam_id: int) -> float:
         return sum(q.total for q in self.questions(exam_id))
+
+    def counted_total(self, exam_id: int) -> float:
+        """مجموع الدرجات المحتسب: كل الأسئلة، أو أعلى N أسئلة إن كان المطلوب الإجابة عن N فقط."""
+        totals = sorted((q.total for q in self.questions(exam_id)), reverse=True)
+        n = self.get_exam(exam_id).answer_count or len(totals)
+        return sum(totals[:n])
 
     def add_question(self, exam_id: int, intro: str = "") -> int:
         self._require_draft(exam_id)
@@ -298,10 +313,16 @@ class ExamStore:
                 raise AppError(
                     f"{question_title(i)} بلا فروع ولا درجة. حدّده واضغط «تعديل» لإدخال درجته، أو احذفه."
                 )
-        total = sum(q.total for q in questions)
-        if abs(total - exam.total_marks) > 1e-9:
+        if exam.answer_count > len(questions):
             raise AppError(
-                f"مجموع درجات الفروع ({format_marks(total)}) لا يساوي الدرجة الكلية "
+                f"المطلوب الإجابة عن {exam.answer_count} أسئلة لكن عدد الأسئلة {len(questions)} فقط."
+            )
+        total = self.counted_total(exam_id)
+        if abs(total - exam.total_marks) > 1e-9:
+            what = (f"مجموع درجات أفضل {exam.answer_count} أسئلة" if exam.answer_count
+                    else "مجموع درجات الفروع")
+            raise AppError(
+                f"{what} ({format_marks(total)}) لا يساوي الدرجة الكلية "
                 f"({format_marks(exam.total_marks)}). عدّل الدرجات حتى يتطابقا."
             )
 

@@ -114,6 +114,11 @@ MIGRATIONS: list[str] = [
     CREATE UNIQUE INDEX idx_scans_one_matched ON scan_pages(exam_id, student_id, page) WHERE status = 'matched';
     ALTER TABLE exams ADD COLUMN import_confirmed_at TEXT;
     """,
+    # 4 — «أجب عن N من M» وتعليمات الامتحان المطبوعة في أعلى الورقة
+    """
+    ALTER TABLE exams ADD COLUMN answer_count INTEGER NOT NULL DEFAULT 0;
+    ALTER TABLE exams ADD COLUMN instructions TEXT NOT NULL DEFAULT '';
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

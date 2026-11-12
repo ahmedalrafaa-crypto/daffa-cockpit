@@ -3,10 +3,11 @@ from __future__ import annotations
 
 from PySide6.QtCore import Qt, Signal
 from PySide6.QtWidgets import (
-    QAbstractItemView, QDialog, QHBoxLayout, QHeaderView, QLabel, QPushButton, QTableWidget, QTableWidgetItem,
+    QAbstractItemView, QDialog, QFileDialog, QHBoxLayout, QHeaderView, QLabel, QPushButton, QTableWidget, QTableWidgetItem,
     QVBoxLayout, QWidget,
 )
 
+from ..core import exam_package
 from ..core.errors import AppError
 from ..core.exams import ExamStore, format_marks
 from ..core.roster import Roster
@@ -38,8 +39,11 @@ class ExamsPage(QWidget):
         new = QPushButton("إنشاء امتحان جديد")
         new.setObjectName("primary")
         new.clicked.connect(self.new_exam)
+        ready = QPushButton("استيراد امتحان جاهز")
+        ready.clicked.connect(self.import_ready)
         top.addWidget(title)
         top.addStretch()
+        top.addWidget(ready)
         top.addWidget(new)
         root.addLayout(top)
 
@@ -107,6 +111,30 @@ class ExamsPage(QWidget):
         while dialog.exec() == QDialog.DialogCode.Accepted:
             try:
                 exam_id = self.store.create_exam(**dialog.values(), question_count=dialog.count.value())
+            except AppError as exc:
+                dialogs.error(self, str(exc))
+                continue
+            self.settings.set(SCHOOL_KEY, dialog.school.text().strip())
+            self.open_exam.emit(exam_id)
+            return
+
+    def import_ready(self) -> None:
+        """استيراد ملف امتحان جاهز (.mexam): تُراجع بياناته وتختار الشعبة ثم يُنشأ مسودة للمراجعة."""
+        if not any(g.section_count for g in self.roster.list_grades()):
+            dialogs.error(self, "أضف صفاً وشعبة واحدة على الأقل قبل استيراد امتحان.")
+            return
+        path, _ = QFileDialog.getOpenFileName(self, "اختيار ملف الامتحان", "", "ملف امتحان جاهز (*.mexam)")
+        if not path:
+            return
+        try:
+            data = exam_package.read(path)
+        except AppError as exc:
+            dialogs.error(self, str(exc))
+            return
+        dialog = ExamDialog(self, self.roster, school_name=self.settings.get(SCHOOL_KEY), defaults=data)
+        while dialog.exec() == QDialog.DialogCode.Accepted:
+            try:
+                exam_id = exam_package.import_exam(self.store, data, **dialog.values())
             except AppError as exc:
                 dialogs.error(self, str(exc))
                 continue

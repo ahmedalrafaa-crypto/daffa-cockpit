@@ -37,6 +37,9 @@ def test_isolate_formulas():
     assert isolate_formulas("الطاقة (PE = ½ C V²).") == f"الطاقة {LRI}(PE = ½ C V²){PDI}."
     assert isolate_formulas("الطاقة (PE = ½ C V²). (10 درجات)") == f"الطاقة {LRI}(PE = ½ C V²){PDI}. (10 درجات)"
     assert isolate_formulas("(س = x + 1)") == f"(س = {LRI}x + 1{PDI})"
+    # درجة البند في آخر السطر لا تُدمج مع معادلة سبقتها
+    assert isolate_formulas("فرق الجهد من C₁ و C₂. (4)") == f"فرق الجهد من {LRI}C₁{PDI} و {LRI}C₂{PDI}. (4)"
+    assert isolate_formulas("احسب f(5) الآن") == f"احسب {LRI}f(5){PDI} الآن"
     assert isolate_formulas("قيمة f(x) = 2(x+1) صحيحة") == f"قيمة {LRI}f(x) = 2(x+1){PDI} صحيحة"
 
 

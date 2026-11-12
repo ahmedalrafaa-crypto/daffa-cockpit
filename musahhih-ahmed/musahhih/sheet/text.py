@@ -45,6 +45,9 @@ _MEANINGFUL = re.compile(r"[A-Za-zͰ-Ͽ×÷←-⋿=+*/^<>]")
 LRI, PDI = "⁦", "⁩"
 
 
+_MARK_TAIL = re.compile(r"\s+\(\d+(?:\.\d+)?\)$")
+
+
 def _trim(run: str) -> tuple[int, int]:
     """حدود المعادلة داخل المقطع: بلا ترقيم طرفي وبلا أقواس غير مغلقة.
 
@@ -56,6 +59,10 @@ def _trim(run: str) -> tuple[int, int]:
             end -= 1
         while start < end and run[start] in " ,=":  # «=» الطرفية تتبع الطرف العربي من المعادلة
             start += 1
+        mark = _MARK_TAIL.search(run, start, end)
+        if mark:  # درجة البند «(4)» ليست من المعادلة؛ تبقى خارج العزل في نهاية السطر العربي
+            end = mark.start()
+            continue
         opened: list[int] = []
         stray_close = -1
         for i in range(start, end):

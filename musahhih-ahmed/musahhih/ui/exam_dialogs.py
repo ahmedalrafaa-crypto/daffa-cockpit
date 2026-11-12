@@ -61,16 +61,20 @@ def _symbol_bar(target: QPlainTextEdit) -> QWidget:
 class ExamDialog(QDialog):
     """بيانات الامتحان الأساسية. عند الإنشاء يُسأل أيضاً عن عدد الأسئلة."""
 
-    def __init__(self, parent: QWidget | None, roster: Roster, exam: Exam | None = None, school_name: str = ""):
+    def __init__(self, parent: QWidget | None, roster: Roster, exam: Exam | None = None, school_name: str = "",
+                 defaults: dict | None = None):
+        """defaults: قيم أولية من ملف امتحان جاهز (اسم، مادة، درجة، مدة، أسئلة مطلوبة، تعليمات)."""
         super().__init__(parent)
         self.roster = roster
-        self.setWindowTitle("تعديل بيانات الامتحان" if exam else "إنشاء امتحان جديد")
+        defaults = defaults or {}
+        self.setWindowTitle("تعديل بيانات الامتحان" if exam else
+                            "استيراد امتحان جاهز" if defaults else "إنشاء امتحان جديد")
         self.setMinimumWidth(520)
         form = QFormLayout()
         form.setVerticalSpacing(10)
-        self.name = QLineEdit(exam.name if exam else "")
+        self.name = QLineEdit(exam.name if exam else defaults.get("name", ""))
         self.name.setPlaceholderText("مثال: امتحان الشهر الأول")
-        self.subject = QLineEdit(exam.subject if exam else "")
+        self.subject = QLineEdit(exam.subject if exam else defaults.get("subject", ""))
         self.subject.setPlaceholderText("مثال: الفيزياء")
         self.school = QLineEdit(exam.school_name if exam else school_name)
         self.school.setPlaceholderText("يظهر في ترويسة الورقة")
@@ -83,12 +87,20 @@ class ExamDialog(QDialog):
         self.total = MarksSpin()
         self.total.setRange(1, 1000)
         self.total.setDecimals(1)
-        self.total.setValue(exam.total_marks if exam else 100)
+        self.total.setValue(exam.total_marks if exam else defaults.get("total_marks", 100))
         self.duration = CountSpin()
         self.duration.setRange(0, 600)
         self.duration.setSuffix(" دقيقة")
         self.duration.setSpecialValueText("غير محددة")
-        self.duration.setValue(exam.duration_minutes if exam else 45)
+        self.duration.setValue(exam.duration_minutes if exam else defaults.get("duration_minutes", 45))
+        self.answer_count = CountSpin()
+        self.answer_count.setRange(0, 50)
+        self.answer_count.setSpecialValueText("جميع الأسئلة")
+        self.answer_count.setToolTip("إن كان المطلوب الإجابة عن بعض الأسئلة فقط (مثل 4 من 5) فاكتب العدد المطلوب")
+        self.answer_count.setValue(exam.answer_count if exam else defaults.get("answer_count", 0))
+        self.instructions = QPlainTextEdit(exam.instructions if exam else defaults.get("instructions", ""))
+        self.instructions.setPlaceholderText("تعليمات تُطبع أعلى الورقة (اختياري)")
+        self.instructions.setFixedHeight(80)
         form.addRow("اسم الامتحان:", self.name)
         form.addRow("المادة:", self.subject)
         form.addRow("اسم المدرسة:", self.school)
@@ -97,8 +109,10 @@ class ExamDialog(QDialog):
         form.addRow("التاريخ:", self.date)
         form.addRow("الدرجة الكلية:", self.total)
         form.addRow("مدة الامتحان:", self.duration)
+        form.addRow("الأسئلة المطلوبة:", self.answer_count)
+        form.addRow("تعليمات الورقة:", self.instructions)
         self.count = None
-        if exam is None:
+        if exam is None and not defaults:
             self.count = CountSpin()
             self.count.setRange(1, 20)
             self.count.setValue(2)
@@ -136,6 +150,7 @@ class ExamDialog(QDialog):
             name=self.name.text(), subject=self.subject.text(), section_id=self.section.currentData(),
             exam_date=self.date.date().toString("yyyy-MM-dd"), total_marks=self.total.value(),
             duration_minutes=self.duration.value(), school_name=self.school.text(),
+            answer_count=self.answer_count.value(), instructions=self.instructions.toPlainText(),
         )
 
 

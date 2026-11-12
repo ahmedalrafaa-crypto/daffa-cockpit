@@ -160,11 +160,14 @@ class ExamEditorPage(QWidget):
         self.tree.blockSignals(False)
 
         total = sum(q.total for q in questions)
-        match = abs(total - exam.total_marks) < 1e-9
-        self.sum_label.setText(
-            f"مجموع الدرجات: {format_marks(total)} من {format_marks(exam.total_marks)}"
-            + ("  ✓" if match else "  — غير مطابق")
-        )
+        counted = self.store.counted_total(self.exam_id)
+        match = abs(counted - exam.total_marks) < 1e-9
+        if exam.answer_count and exam.answer_count < len(questions):
+            summary = (f"مجموع الأسئلة: {format_marks(total)}   ·   المحتسب (أفضل {exam.answer_count}): "
+                       f"{format_marks(counted)} من {format_marks(exam.total_marks)}")
+        else:
+            summary = f"مجموع الدرجات: {format_marks(total)} من {format_marks(exam.total_marks)}"
+        self.sum_label.setText(summary + ("  ✓" if match else "  — غير مطابق"))
         self.sum_label.setStyleSheet(f"font-weight: bold; color: {'#2f8f83' if match else '#b3392f'};")
         self._approved = exam.approved
         self._update_buttons()
