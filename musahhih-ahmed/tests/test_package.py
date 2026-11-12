@@ -143,3 +143,14 @@ def test_part_label_styles(store, section):
     from musahhih.core import exam_package
     data = exam_package.from_store(store, exam_id)
     assert (data["label_style"], data["target_pages"]) == ("en", 4)
+
+
+def test_sheet_pages_matches_actual_sheets(qapp, data_dir, store, conn, section):
+    import pymupdf
+    Roster(conn).add_student(section, "طالبة")
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 10, target_pages=2)
+    q = store.add_question(exam_id)
+    store.add_part(q, "عنوان\n١. بند", 10, 30)
+    estimate = workflow.sheet_pages(store, exam_id)
+    path = workflow.approve(store, Roster(conn), exam_id)
+    assert estimate == 2 == len(pymupdf.open(path))

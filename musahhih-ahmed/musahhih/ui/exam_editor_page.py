@@ -316,9 +316,16 @@ class ExamEditorPage(QWidget):
             return
         exam = self.store.get_exam(self.exam_id)
         count = len(self.roster.list_students(exam.section_id))
+        pages: list[int] = []
+        if not self._try(lambda: pages.append(workflow.sheet_pages(self.store, self.exam_id))):
+            return
+        wanted = f" (المطلوب {exam.target_pages})" if exam.target_pages else ""
+        if exam.target_pages and pages[0] != exam.target_pages:
+            wanted += " — تنبيه: يختلف عن المطلوب"
         if not dialogs.confirm(
             self,
-            f"سيُعتمد الامتحان وتُنشأ أوراق {count} طالباً في {exam.grade_name} / شعبة {exam.section_name}.\n\n"
+            f"سيُعتمد الامتحان وتُنشأ أوراق {count} طالباً في {exam.grade_name} / شعبة {exam.section_name}.\n"
+            f"عدد صفحات ورقة الطالب الواحد: {pages[0]}{wanted}، فالمجموع {pages[0] * count} ورقة للطباعة.\n\n"
             "بعد الاعتماد تُقفل الأسئلة والدرجات لأن مواضع الخانات تثبت على الورق المطبوع.\n"
             "تأكد من المعاينة أولاً. هل تريد المتابعة؟",
             yes="اعتماد",

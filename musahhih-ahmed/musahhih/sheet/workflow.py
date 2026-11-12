@@ -47,6 +47,13 @@ def preview(store: ExamStore, exam_id: int) -> Path:
     return final
 
 
+def sheet_pages(store: ExamStore, exam_id: int) -> int:
+    """عدد صفحات ورقة الطالب الواحد كما ستُطبع (من ورقة المعاينة)."""
+    import pymupdf
+    with pymupdf.open(preview(store, exam_id)) as doc:
+        return doc.page_count
+
+
 def approve(store: ExamStore, roster: Roster, exam_id: int,
             progress: Callable[[int, int], None] | None = None) -> Path:
     """يعتمد الامتحان وينشئ ملف أوراق جميع طلاب الشعبة."""
