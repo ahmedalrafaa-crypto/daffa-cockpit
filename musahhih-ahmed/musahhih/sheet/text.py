@@ -96,6 +96,8 @@ def isolate_formulas(text: str) -> str:
         core = run[start:end]
         if len(core) < 2 or not _MEANINGFUL.search(core):
             return run
+        if len(core) <= 40:
+            core = core.replace(" ", "\u00a0")  # لا تنقسم المعادلة القصيرة بين سطرين
         return f"{run[:start]}{LRI}{core}{PDI}{run[end:]}"
 
     return _RUN.sub(wrap, text)
