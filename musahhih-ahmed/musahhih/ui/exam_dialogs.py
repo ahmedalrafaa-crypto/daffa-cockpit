@@ -109,7 +109,8 @@ class ExamDialog(QDialog):
         self.target_pages.setSuffix(" صفحات")
         self.target_pages.setToolTip("يضبط البرنامج أسطر الإجابة تلقائياً ليتسع الامتحان كله في هذا العدد من الصفحات")
         self.target_pages.setValue(exam.target_pages if exam else defaults.get("target_pages", 0))
-        self.page_per_question = QCheckBox("كل سؤال في صفحة كاملة (الفرع الأول ربع الصفحة والباقي للفرع الثاني)")
+        self.page_per_question = QCheckBox("كل سؤال في صفحة كاملة")
+        self.page_per_question.setToolTip("كل سؤال يبدأ صفحة جديدة: الفرع الأول ربع الصفحة والباقي للفرع الثاني")
         self.page_per_question.setChecked(exam.page_per_question if exam else bool(defaults.get("page_per_question")))
         self.instructions = QPlainTextEdit(exam.instructions if exam else defaults.get("instructions", ""))
         self.instructions.setPlaceholderText("تعليمات تُطبع أعلى الورقة (اختياري)")
@@ -149,11 +150,12 @@ class ExamDialog(QDialog):
         scroll = QScrollArea()
         scroll.setWidgetResizable(True)
         scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
         scroll.setWidget(holder)
         layout.addWidget(scroll, 1)
         layout.addWidget(_buttons(self, "حفظ" if exam else "استيراد" if defaults else "إنشاء"))
         available = (self.screen() or QApplication.primaryScreen()).availableGeometry().height()
-        self.resize(580, min(holder.sizeHint().height() + 90, int(available * 0.9)))
+        self.resize(620, min(holder.sizeHint().height() + 90, int(available * 0.9)))
 
     def _load_sections(self, select: int | None = None) -> None:
         self.section.clear()
