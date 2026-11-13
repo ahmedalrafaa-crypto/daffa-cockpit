@@ -4,7 +4,7 @@ from __future__ import annotations
 from PySide6.QtCore import QBuffer, QByteArray, QDate, QIODevice, Qt, QTimer
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import (
-    QCheckBox, QComboBox, QDateEdit, QDialog, QDialogButtonBox, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout,
+    QApplication, QCheckBox, QComboBox, QDateEdit, QFrame, QScrollArea, QDialog, QDialogButtonBox, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSpinBox, QVBoxLayout, QWidget,
 )
 
@@ -143,8 +143,17 @@ class ExamDialog(QDialog):
         self._load_sections(exam.section_id if exam else None)
 
         layout = QVBoxLayout(self)
-        layout.addLayout(form)
-        layout.addWidget(_buttons(self, "حفظ" if exam else "إنشاء"))
+        # الحقول داخل منطقة تمرير والأزرار ثابتة أسفلها، حتى لا تختفي الأزرار على الشاشات الصغيرة
+        holder = QWidget()
+        holder.setLayout(form)
+        scroll = QScrollArea()
+        scroll.setWidgetResizable(True)
+        scroll.setFrameShape(QFrame.Shape.NoFrame)
+        scroll.setWidget(holder)
+        layout.addWidget(scroll, 1)
+        layout.addWidget(_buttons(self, "حفظ" if exam else "استيراد" if defaults else "إنشاء"))
+        available = (self.screen() or QApplication.primaryScreen()).availableGeometry().height()
+        self.resize(580, min(holder.sizeHint().height() + 90, int(available * 0.9)))
 
     def _load_sections(self, select: int | None = None) -> None:
         self.section.clear()

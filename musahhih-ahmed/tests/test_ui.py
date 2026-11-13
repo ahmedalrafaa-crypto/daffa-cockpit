@@ -121,3 +121,20 @@ def test_editing_single_part_question_edits_its_marks(qapp, conn, data_dir, stor
     assert store.questions(exam_id)[0].parts[0].max_marks == 10
     window.editor.refresh()
     assert "10 من 10" in window.editor.sum_label.text()
+
+
+def test_exam_dialog_fits_small_screens_and_keeps_buttons(qapp, conn, data_dir, roster, section):
+    from PySide6.QtWidgets import QDialogButtonBox, QScrollArea
+
+    from musahhih.ui.exam_dialogs import ExamDialog
+
+    dialog = ExamDialog(None, roster, defaults={"name": "x", "subject": "م", "total_marks": 100})
+    dialog.show()
+    qapp.processEvents()
+    available = dialog.screen().availableGeometry().height()
+    assert dialog.height() <= available
+    buttons = dialog.findChild(QDialogButtonBox)
+    assert buttons.isVisible() and buttons.mapTo(dialog, buttons.rect().bottomLeft()).y() <= dialog.height()
+    assert dialog.findChild(QScrollArea) is not None
+    texts = [b.text() for b in buttons.buttons()]
+    assert "استيراد" in texts and "إلغاء" in texts
