@@ -158,7 +158,7 @@ def test_sheet_pages_matches_actual_sheets(qapp, data_dir, store, conn, section)
 
 def test_page_per_question_layout(qapp, data_dir, store, conn, section):
     Roster(conn).add_student(section, "طالبة")
-    exam_id = store.create_exam("x", "م", section, "2026-01-01", 80, page_per_question=True)
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 80, questions_per_page=1)
     for _ in range(4):
         q = store.add_question(exam_id)
         store.add_part(q, "أسئلة كلامية\n١. بند\n٢. بند", 10, 3)
@@ -170,10 +170,32 @@ def test_page_per_question_layout(qapp, data_dir, store, conn, section):
     assert [b.page for b in bands] == [1, 2, 3, 4]                      # سؤال في كل صفحة
     for page in (2, 3, 4):
         a, b = [x for x in boxes if x.kind == "answer" and x.page == page]
-        available = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 2 - 3
-        assert abs(a.h - available * g.FIRST_PART_SHARE) < 0.01          # الفرع الأول ربع الصفحة
+        assert a.h < b.h                                                  # الفرع الأول أصغر
         assert abs((b.y + b.h) - (g.CONTENT_BOTTOM - 3)) < 0.01          # الثاني يملأ الباقي حتى نهاية الصفحة
     back = store.get_exam(exam_id)
-    assert back.page_per_question
+    assert back.questions_per_page == 1
     from musahhih.core import exam_package
-    assert exam_package.from_store(store, exam_id)["page_per_question"] is True
+    assert exam_package.from_store(store, exam_id)["questions_per_page"] == 1
+
+
+def test_two_questions_per_page(qapp, data_dir, store, conn, section):
+    Roster(conn).add_student(section, "طالبة")
+    exam_id = store.create_exam("x", "م", section, "2026-01-01", 100, questions_per_page=2, target_pages=2)
+    for marks, text in ((20, "١. علّل\n٢. عرّف"), (30, "مسألة طويلة\n١. احسب\n٢. احسب"),
+                        (20, "١. علّل\n٢. قارن"), (30, "مسألة\n١. احسب")):
+        store.add_question_with_part(exam_id, text, marks, 5)
+    workflow.approve(store, Roster(conn), exam_id)
+    boxes = store.layout(exam_id)
+    assert max(b.page for b in boxes) == 2
+    assert [b.page for b in sorted((b for b in boxes if b.kind == "question_mark"), key=lambda b: b.y + 1000 * b.page)] == [1, 1, 2, 2]
+    assert not [b for b in boxes if b.kind == "part_mark"]                      # أسئلة بلا فروع
+    for page in (1, 2):
+        short, long = sorted((b for b in boxes if b.kind == "answer" and b.page == page), key=lambda b: b.y)
+        assert short.h < long.h
+        assert abs((long.y + long.h) - (g.CONTENT_BOTTOM - 3)) < 0.01                    # الثاني يملأ الباقي
+
+
+def test_old_package_flag_means_one_question_per_page():
+    from musahhih.core.exam_package import _per_page
+    assert _per_page({"page_per_question": True}) == 1
+    assert _per_page({}) == 0 and _per_page({"questions_per_page": 2}) == 2

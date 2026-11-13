@@ -124,7 +124,7 @@ MIGRATIONS: list[str] = [
     ALTER TABLE exams ADD COLUMN label_style TEXT NOT NULL DEFAULT 'ar' CHECK (label_style IN ('ar', 'en'));
     ALTER TABLE exams ADD COLUMN target_pages INTEGER NOT NULL DEFAULT 0;
     """,
-    # 6 — كل سؤال في صفحة كاملة (الفرع الأول ربع الصفحة والباقي لبقية الفروع)
+    # 6 — عدد الأسئلة في كل صفحة (0 = حسب المحتوى). الاسم التاريخي للعمود page_per_question.
     """
     ALTER TABLE exams ADD COLUMN page_per_question INTEGER NOT NULL DEFAULT 0;
     """,

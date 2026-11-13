@@ -16,6 +16,7 @@ PART_LETTERS = ["أ", "ب", "ج", "د", "هـ", "و", "ز", "ح", "ط", "ي", "�
 LATIN_LETTERS = list("ABCDEFGHIJKL")
 LABEL_STYLES = {"ar": "أ  ب  ج", "en": "A  B  C"}
 MAX_TARGET_PAGES = 20
+MAX_QUESTIONS_PER_PAGE = 3
 MAX_ANSWER_LINES = 25
 
 
@@ -76,7 +77,7 @@ class Exam:
     instructions: str = ""
     label_style: str = "ar"      # ترقيم الفروع: ar = أ ب ج ، en = A B C
     target_pages: int = 0        # 0 = حسب المحتوى؛ N = اضبط أسطر الإجابة ليتسع الامتحان في N صفحات
-    page_per_question: bool = False   # كل سؤال في صفحة كاملة، الفرع الأول ربعها والباقي لبقية الفروع
+    questions_per_page: int = 0  # 0 = حسب المحتوى؛ N = كل صفحة فيها N أسئلة تملؤها (الأول ربعها)
 
     @property
     def approved(self) -> bool:
@@ -112,7 +113,7 @@ def _exam(r: sqlite3.Row) -> Exam:
         r["id"], r["name"], r["subject"], r["section_id"], r["section_name"], r["grade_name"], r["exam_date"],
         r["total_marks"], r["duration_minutes"], r["school_name"], r["status"], r["sheets_file"],
         r["answer_count"], r["instructions"], r["label_style"], r["target_pages"],
-        bool(r["page_per_question"]),
+        r["page_per_question"],
     )
 
 
@@ -139,10 +140,16 @@ class ExamStore:
             raise AppError("الدرجة الكلية يجب أن تكون أكبر من صفر.")
         return name, subject
 
+    @staticmethod
+    def _validate_per_page(questions_per_page: int) -> None:
+        if not 0 <= questions_per_page <= MAX_QUESTIONS_PER_PAGE:
+            raise AppError(f"عدد الأسئلة في الصفحة يجب أن يكون بين 0 و {MAX_QUESTIONS_PER_PAGE}.")
+
     def create_exam(self, name: str, subject: str, section_id: int, exam_date: str, total_marks: float,
                     duration_minutes: int = 0, school_name: str = "", question_count: int = 0,
                     answer_count: int = 0, instructions: str = "", label_style: str = "ar",
-                    target_pages: int = 0, page_per_question: bool = False) -> int:
+                    target_pages: int = 0, questions_per_page: int = 0) -> int:
+        self._validate_per_page(questions_per_page)
         name, subject = self._validate(name, subject, total_marks, answer_count, label_style, target_pages)
         with self.conn:
             cur = self.conn.execute(
@@ -150,7 +157,7 @@ class ExamStore:
                 " answer_count, instructions, label_style, target_pages, page_per_question)"
                 " VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
                 (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
-                 answer_count, instructions.strip(), label_style, target_pages, int(page_per_question)),
+                 answer_count, instructions.strip(), label_style, target_pages, questions_per_page),
             )
             for position in range(question_count):
                 self.conn.execute("INSERT INTO questions (exam_id, position) VALUES (?, ?)", (cur.lastrowid, position))
@@ -159,8 +166,9 @@ class ExamStore:
     def update_exam(self, exam_id: int, name: str, subject: str, section_id: int, exam_date: str,
                     total_marks: float, duration_minutes: int, school_name: str,
                     answer_count: int = 0, instructions: str = "", label_style: str = "ar",
-                    target_pages: int = 0, page_per_question: bool = False) -> None:
+                    target_pages: int = 0, questions_per_page: int = 0) -> None:
         self._require_draft(exam_id)
+        self._validate_per_page(questions_per_page)
         name, subject = self._validate(name, subject, total_marks, answer_count, label_style, target_pages)
         with self.conn:
             self.conn.execute(
@@ -168,7 +176,7 @@ class ExamStore:
                 " school_name=?, answer_count=?, instructions=?, label_style=?, target_pages=?, page_per_question=?"
                 " WHERE id=?",
                 (name, subject, section_id, exam_date, total_marks, duration_minutes, clean_name(school_name),
-                 answer_count, instructions.strip(), label_style, target_pages, int(page_per_question), exam_id),
+                 answer_count, instructions.strip(), label_style, target_pages, questions_per_page, exam_id),
             )
 
     def get_exam(self, exam_id: int) -> Exam:

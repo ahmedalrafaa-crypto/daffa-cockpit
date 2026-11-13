@@ -8,6 +8,7 @@ from PySide6.QtWidgets import (
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSpinBox, QVBoxLayout, QWidget,
 )
 
+from ..core.exam_package import _per_page
 from ..core.exams import LABEL_STYLES, MAX_ANSWER_LINES, MAX_TARGET_PAGES, Exam, Part
 from ..core.roster import Roster
 from . import dialogs
@@ -109,9 +110,14 @@ class ExamDialog(QDialog):
         self.target_pages.setSuffix(" صفحات")
         self.target_pages.setToolTip("يضبط البرنامج أسطر الإجابة تلقائياً ليتسع الامتحان كله في هذا العدد من الصفحات")
         self.target_pages.setValue(exam.target_pages if exam else defaults.get("target_pages", 0))
-        self.page_per_question = QCheckBox("كل سؤال في صفحة كاملة")
-        self.page_per_question.setToolTip("كل سؤال يبدأ صفحة جديدة: الفرع الأول ربع الصفحة والباقي للفرع الثاني")
-        self.page_per_question.setChecked(exam.page_per_question if exam else bool(defaults.get("page_per_question")))
+        self.per_page = QComboBox()
+        for value, text in ((0, "حسب المحتوى"), (1, "سؤال في كل صفحة"), (2, "سؤالان في كل صفحة"),
+                            (3, "ثلاثة أسئلة في كل صفحة")):
+            self.per_page.addItem(text, value)
+        self.per_page.setToolTip("الأسئلة تملأ الصفحة: الأول ربعها والباقي لما بعده. "
+                                 "في «سؤال في كل صفحة» يأخذ الفرع الأول الربع والفرع الثاني الباقي.")
+        current = exam.questions_per_page if exam else _per_page(defaults)
+        self.per_page.setCurrentIndex(max(self.per_page.findData(current), 0))
         self.instructions = QPlainTextEdit(exam.instructions if exam else defaults.get("instructions", ""))
         self.instructions.setPlaceholderText("تعليمات تُطبع أعلى الورقة (اختياري)")
         self.instructions.setFixedHeight(80)
@@ -126,7 +132,7 @@ class ExamDialog(QDialog):
         form.addRow("الأسئلة المطلوبة:", self.answer_count)
         form.addRow("ترقيم الفروع:", self.label_style)
         form.addRow("عدد صفحات الورقة:", self.target_pages)
-        form.addRow("", self.page_per_question)
+        form.addRow("توزيع الأسئلة:", self.per_page)
         form.addRow("تعليمات الورقة:", self.instructions)
         self.count = None
         if exam is None and not defaults:
@@ -179,7 +185,7 @@ class ExamDialog(QDialog):
             duration_minutes=self.duration.value(), school_name=self.school.text(),
             answer_count=self.answer_count.value(), instructions=self.instructions.toPlainText(),
             label_style=self.label_style.currentData(), target_pages=self.target_pages.value(),
-            page_per_question=self.page_per_question.isChecked(),
+            questions_per_page=self.per_page.currentData(),
         )
 
 

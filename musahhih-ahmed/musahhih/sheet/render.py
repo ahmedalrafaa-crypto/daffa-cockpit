@@ -25,7 +25,7 @@ BLACK = QColor(0, 0, 0)
 GREY = QColor(120, 120, 120)
 LIGHT = QColor(232, 232, 232)
 
-IMAGE_MAX_W = 110.0
+IMAGE_MAX_W = 90.0
 IMAGE_MAX_H = 70.0
 IMAGE_DPI = 150.0  # الصورة لا تُكبَّر فوق حجمها الطبيعي عند هذه الدقة
 
@@ -125,13 +125,17 @@ class SheetRenderer:
 
         for qi, question in enumerate(self.questions):
             single = len(question.parts) == 1
-            if self.exam.page_per_question:
-                self._break_page()  # كل سؤال يبدأ صفحة جديدة
+            per_page = self.exam.questions_per_page
+            if per_page and qi % per_page == 0:
+                self._break_page()  # كل مجموعة أسئلة تبدأ صفحة جديدة
+                # مساحة الكتابة = الصفحة ناقص نصوص أسئلة المجموعة؛ تُوزَّع: الأول ربعها والباقي لمن بعده
+                fixed = [self._question_fixed(painter, q, body) for q in self.questions[qi:qi + per_page]]
+                self._group_spare = self._shares(max(0.0, g.CONTENT_BOTTOM - self._y - sum(fixed)), len(fixed))
             intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
             blocks = [self._measure_part(painter, part, body, single) for part in question.parts]
             head_h = g.QUESTION_BAND_H + 2 + intro_h
-            if self.exam.page_per_question:
-                blocks = self._stretch(blocks, head_h)
+            if per_page:
+                blocks = self._stretch(blocks, self._group_spare[qi % per_page])
             self._ensure(head_h + (blocks[0].height if blocks else 0))
 
             # شريط عنوان السؤال + خانة مجموع السؤال في عمود الدرجات
@@ -204,20 +208,26 @@ class SheetRenderer:
             self.pages.append(_Page())
             self._y = self._page_top = g.NEXT_PAGE_TOP
 
-    def _stretch(self, blocks: list[_Block], head_h: float) -> list[_Block]:
-        """نمط «سؤال في صفحة»: الفرع الأول ربع الارتفاع المتاح وبقية الفروع تتقاسم الباقي؛
-        وإن لم يتسع نص فرع في حصته يأخذ ما يحتاجه (ويأخذ الباقي من الفروع التي بعده)."""
-        available = g.CONTENT_BOTTOM - self._y - head_h - 3
-        n = len(blocks)
-        if n == 1:
-            shares = [available]
-        else:
-            first = available * g.FIRST_PART_SHARE
-            shares = [first] + [(available - first) / (n - 1)] * (n - 1)
-        for block, share in zip(blocks, shares):
-            height = max(share, block.fixed)
-            block.lines = max(0, int((height - block.fixed) // g.LINE_STEP))
-            block.height = height
+    @staticmethod
+    def _shares(available: float, n: int) -> list[float]:
+        """الأول يأخذ ربع المساحة والباقون يتقاسمون البقية بالتساوي."""
+        if n <= 1:
+            return [available]
+        first = available * g.FIRST_PART_SHARE
+        return [first] + [(available - first) / (n - 1)] * (n - 1)
+
+    def _question_fixed(self, painter: QPainter, question: Question, body) -> float:
+        """ارتفاع السؤال بلا أسطر إجابة: شريط العنوان والمقدمة ونصوص الفروع والمسافة بعده."""
+        single = len(question.parts) == 1
+        intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
+        parts = sum(self._measure_part(painter, p, body, single).fixed for p in question.parts)
+        return g.QUESTION_BAND_H + 2 + intro_h + parts + 3
+
+    def _stretch(self, blocks: list[_Block], spare: float) -> list[_Block]:
+        """يوزّع مساحة الكتابة المتاحة للسؤال على فروعه: الفرع الأول ربعها والباقي لبقية الفروع."""
+        for block, share in zip(blocks, self._shares(spare, len(blocks))):
+            block.lines = max(0, int(share // g.LINE_STEP))
+            block.height = block.fixed + share
         return blocks
 
     def _ensure(self, height: float) -> None:
