@@ -13,7 +13,7 @@ from . import APP_NAME, paths
 from .core.db import open_db
 from .ui import dialogs
 from .ui.main_window import MainWindow
-from .ui.theme import FONT_FAMILIES, FONT_SIZE_PT, STYLE
+from .ui.theme import FONT_FAMILIES, FONT_SIZE_PT, apply_light_theme, stylesheet
 
 
 def _log_error(text: str) -> None:
@@ -38,11 +38,12 @@ def create_app(argv: list[str]) -> QApplication:
     app = QApplication(argv)
     app.setApplicationName(APP_NAME)
     app.setLayoutDirection(Qt.LayoutDirection.RightToLeft)
+    apply_light_theme(app)
     font = QFont()
     font.setFamilies(FONT_FAMILIES)
     font.setPointSize(FONT_SIZE_PT)
     app.setFont(font)
-    app.setStyleSheet(STYLE)
+    app.setStyleSheet(stylesheet())
     return app
 
 

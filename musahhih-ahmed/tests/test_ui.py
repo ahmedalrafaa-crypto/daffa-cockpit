@@ -138,3 +138,27 @@ def test_exam_dialog_fits_small_screens_and_keeps_buttons(qapp, conn, data_dir, 
     assert dialog.findChild(QScrollArea) is not None
     texts = [b.text() for b in buttons.buttons()]
     assert "استيراد" in texts and "إلغاء" in texts
+
+
+def test_light_theme_overrides_dark_system(qapp):
+    """وضع ويندوز الداكن لا يغيّر ألوان البرنامج: الخلفيات فاتحة والنص داكن."""
+    from pathlib import Path
+
+    from PySide6.QtGui import QColor, QPalette
+
+    from musahhih.ui.theme import apply_light_theme, stylesheet
+    dark = QPalette()
+    for role in (QPalette.ColorRole.Window, QPalette.ColorRole.Base):
+        dark.setColor(role, QColor("#202020"))
+    qapp.setPalette(dark)
+    apply_light_theme(qapp)
+    palette = qapp.palette()
+    assert palette.color(QPalette.ColorRole.Window).lightness() > 200
+    assert palette.color(QPalette.ColorRole.Base).lightness() > 200
+    assert palette.color(QPalette.ColorRole.Text).lightness() < 80
+    sheet = stylesheet()
+    assert "{ICONS}" not in sheet
+    for icon in ("up.svg", "down.svg"):
+        assert icon in sheet
+    icons = Path(sheet.split("url(")[1].split(")")[0]).parent
+    assert (icons / "up.svg").exists() and (icons / "down.svg").exists()
