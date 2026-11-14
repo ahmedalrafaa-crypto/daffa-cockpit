@@ -273,4 +273,4 @@ class ScanPage(QWidget):
             return
         if self._try(lambda: self.scans.confirm(exam_id)):
             self._load()
-            dialogs.info(self, "تم تأكيد اكتمال الاستيراد. يمكن البدء بالتصحيح في المرحلة القادمة.")
+            dialogs.info(self, "تم تأكيد اكتمال الاستيراد. يمكنك الآن البدء من صفحة «تصحيح الامتحانات».")

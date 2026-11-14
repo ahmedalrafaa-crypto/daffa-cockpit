@@ -58,6 +58,8 @@ QListWidget, QTableWidget, QTreeWidget {
 QListWidget::item { padding: 10px 12px; }
 QTreeWidget::item { padding: 7px 4px; }
 QListWidget::item:selected, QTableWidget::item:selected, QTreeWidget::item:selected { background: #d6ece9; color: #1f2d3a; }
+QProgressBar { border: 1px solid #c5ced6; border-radius: 6px; text-align: center; background: white; min-height: 20px; }
+QProgressBar::chunk { background: #8fd0c7; border-radius: 5px; }
 QHeaderView::section {
     background: #eaf0f3; border: none; border-bottom: 1px solid #dde3e8; padding: 8px; font-weight: bold;
 }

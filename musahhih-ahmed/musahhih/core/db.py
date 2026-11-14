@@ -128,6 +128,19 @@ MIGRATIONS: list[str] = [
     """
     ALTER TABLE exams ADD COLUMN page_per_question INTEGER NOT NULL DEFAULT 0;
     """,
+    # 7 — المرحلة الرابعة: درجات التصحيح. صف واحد لكل (امتحان، طالب، فرع) فلا تتكرر درجة أبداً.
+    """
+    CREATE TABLE marks (
+        exam_id    INTEGER NOT NULL REFERENCES exams(id) ON DELETE RESTRICT,
+        student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE RESTRICT,
+        part_id    INTEGER NOT NULL REFERENCES parts(id) ON DELETE RESTRICT,
+        value      REAL,
+        status     TEXT NOT NULL CHECK (status IN ('graded', 'skipped')),
+        updated_at TEXT NOT NULL DEFAULT (datetime('now')),
+        PRIMARY KEY (exam_id, student_id, part_id),
+        CHECK ((status = 'graded') = (value IS NOT NULL))
+    );
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

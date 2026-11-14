@@ -9,19 +9,20 @@ from PySide6.QtWidgets import (
 
 from .. import APP_NAME, APP_SUBTITLE, __version__
 from ..core.exams import ExamStore
+from ..core.grading import GradingStore
 from ..core.roster import Roster
 from ..core.scans import ScanStore
 from ..core.settings import Settings
 from .classes_page import ClassesPage
 from .exam_editor_page import ExamEditorPage
 from .exams_page import ExamsPage
+from .grading_page import GradingPage
 from .home_page import HomePage
 from .scan_page import ScanPage
 from .students_page import StudentsPage
 
 # أقسام لم تُنفَّذ بعد: تظهر معطّلة مع رقم مرحلتها، حتى لا يوجد زر شكلي.
 UPCOMING = [
-    ("تصحيح الامتحانات", 4),
     ("سجل الدرجات", 5),
     ("إعدادات الطباعة", 6),
     ("النسخ الاحتياطي", 7),
@@ -45,7 +46,8 @@ class MainWindow(QMainWindow):
         self.editor = ExamEditorPage(self.store, self.roster, self.settings)
         # محرّر الامتحان صفحة داخلية تُفتح من قائمة الامتحانات وليس لها زر في الشريط
         self.scan = ScanPage(self.store, ScanStore(conn))
-        self.pages = [self.home, self.classes, self.students, self.exams, self.editor, self.scan]
+        self.grading = GradingPage(self.store, ScanStore(conn), GradingStore(conn), self.settings)
+        self.pages = [self.home, self.classes, self.students, self.exams, self.editor, self.scan, self.grading]
 
         central = QWidget()
         layout = QHBoxLayout(central)
@@ -67,7 +69,7 @@ class MainWindow(QMainWindow):
         side.addWidget(subtitle)
 
         self.nav = QButtonGroup(self)
-        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات", "استيراد الأوراق")):
+        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات", "استيراد الأوراق", "تصحيح الامتحانات")):
             button = QPushButton(text)
             button.setCheckable(True)
             self.nav.addButton(button, index)
@@ -104,8 +106,8 @@ class MainWindow(QMainWindow):
         self.show_page(0)
 
     # زر الشريط ← رقم الصفحة (المحرّر صفحة داخلية بلا زر، ويُضاء زر «الامتحانات» عند فتحه)
-    NAV_PAGES = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5}
-    PAGE_NAV = {0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4}
+    NAV_PAGES = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6}
+    PAGE_NAV = {0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4, 6: 5}
 
     def show_page(self, index: int) -> None:
         self.nav.button(self.PAGE_NAV[index]).setChecked(True)
