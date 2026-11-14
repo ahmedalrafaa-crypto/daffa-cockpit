@@ -31,6 +31,7 @@ def from_store(store: ExamStore, exam_id: int) -> dict:
         "questions": [
             {"intro": q.intro, "parts": [
                 {"text": p.text, "max_marks": p.max_marks, "answer_lines": p.answer_lines,
+                 "lines_fixed": p.lines_fixed,
                  "image": base64.b64encode(p.image).decode("ascii") if p.image else None}
                 for p in q.parts]}
             for q in store.questions(exam_id)
@@ -97,7 +98,8 @@ def import_exam(store: ExamStore, data: dict, section_id: int, exam_date: str, s
             question_id = store.add_question(exam_id, q.get("intro", ""))
             for p in q["parts"]:
                 image = base64.b64decode(p["image"]) if p.get("image") else None
-                store.add_part(question_id, p["text"], float(p["max_marks"]), int(p["answer_lines"]), image)
+                store.add_part(question_id, p["text"], float(p["max_marks"]), int(p["answer_lines"]), image,
+                               bool(p.get("lines_fixed", False)))
     except Exception:
         store.delete_exam(exam_id)
         raise

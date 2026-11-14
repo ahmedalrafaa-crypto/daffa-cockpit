@@ -17,7 +17,7 @@ from ..core.settings import Settings
 from ..sheet import workflow
 from ..sheet.text import isolate_formulas
 from . import dialogs
-from .exam_dialogs import AlignmentDialog, ExamDialog, IntroDialog, PartDialog
+from .exam_dialogs import AlignmentDialog, ExamDialog, IntroDialog, LinesDialog, PartDialog
 from .exams_page import ui_date
 
 ROLE_KIND = Qt.ItemDataRole.UserRole          # "question" أو "part"
@@ -85,7 +85,9 @@ class ExamEditorPage(QWidget):
         self.up = _button("▲", lambda: self._move(-1), "icon")
         self.down = _button("▼", lambda: self._move(1), "icon")
         self.delete = _button("حذف", self._delete, "danger")
-        for b in (self.add_question, self.add_part, self.edit, self.up, self.down, self.delete):
+        self.lines_button = _button("أسطر الإجابة", self._edit_lines)
+        self.lines_button.setToolTip("تعديل عدد أسطر الإجابة لكل سؤال وفرع")
+        for b in (self.add_question, self.add_part, self.edit, self.up, self.down, self.delete, self.lines_button):
             row.addWidget(b)
         row.addStretch()
         self.sum_label = QLabel()
@@ -181,6 +183,7 @@ class ExamEditorPage(QWidget):
         current = self._current()
         self.edit_info.setEnabled(draft)
         self.add_question.setEnabled(draft)
+        self.lines_button.setEnabled(draft and self.tree.topLevelItemCount() > 0)
         self.add_part.setEnabled(draft and current is not None)
         for b in (self.edit, self.up, self.down, self.delete):
             b.setEnabled(draft and current is not None)
@@ -300,6 +303,11 @@ class ExamEditorPage(QWidget):
         delete = self.store.delete_question if kind == "question" else self.store.delete_part
         if self._try(lambda: delete(item_id)):
             self.refresh()
+
+    def _edit_lines(self) -> None:
+        dialog = LinesDialog(self, self.store, self.exam_id, workflow.layout_info)
+        dialog.exec()
+        self.refresh()
 
     # ---------- الورقة ----------
     @staticmethod

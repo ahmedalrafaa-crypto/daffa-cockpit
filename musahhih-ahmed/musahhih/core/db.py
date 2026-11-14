@@ -141,6 +141,10 @@ MIGRATIONS: list[str] = [
         CHECK ((status = 'graded') = (value IS NOT NULL))
     );
     """,
+    # 8 — «عدد أسطر ثابت» لكل فرع: لا يغيّره الضبط التلقائي للصفحات
+    """
+    ALTER TABLE parts ADD COLUMN lines_fixed INTEGER NOT NULL DEFAULT 0;
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

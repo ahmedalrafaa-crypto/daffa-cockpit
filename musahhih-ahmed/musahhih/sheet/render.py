@@ -99,6 +99,7 @@ class _Block:
     image_h: float
     lines: int
     height: float
+    pinned: bool = False   # فرع بعدد أسطر ثابت
 
 
 class SheetRenderer:
@@ -109,6 +110,7 @@ class SheetRenderer:
         self.boxes: list[LayoutBox] = []
         self.scale = 1.0   # معامل تصغير أسطر الإجابة لملاءمة عدد الصفحات المستهدف
         self.extra: dict[int, int] = {}   # أسطر إضافية لكل فرع بعد الضبط الدقيق
+        self.part_lines: dict[int, int] = {}   # الأسطر المطبوعة فعلاً لكل فرع بعد آخر ترتيب
 
     # ---------- التخطيط ----------
     def _layout(self, painter: QPainter) -> None:
@@ -121,6 +123,7 @@ class SheetRenderer:
         self.first_top = g.FIRST_PAGE_TOP + (self.instructions_h + 3 if self.instructions_h else 0)
         self._y = self.first_top
         self._page_top = self.first_top
+        self.part_lines = {}
         box_x = g.GUTTER_X + (g.GUTTER_W - g.MARK_BOX_W) / 2
 
         for qi, question in enumerate(self.questions):
@@ -129,8 +132,14 @@ class SheetRenderer:
             if per_page and qi % per_page == 0:
                 self._break_page()  # كل مجموعة أسئلة تبدأ صفحة جديدة
                 # مساحة الكتابة = الصفحة ناقص نصوص أسئلة المجموعة؛ تُوزَّع: الأول ربعها والباقي لمن بعده
-                fixed = [self._question_fixed(painter, q, body) for q in self.questions[qi:qi + per_page]]
-                self._group_spare = self._shares(max(0.0, g.CONTENT_BOTTOM - self._y - sum(fixed)), len(fixed))
+                group = self.questions[qi:qi + per_page]
+                fixed = [self._question_fixed(painter, q, body) for q in group]
+                # المساحة تتوزع على الأسئلة التي فيها فرع غير ثابت فقط
+                flexible = [i for i, q in enumerate(group) if not all(p.lines_fixed for p in q.parts)]
+                shares = self._shares(max(0.0, g.CONTENT_BOTTOM - self._y - sum(fixed)), len(flexible))
+                self._group_spare = [0.0] * len(group)
+                for i, share in zip(flexible, shares):
+                    self._group_spare[i] = share
             intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
             blocks = [self._measure_part(painter, part, body, single) for part in question.parts]
             head_h = g.QUESTION_BAND_H + 2 + intro_h
@@ -172,6 +181,7 @@ class SheetRenderer:
                 if b.lines:
                     self._add(lambda p, y=y, lines=b.lines: self._draw_lines(p, y, lines))
                 self._box("answer", question.id, part.id, g.CONTENT_X - 1, top, g.CONTENT_W + 2, b.height)
+                self.part_lines[part.id] = b.lines
                 self._y = top + b.height
             self._y += 3
 
@@ -197,10 +207,13 @@ class SheetRenderer:
         after_h = text_height(painter, after, body, width) if after else 0.0
         fixed = before_h + 1 + (image_h + 2 if image is not None else 0) + (after_h + 1 if after else 0) + 2
         capacity = g.CONTENT_BOTTOM - g.NEXT_PAGE_TOP - g.QUESTION_BAND_H - 4
-        wanted = min(part.answer_lines, int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0))
+        if part.lines_fixed:
+            wanted = part.answer_lines
+        else:
+            wanted = min(part.answer_lines, int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0))
         lines = max(0, min(wanted, int((capacity - fixed) // g.LINE_STEP)))
         return _Block(fixed, before, before_h, after, after_h, image, image_w, image_h, lines,
-                      fixed + lines * g.LINE_STEP)
+                      fixed + lines * g.LINE_STEP, part.lines_fixed)
 
     def _break_page(self) -> None:
         """يبدأ صفحة جديدة إلا إذا كانت الحالية فارغة أصلاً."""
@@ -220,12 +233,14 @@ class SheetRenderer:
         """ارتفاع السؤال بلا أسطر إجابة: شريط العنوان والمقدمة ونصوص الفروع والمسافة بعده."""
         single = len(question.parts) == 1
         intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
-        parts = sum(self._measure_part(painter, p, body, single).fixed for p in question.parts)
+        blocks = [self._measure_part(painter, p, body, single) for p in question.parts]
+        parts = sum(b.height if b.pinned else b.fixed for b in blocks)   # الأسطر الثابتة جزء من الارتفاع المحجوز
         return g.QUESTION_BAND_H + 2 + intro_h + parts + 3
 
     def _stretch(self, blocks: list[_Block], spare: float) -> list[_Block]:
-        """يوزّع مساحة الكتابة المتاحة للسؤال على فروعه: الفرع الأول ربعها والباقي لبقية الفروع."""
-        for block, share in zip(blocks, self._shares(spare, len(blocks))):
+        """يوزّع مساحة الكتابة المتاحة للسؤال على فروعه غير الثابتة: الأول ربعها والباقي لما بعده."""
+        flexible = [b for b in blocks if not b.pinned]
+        for block, share in zip(flexible, self._shares(spare, len(flexible))):
             block.lines = max(0, int(share // g.LINE_STEP))
             block.height = block.fixed + share
         return blocks
@@ -359,7 +374,7 @@ class SheetRenderer:
             if self.scale == 0.0 and len(self.pages) > target:
                 raise AppError(
                     f"لا يتسع الامتحان في {target} صفحات حتى بلا أسطر إجابة ({len(self.pages)} صفحات). "
-                    "زد عدد الصفحات أو قلّل النصوص والصور."
+                    "زد عدد الصفحات، أو قلّل الأسطر الثابتة أو النصوص والصور."
                 )
         if target and self.scale < 1.0:
             self._grow(painter, target)
@@ -371,7 +386,8 @@ class SheetRenderer:
             grew = False
             for question in self.questions:
                 for part in question.parts:
-                    if int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0) >= part.answer_lines:
+                    if part.lines_fixed or \
+                            int(part.answer_lines * self.scale + 0.5) + self.extra.get(part.id, 0) >= part.answer_lines:
                         continue
                     self.extra[part.id] = self.extra.get(part.id, 0) + 1
                     self._layout(painter)

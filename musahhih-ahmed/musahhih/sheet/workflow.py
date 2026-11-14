@@ -47,6 +47,21 @@ def preview(store: ExamStore, exam_id: int) -> Path:
     return final
 
 
+def layout_info(store: ExamStore, exam_id: int) -> tuple[int, dict[int, int]]:
+    """(عدد صفحات ورقة الطالب، الأسطر المطبوعة فعلاً لكل فرع) كما ستخرج عند الاعتماد."""
+    exam = store.get_exam(exam_id)
+    questions = [q for q in store.questions(exam_id) if q.parts]
+    if not questions:
+        return 0, {}
+    tmp = paths.exam_dir(exam_id) / "layout-check.tmp"
+    renderer = SheetRenderer(exam, questions)
+    try:
+        _render(renderer, tmp, [ExamStudent(0, "")])
+    finally:
+        tmp.unlink(missing_ok=True)
+    return len(renderer.pages), dict(renderer.part_lines)
+
+
 def sheet_pages(store: ExamStore, exam_id: int) -> int:
     """عدد صفحات ورقة الطالب الواحد كما ستُطبع (من ورقة المعاينة)."""
     import pymupdf

@@ -46,6 +46,7 @@ class Part:
     image: bytes | None
     max_marks: float
     answer_lines: int
+    lines_fixed: bool = False    # ثابت: يُطبع هذا العدد من الأسطر حتى في الضبط التلقائي للصفحات
 
 
 @dataclass(frozen=True)
@@ -217,7 +218,8 @@ class ExamStore:
             " ORDER BY p.position, p.id", (exam_id,),
         ):
             parts.setdefault(r["question_id"], []).append(
-                Part(r["id"], r["question_id"], r["text"], r["image"], r["max_marks"], r["answer_lines"])
+                Part(r["id"], r["question_id"], r["text"], r["image"], r["max_marks"], r["answer_lines"],
+                     bool(r["lines_fixed"]))
             )
         return [
             Question(r["id"], r["intro"], parts.get(r["id"], []))
@@ -245,13 +247,13 @@ class ExamStore:
         return cur.lastrowid
 
     def add_question_with_part(self, exam_id: int, text: str, max_marks: float, answer_lines: int = 5,
-                               image: bytes | None = None) -> tuple[int, int]:
+                               image: bytes | None = None, lines_fixed: bool = False) -> tuple[int, int]:
         """يضيف سؤالاً مع فرعه الأول معاً؛ إن رُفض الفرع (درجة غير صالحة مثلاً) لا يبقى سؤال فارغ."""
         self._require_draft(exam_id)
         self._validate_part(max_marks, answer_lines)
         question_id = self.add_question(exam_id)
         try:
-            return question_id, self.add_part(question_id, text, max_marks, answer_lines, image)
+            return question_id, self.add_part(question_id, text, max_marks, answer_lines, image, lines_fixed)
         except Exception:
             self.delete_question(question_id)
             raise
@@ -281,7 +283,7 @@ class ExamStore:
             raise AppError(f"عدد أسطر الإجابة يجب أن يكون بين 0 و {MAX_ANSWER_LINES}.")
 
     def add_part(self, question_id: int, text: str, max_marks: float, answer_lines: int = 5,
-                 image: bytes | None = None) -> int:
+                 image: bytes | None = None, lines_fixed: bool = False) -> int:
         self._require_draft(self._exam_of_question(question_id))
         self._validate_part(max_marks, answer_lines)
         with self.conn:
@@ -289,18 +291,34 @@ class ExamStore:
                 "SELECT COALESCE(MAX(position), -1) + 1 FROM parts WHERE question_id = ?", (question_id,)
             ).fetchone()[0]
             cur = self.conn.execute(
-                "INSERT INTO parts (question_id, position, text, image, max_marks, answer_lines) VALUES (?,?,?,?,?,?)",
-                (question_id, position, text.strip(), image, max_marks, answer_lines),
+                "INSERT INTO parts (question_id, position, text, image, max_marks, answer_lines, lines_fixed)"
+                " VALUES (?,?,?,?,?,?,?)",
+                (question_id, position, text.strip(), image, max_marks, answer_lines, int(lines_fixed)),
             )
         return cur.lastrowid
 
-    def update_part(self, part_id: int, text: str, max_marks: float, answer_lines: int, image: bytes | None) -> None:
+    def update_part(self, part_id: int, text: str, max_marks: float, answer_lines: int, image: bytes | None,
+                    lines_fixed: bool | None = None) -> None:
         self._require_draft(self._exam_of_question(self._question_of_part(part_id)))
         self._validate_part(max_marks, answer_lines)
         with self.conn:
             self.conn.execute(
-                "UPDATE parts SET text = ?, max_marks = ?, answer_lines = ?, image = ? WHERE id = ?",
-                (text.strip(), max_marks, answer_lines, image, part_id),
+                "UPDATE parts SET text = ?, max_marks = ?, answer_lines = ?, image = ?,"
+                " lines_fixed = COALESCE(?, lines_fixed) WHERE id = ?",
+                (text.strip(), max_marks, answer_lines, image, None if lines_fixed is None else int(lines_fixed),
+                 part_id),
+            )
+
+    def set_answer_lines(self, changes: dict[int, tuple[int, bool]]) -> None:
+        """يعدّل أسطر الإجابة لعدة فروع في عملية واحدة: {فرع: (عدد الأسطر، ثابت؟)}."""
+        for part_id, (lines, _) in changes.items():
+            self._require_draft(self._exam_of_question(self._question_of_part(part_id)))
+            if not 0 <= lines <= MAX_ANSWER_LINES:
+                raise AppError(f"عدد أسطر الإجابة يجب أن يكون بين 0 و {MAX_ANSWER_LINES}.")
+        with self.conn:
+            self.conn.executemany(
+                "UPDATE parts SET answer_lines = ?, lines_fixed = ? WHERE id = ?",
+                [(lines, int(fixed), part_id) for part_id, (lines, fixed) in changes.items()],
             )
 
     def delete_part(self, part_id: int) -> None:

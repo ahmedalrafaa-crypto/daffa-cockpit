@@ -4,12 +4,15 @@ from __future__ import annotations
 from PySide6.QtCore import QBuffer, QByteArray, QDate, QIODevice, Qt, QTimer
 from PySide6.QtGui import QImage, QPixmap
 from PySide6.QtWidgets import (
-    QApplication, QCheckBox, QComboBox, QDateEdit, QFrame, QScrollArea, QDialog, QDialogButtonBox, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout,
+    QApplication, QCheckBox, QComboBox, QDateEdit, QFrame, QHeaderView, QScrollArea, QTableWidget,
+    QTableWidgetItem, QDialog, QDialogButtonBox, QDoubleSpinBox, QFileDialog, QFormLayout, QGridLayout,
     QHBoxLayout, QLabel, QLineEdit, QPlainTextEdit, QPushButton, QSpinBox, QVBoxLayout, QWidget,
 )
 
 from ..core.exam_package import _per_page
-from ..core.exams import LABEL_STYLES, MAX_ANSWER_LINES, MAX_TARGET_PAGES, Exam, Part
+from ..core.exams import (
+    LABEL_STYLES, MAX_ANSWER_LINES, MAX_TARGET_PAGES, Exam, Part, format_marks, part_letter, question_title,
+)
 from ..core.roster import Roster
 from . import dialogs
 
@@ -234,6 +237,10 @@ class PartDialog(QDialog):
         self.lines.setValue(part.answer_lines if part else 5)
         self.lines.setToolTip("مساحة الإجابة المحجوزة على الورقة، كل سطر 9 ملم")
         row.addWidget(self.lines)
+        self.lines_fixed = QCheckBox("ثابت")
+        self.lines_fixed.setToolTip("يُطبع هذا العدد من الأسطر كما هو حتى عند الضبط التلقائي للصفحات")
+        self.lines_fixed.setChecked(part.lines_fixed if part else False)
+        row.addWidget(self.lines_fixed)
         row.addStretch()
         layout.addLayout(row)
 
@@ -287,7 +294,7 @@ class PartDialog(QDialog):
 
     def values(self) -> dict:
         return dict(text=self.text.toPlainText(), max_marks=self.marks.value(),
-                    answer_lines=self.lines.value(), image=self.image)
+                    answer_lines=self.lines.value(), image=self.image, lines_fixed=self.lines_fixed.isChecked())
 
 
 class AlignmentDialog(QDialog):
@@ -325,3 +332,108 @@ class AlignmentDialog(QDialog):
         spin.setSuffix(" ملم")
         spin.setValue(value)
         return spin
+
+
+class LinesDialog(QDialog):
+    """تعديل أسطر الإجابة لكل الأسئلة والفروع في مكان واحد، مع عرض ما سيُطبع فعلاً."""
+
+    def __init__(self, parent: QWidget | None, store, exam_id: int, layout_info):
+        super().__init__(parent)
+        self.store, self.exam_id, self.layout_info = store, exam_id, layout_info
+        exam = store.get_exam(exam_id)
+        self.auto = bool(exam.target_pages or exam.questions_per_page)
+        self.setWindowTitle("أسطر الإجابة لكل سؤال")
+        self.setMinimumSize(640, 460)
+        layout = QVBoxLayout(self)
+        self.fill = bool(exam.questions_per_page)
+        if self.fill:
+            note = ("«توزيع الأسئلة» مفعّل: الفروع غير الثابتة تملأ مساحة صفحتها تلقائياً. "
+                    "لتحديد عدد أسطر فرع بعينه فعّل «ثابت» ثم اكتب العدد، فتتوزع المساحة الباقية على غيره.")
+        elif self.auto:
+            note = (f"«عدد صفحات الورقة = {exam.target_pages}» مفعّل: الرقم المكتوب لكل فرع حدّ أقصى، "
+                    "والبرنامج يصغّره عند الحاجة ليتسع الامتحان. فعّل «ثابت» لفرض العدد كما هو.")
+        else:
+            note = "تُطبع الأسطر بالعدد المكتوب لكل فرع."
+        hint = QLabel(note)
+        hint.setWordWrap(True)
+        layout.addWidget(hint)
+        self.table = QTableWidget(0, 4 if self.auto else 3)
+        heads = ["السؤال / الفرع", "الأسطر", "على الورقة"] + (["ثابت"] if self.auto else [])
+        self.table.setHorizontalHeaderLabels(heads)
+        self.table.verticalHeader().setVisible(False)
+        self.table.horizontalHeader().setSectionResizeMode(0, QHeaderView.ResizeMode.Stretch)
+        self.rows: list[tuple[int, QSpinBox, QCheckBox | None]] = []
+        for qi, q in enumerate(store.questions(exam_id)):
+            for pi, p in enumerate(q.parts):
+                label = question_title(qi) if len(q.parts) == 1 else f"{question_title(qi)} — {part_letter(pi, exam.label_style)}"
+                r = self.table.rowCount()
+                self.table.insertRow(r)
+                self.table.setItem(r, 0, QTableWidgetItem(f"{label}  ({format_marks(p.max_marks)} درجة)"))
+                spin = CountSpin()
+                spin.setRange(0, MAX_ANSWER_LINES)
+                spin.setValue(p.answer_lines)
+                self.table.setCellWidget(r, 1, spin)
+                item = QTableWidgetItem("")
+                item.setTextAlignment(Qt.AlignmentFlag.AlignCenter)
+                self.table.setItem(r, 2, item)
+                box = None
+                if self.auto:
+                    box = QCheckBox()
+                    box.setChecked(p.lines_fixed)
+                    if self.fill:   # في هذا الوضع الرقم لا يُستعمل إلا للفرع الثابت
+                        spin.setEnabled(p.lines_fixed)
+                        box.toggled.connect(spin.setEnabled)
+                    holder = QWidget()
+                    h = QHBoxLayout(holder)
+                    h.setContentsMargins(0, 0, 0, 0)
+                    h.addWidget(box, alignment=Qt.AlignmentFlag.AlignCenter)
+                    self.table.setCellWidget(r, 3, holder)
+                self.rows.append((p.id, spin, box))
+        layout.addWidget(self.table, 1)
+        self.pages = QLabel()
+        self.pages.setObjectName("panelTitle")
+        layout.addWidget(self.pages)
+        buttons = QDialogButtonBox()
+        apply = buttons.addButton("تطبيق وإعادة الحساب", QDialogButtonBox.ButtonRole.ApplyRole)
+        apply.clicked.connect(self.apply)
+        save = buttons.addButton("حفظ وإغلاق", QDialogButtonBox.ButtonRole.AcceptRole)
+        save.setObjectName("primary")
+        buttons.addButton("إلغاء", QDialogButtonBox.ButtonRole.RejectRole)
+        buttons.accepted.connect(self.accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+        self._show_actual()
+
+    def changes(self) -> dict[int, tuple[int, bool]]:
+        return {pid: (spin.value(), box.isChecked() if box else False) for pid, spin, box in self.rows}
+
+    def apply(self) -> bool:
+        from ..core.errors import AppError
+        try:
+            self.store.set_answer_lines(self.changes())
+            self._show_actual()
+        except AppError as exc:
+            dialogs.error(self, str(exc))
+            return False
+        return True
+
+    def accept(self) -> None:
+        if self.apply():
+            super().accept()
+
+    def _show_actual(self) -> None:
+        from ..core.errors import AppError
+        try:
+            pages, lines = self.layout_info(self.store, self.exam_id)
+        except AppError as exc:
+            self.pages.setText(str(exc))
+            self.pages.setStyleSheet("color: #b3392f;")
+            return
+        self.pages.setStyleSheet("")
+        self.pages.setText(f"عدد صفحات ورقة الطالب: {pages}")
+        for r, (pid, spin, _) in enumerate(self.rows):
+            actual = lines.get(pid)
+            item = self.table.item(r, 2)
+            item.setText("—" if actual is None else str(actual))
+            item.setForeground(Qt.GlobalColor.darkRed if actual is not None and actual < spin.value() and
+                               not self.auto else Qt.GlobalColor.black)
