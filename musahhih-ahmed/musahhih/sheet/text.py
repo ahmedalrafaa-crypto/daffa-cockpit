@@ -39,7 +39,7 @@ def font(size_mm: float, bold: bool = False) -> QFont:
 
 
 # مقاطع لاتينية/رمزية (معادلات ووحدات) داخل نص عربي
-_LTR = r"A-Za-z0-9Ͱ-Ͽ°-¾×÷⁰-₟←-⋿=+\-*/^_.,%<>()\[\]"
+_LTR = r"A-Za-z0-9Ͱ-Ͽ°-¾×÷⁰-₟←-⋿=+\-*/^_.,%<>()\[\]'\u2032"
 _RUN = re.compile(f"[{_LTR}](?:[{_LTR} ]*[{_LTR}])?")
 _MEANINGFUL = re.compile(r"[A-Za-zͰ-Ͽ×÷←-⋿=+*/^<>]")
 LRI, PDI = "⁦", "⁩"

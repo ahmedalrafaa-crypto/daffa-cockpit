@@ -40,6 +40,9 @@ def test_isolate_formulas():
     assert isolate_formulas("(س = x + 1)") == f"(س = {LRI}x{nb}+{nb}1{PDI})"
     # درجة البند في آخر السطر لا تُدمج مع معادلة سبقتها
     assert isolate_formulas("فرق الجهد من C₁ و C₂. (4)") == f"فرق الجهد من {LRI}C₁{PDI} و {LRI}C₂{PDI}. (4)"
+    # الشرطة العلوية جزء من الرمز: ΔV′ و C′eq و Q₁'
+    assert isolate_formulas("فرق الجهد ΔV′ = Q / C′eq الجديد") == f"فرق الجهد {LRI}ΔV′{nb}={nb}Q{nb}/{nb}C′eq{PDI} الجديد"
+    assert isolate_formulas("الشحنة Q₁' = 120 μC (3)") == f"الشحنة {LRI}Q₁'{nb}={nb}120{nb}μC{PDI} (3)"
     assert isolate_formulas("احسب f(5) الآن") == f"احسب {LRI}f(5){PDI} الآن"
     assert isolate_formulas("قيمة f(x) = 2(x+1) صحيحة") == f"قيمة {LRI}f(x){nb}={nb}2(x+1){PDI} صحيحة"
 
