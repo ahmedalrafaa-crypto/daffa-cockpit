@@ -19,7 +19,7 @@ from ..core.exams import (
 )
 from ..core.qr_payload import SheetCode, encode
 from . import geometry as g
-from .text import CENTER, LEFT, LRI, PDI, RIGHT, draw_text, font, px, rect, text_height
+from .text import CENTER, LEFT, LRI, PDI, RIGHT, draw_text, fitted_font, font, px, rect, text_height
 
 BLACK = QColor(0, 0, 0)
 GREY = QColor(120, 120, 120)
@@ -312,13 +312,16 @@ class SheetRenderer:
             draw_text(p, f"من {format_marks(exam.total_marks)}", font(2.8), x, y + h + 0.3, w, 4, CENTER, wrap=False)
             p.setPen(BLACK)
             if exam.school_name:
-                draw_text(p, exam.school_name, font(5.2, True), text_x, 15, text_w, 8, CENTER, wrap=False)
-            draw_text(p, f"{exam.name} — {exam.subject}", font(4.6, True), text_x, 23, text_w, 7, CENTER, wrap=False)
+                draw_text(p, exam.school_name, fitted_font(p, exam.school_name, 5.2, text_w, True),
+                          text_x, 15, text_w, 8, CENTER, wrap=False)
+            title = f"{exam.name} — {exam.subject}"
+            draw_text(p, title, fitted_font(p, title, 4.6, text_w, True), text_x, 23, text_w, 7, CENTER, wrap=False)
             info = [f"الصف: {exam.grade_name} / شعبة {exam.section_name}", f"التاريخ: {display_date(exam.exam_date)}"]
             if exam.duration_minutes:
                 info.append(f"المدة: {exam.duration_minutes} دقيقة")
             draw_text(p, "     ".join(info), font(3.7), text_x, 31, text_w, 6, CENTER, wrap=False)
-            draw_text(p, f"اسم الطالب: {student.full_name}", font(4.4, True), text_x, 39, text_w, 7, RIGHT, wrap=False)
+            name = f"اسم الطالب: {student.full_name}"
+            draw_text(p, name, fitted_font(p, name, 4.4, text_w, True), text_x, 39, text_w, 7, RIGHT, wrap=False)
             p.setPen(_pen(0.4))
             p.drawLine(int(px(g.GUTTER_X)), int(px(48)), int(px(g.CONTENT_R)), int(px(48)))
             if self.instructions_h:
@@ -330,8 +333,10 @@ class SheetRenderer:
                           self.instructions_h)
             top = self.first_top
         else:
-            draw_text(p, f"{exam.name} — {exam.subject}", font(4.0, True), text_x, 18, text_w, 6, RIGHT, wrap=False)
-            draw_text(p, f"اسم الطالب: {student.full_name}", font(4.0), text_x, 26, text_w, 6, RIGHT, wrap=False)
+            title = f"{exam.name} — {exam.subject}"
+            name = f"اسم الطالب: {student.full_name}"
+            draw_text(p, title, fitted_font(p, title, 4.0, text_w, True), text_x, 18, text_w, 6, RIGHT, wrap=False)
+            draw_text(p, name, fitted_font(p, name, 4.0, text_w), text_x, 26, text_w, 6, RIGHT, wrap=False)
             top = g.NEXT_PAGE_TOP
 
         # الخط الفاصل بين عمود الدرجات ومنطقة الإجابة

@@ -111,6 +111,19 @@ def text_height(painter: QPainter, text: str, f: QFont, width_mm: float) -> floa
     return r.height() / PX_PER_MM
 
 
+def fitted_font(painter: QPainter, text: str, size_mm: float, width_mm: float, bold: bool = False,
+                min_mm: float = 2.8) -> QFont:
+    """أكبر خط (حتى size_mm) يتسع فيه النص في سطر واحد بالعرض المعطى؛ للعناوين والأسماء الطويلة."""
+    size = size_mm
+    while True:
+        f = font(size, bold)
+        painter.setFont(f)
+        width = painter.boundingRect(QRectF(0, 0, 1e7, 1e5), int(RIGHT), isolate_formulas(text)).width() / PX_PER_MM
+        if width <= width_mm or size <= min_mm:
+            return f
+        size = max(min_mm, size - 0.2)
+
+
 def draw_text(painter: QPainter, text: str, f: QFont, x: float, y: float, w: float, h: float,
               align=RIGHT, valign=Qt.AlignmentFlag.AlignTop, wrap: bool = True) -> None:
     painter.setFont(f)

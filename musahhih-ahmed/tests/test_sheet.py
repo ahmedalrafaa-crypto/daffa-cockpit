@@ -186,3 +186,19 @@ def test_printer_offset_shifts_overlay(approved, store, conn):
     settings.set(workflow.OFFSET_Y_KEY, -1.5)
     x1, y1 = ink_corner()
     assert abs((x1 - x0) - 2.0) < 0.15 and abs((y1 - y0) + 1.5) < 0.15
+
+
+def test_long_titles_are_shrunk_not_clipped(qapp, data_dir, store, conn, section):
+    """عنوان امتحان طويل جداً يُصغَّر خطه ليبقى كاملاً داخل منطقة الترويسة."""
+    from musahhih.core.roster import Roster
+    Roster(conn).add_student(section, "طالبة باسم طويل جداً جداً من أجل اختبار ملاءمة العرض")
+    name = "امتحان الفصلين الأول والثاني (الكهربائية الساكنة والمغناطيسية والتيار والمقاومة)"
+    exam_id = store.create_exam(name, "الفيزياء", section, "2026-01-01", 10, school_name="ثانوية " + "الرافدين " * 6)
+    store.add_part(store.add_question(exam_id), "س", 10)
+    doc = pymupdf.open(workflow.approve(store, Roster(conn), exam_id))
+    for page in doc:
+        header = [s for b in page.get_text("dict")["blocks"] for l in b.get("lines", []) for s in l["spans"]
+                  if s["text"].strip() and s["bbox"][1] < 50 * 72 / 25.4
+                  and s["bbox"][2] > 66 * 72 / 25.4]       # يُستثنى نص خانة الدرجة النهائية (عند 40–64 ملم)
+        left_limit = 68 * 72 / 25.4 - 1          # منطقة نص الترويسة تبدأ عند 68 ملم (يمين رمز QR وخانة الدرجة)
+        assert header and all(s["bbox"][0] >= left_limit for s in header), [s["text"] for s in header]
