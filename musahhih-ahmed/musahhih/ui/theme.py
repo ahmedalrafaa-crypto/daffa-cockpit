@@ -51,6 +51,7 @@ QMainWindow, #page { background: #f4f6f8; }
 #pageHint { color: #5b6b78; font-size: 11pt; }
 #panelTitle { font-size: 13pt; font-weight: bold; color: #1f3a4d; }
 #card { background: white; border: 1px solid #dde3e8; border-radius: 12px; }
+#card QScrollArea, #panelInner { background: white; }
 #statNumber { font-size: 26pt; font-weight: bold; color: #2f8f83; }
 #statLabel { color: #5b6b78; }
 

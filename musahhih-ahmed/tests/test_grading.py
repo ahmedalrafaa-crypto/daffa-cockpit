@@ -196,3 +196,46 @@ def test_parse_mark():
     from musahhih.ui.grading_page import parse_mark
     assert parse_mark("٤٫٥") == 4.5 and parse_mark("4,5") == 4.5 and parse_mark(" 7 ") == 7
     assert parse_mark("") is None and parse_mark("abc") is None
+
+
+def test_many_parts_do_not_overlap_on_short_screens(qapp, data_dir, store, conn, section, tmp_path, monkeypatch):
+    """سؤال بخمسة فروع (مثل «علّل») في نافذة قصيرة: الخانات بارتفاعها الكامل ولا يتداخل بعضها فوق بعض."""
+    from PySide6.QtCore import QCoreApplication, QEvent
+
+    from musahhih.ui import dialogs
+    from musahhih.ui.main_window import MainWindow
+    monkeypatch.setattr(dialogs, "info", lambda *a, **k: None)
+    roster = Roster(conn)
+    roster.add_students(section, ["طالبة أولى", "طالبة ثانية"])
+    exam = store.create_exam("x", "م", section, "2026-01-01", 20)
+    q = store.add_question(exam, "علّل ما يأتي:")
+    for i in range(5):
+        store.add_part(q, f"فقرة {i + 1}", 4, 2)
+    pdf = workflow.approve(store, roster, exam)
+    files = []
+    for i, image in enumerate(_pages(pdf)):
+        path = tmp_path / f"p{i}.png"
+        cv2.imwrite(str(path), image)
+        files.append(path)
+    scans = ScanStore(conn)
+    importer.import_files(scans, exam, files)
+    scans.confirm(exam)
+
+    window = MainWindow(conn)
+    window.resize(1100, 560)
+    window.show()
+    window.show_page(6)
+    page = window.grading
+    page.select_exam(exam)
+    QCoreApplication.sendPostedEvents(None, QEvent.Type.DeferredDelete)
+    qapp.processEvents()
+    edits = [e for _, e, _ in page.edits]
+    assert len(edits) == 5
+    tops = [e.mapTo(page.panel_scroll.widget(), e.rect().topLeft()).y() for e in edits]
+    assert all(e.height() >= 36 for e in edits)
+    assert all(b - a >= e.height() for (a, b), e in zip(zip(tops, tops[1:]), edits)), tops   # لا تداخل
+    # زر الاعتماد ثابت أسفل اللوحة خارج منطقة التمرير: ظاهر دائماً ولا يغطي الخانات
+    scroll_bottom = page.panel_scroll.mapTo(window, page.panel_scroll.rect().bottomLeft()).y()
+    approve_top = page.approve_button.mapTo(window, page.approve_button.rect().topLeft()).y()
+    assert page.approve_button.isVisible() and approve_top >= scroll_bottom
+    assert approve_top + page.approve_button.height() <= window.height()

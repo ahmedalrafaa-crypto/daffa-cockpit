@@ -6,7 +6,7 @@ from PySide6.QtCore import Qt, QTimer
 from PySide6.QtGui import QImage, QPainter, QPixmap
 from PySide6.QtWidgets import (
     QComboBox, QDialog, QFrame, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGridLayout, QHBoxLayout,
-    QLabel, QLineEdit, QListWidget, QListWidgetItem, QProgressBar, QPushButton, QVBoxLayout, QWidget,
+    QLabel, QLineEdit, QListWidget, QListWidgetItem, QProgressBar, QPushButton, QScrollArea, QVBoxLayout, QWidget,
 )
 
 from ..core.errors import AppError
@@ -20,6 +20,7 @@ from . import dialogs
 
 _DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩٫،,", "0123456789...")
 CACHE_SIZE = 10
+MARK_STYLE = "padding: 2px 6px; min-height: 0;"
 
 
 def parse_mark(text: str) -> float | None:
@@ -82,9 +83,13 @@ class ZoomView(QGraphicsView):
 
 
 class MarkEdit(QLineEdit):
+    focused = None   # يُستدعى عند التركيز ليمرّر اللوحة إلى الخانة الحالية
+
     def focusInEvent(self, event):
         super().focusInEvent(event)
         QTimer.singleShot(0, self.selectAll)
+        if self.focused:
+            self.focused()
 
 
 class PendingDialog(QDialog):
@@ -149,10 +154,22 @@ class GradingPage(QWidget):
         # --- لوحة التحكم ---
         panel = QFrame()
         panel.setObjectName("card")
-        panel.setFixedWidth(340)
-        side = QVBoxLayout(panel)
+        panel.setFixedWidth(350)
+        outer = QVBoxLayout(panel)
+        outer.setContentsMargins(0, 0, 0, 0)
+        # محتوى اللوحة داخل منطقة تمرير: على الشاشات القصيرة أو مع فروع كثيرة يظهر شريط تمرير
+        # بدل أن تنضغط الخانات فوق بعضها.
+        inner = QWidget()
+        inner.setObjectName("panelInner")
+        side = QVBoxLayout(inner)
         side.setContentsMargins(16, 14, 16, 14)
         side.setSpacing(8)
+        self.panel_scroll = QScrollArea()
+        self.panel_scroll.setWidgetResizable(True)
+        self.panel_scroll.setFrameShape(QFrame.Shape.NoFrame)
+        self.panel_scroll.setHorizontalScrollBarPolicy(Qt.ScrollBarPolicy.ScrollBarAlwaysOff)
+        self.panel_scroll.setWidget(inner)
+        outer.addWidget(self.panel_scroll)
         side.addWidget(QLabel("السؤال:"))
         self.question_box = QComboBox()
         self.question_box.currentIndexChanged.connect(self._question_changed)
@@ -168,15 +185,23 @@ class GradingPage(QWidget):
         side.addWidget(self.student_info)
         self.status = QLabel()
         self.status.setWordWrap(True)
+        self.status.hide()
         side.addWidget(self.status)
         self.marks_grid = QGridLayout()
-        self.marks_grid.setVerticalSpacing(8)
+        self.marks_grid.setVerticalSpacing(6)
+        self.marks_grid.setColumnStretch(0, 1)
         side.addLayout(self.marks_grid)
+        side.addStretch()
+        # الأزرار ثابتة أسفل اللوحة خارج منطقة التمرير: ظاهرة دائماً مهما قصرت الشاشة
+        bottom = QVBoxLayout()
+        bottom.setContentsMargins(16, 6, 16, 12)
+        bottom.setSpacing(6)
+        outer.addLayout(bottom)
         self.approve_button = QPushButton("اعتماد والانتقال للتالي")
         self.approve_button.setToolTip("أو اضغط Enter في خانة الدرجة الأخيرة")
         self.approve_button.setObjectName("primary")
         self.approve_button.clicked.connect(self.approve_next)
-        side.addWidget(self.approve_button)
+        bottom.addWidget(self.approve_button)
         row = QHBoxLayout()
         self.prev_button = QPushButton("الطالب السابق")
         self.prev_button.clicked.connect(self.previous)
@@ -185,14 +210,13 @@ class GradingPage(QWidget):
         self.skip_button.clicked.connect(self.skip)
         row.addWidget(self.prev_button)
         row.addWidget(self.skip_button)
-        side.addLayout(row)
+        bottom.addLayout(row)
         self.pending_button = QPushButton("قائمة غير المصحح")
         self.pending_button.clicked.connect(self.show_pending)
-        side.addWidget(self.pending_button)
-        side.addStretch()
-        side.addWidget(QLabel("الإنجاز الكلي:"))
+        bottom.addWidget(self.pending_button)
         self.total_bar = QProgressBar()
-        side.addWidget(self.total_bar)
+        self.total_bar.setToolTip("الإنجاز الكلي لكل الأسئلة")
+        bottom.addWidget(self.total_bar)
         body.addWidget(panel)
 
         # --- الصورة ---
@@ -358,6 +382,9 @@ class GradingPage(QWidget):
             label = QLabel("الدرجة المستحقة:" if single else
                            f"\u200fالفرع {part_letter(row, exam.label_style)}:")
             edit = MarkEdit()
+            edit.setFixedHeight(36)       # ارتفاع ثابت مضغوط؛ اللوحة تتمرر بدل أن تتداخل الخانات
+            edit.setStyleSheet(MARK_STYLE)
+            edit.focused = lambda e=edit: self.panel_scroll.ensureWidgetVisible(e, 0, 40)
             edit.setAlignment(Qt.AlignmentFlag.AlignCenter)
             edit.setFixedWidth(80)
             mark = saved.get(part.id)
@@ -369,6 +396,10 @@ class GradingPage(QWidget):
             self.marks_grid.addWidget(edit, row, 1)
             self.marks_grid.addWidget(QLabel(f"من {format_marks(part.max_marks)}"), row, 2)
             self.edits.append((part.id, edit, part.max_marks))
+        # منطقة التمرير لا تعيد حساب الحد الأدنى للوحة عند تغيّر عدد الفروع؛ نفرضه صراحة
+        inner = self.panel_scroll.widget()
+        inner.layout().activate()
+        inner.setMinimumHeight(inner.minimumSizeHint().height())
         states = [saved.get(p.id) for p in question.parts]
         if all(m and m.status == GRADED for m in states):
             self.status.setText("✓ مصحَّح — يمكنك تعديل الدرجة ثم الاعتماد")
@@ -378,6 +409,7 @@ class GradingPage(QWidget):
             self.status.setStyleSheet("color: #b3392f;")
         else:
             self.status.setText("")
+        self.status.setVisible(bool(self.status.text()))
         self._update_progress()
         self._save_position()
         if self.edits:
@@ -406,7 +438,7 @@ class GradingPage(QWidget):
     def _validate_edit(edit: QLineEdit, maximum: float) -> bool:
         value = parse_mark(edit.text())
         ok = edit.text().strip() == "" or (value is not None and 0 <= value <= maximum + 1e-9)
-        edit.setStyleSheet("" if ok else "border: 2px solid #b3392f;")
+        edit.setStyleSheet(MARK_STYLE + ("" if ok else " border: 2px solid #b3392f;"))
         return ok
 
     # ---------- الأفعال ----------
