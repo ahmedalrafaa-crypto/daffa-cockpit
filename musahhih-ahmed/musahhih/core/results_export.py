@@ -76,9 +76,12 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
     for label, value in (("عدد الطلاب", stats["students"]), ("الغائبون", stats["absent"]),
                          ("تصحيحهم ناقص", stats["incomplete"]), ("المتوسط", _round(stats["average"])),
                          ("أعلى درجة", stats["highest"]), ("أدنى درجة", stats["lowest"]),
-                         ("الناجحون (نصف الدرجة فأكثر)", stats["passed"])):
+                         ("الناجحون (نصف الدرجة فأكثر)", stats["passed"]),
+                         ("نسبة النجاح", None if stats["pass_rate"] is None else stats["pass_rate"] / 100)):
         ws.append(["", "", label, value])
         ws.cell(ws.max_row, 3).font = bold
+        if label == "نسبة النجاح" and value is not None:
+            ws.cell(ws.max_row, 4).number_format = "0.#%"     # رقم بتنسيق نسبة مئوية: يُحسب عليه في Excel
 
     widths = {1: 5, 2: 14, 3: 30, 4: 16, 5: 8}
     for c in range(1, len(header) + 1):
@@ -96,6 +99,13 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
 def _dmy(iso: str) -> str:
     parts = iso.split("-")
     return f"{parts[2]}/{parts[1]}/{parts[0]}" if len(parts) == 3 else iso
+
+
+def percent(rate) -> str:
+    """50.0 ← «50%» و 66.7 ← «66.7%»؛ بلا طلاب مكتمل تصحيحهم ← «—».
+
+    معزولة من اليسار لليمين حتى لا تظهر «%50» داخل النص العربي."""
+    return "—" if rate is None else f"\u2066{rate:g}%\u2069"
 
 
 def _round(value):

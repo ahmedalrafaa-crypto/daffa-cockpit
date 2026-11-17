@@ -41,6 +41,7 @@ def test_absent_incomplete_and_stats(graded_exam, store, conn):
     s = reg.stats()
     assert (s["students"], s["absent"], s["incomplete"], s["graded"]) == (5, 1, 2, 2)
     assert (s["average"], s["highest"], s["lowest"], s["passed"]) == (17.5, 25, 10, 1)
+    assert s["pass_rate"] == 50.0                     # 1 من 2 مكتمل تصحيحهما؛ الغائب والناقص خارج الحساب
 
 
 def test_best_n_of_m(store, section, conn):
@@ -74,6 +75,11 @@ def test_excel_and_pdf_exports(graded_exam, store, conn, tmp_path):
     data = rows[header_index + 1: header_index + 1 + len(students)]
     assert [r[final_col] for r in data].count(22) == 4
     assert "غائب" in [r[final_col + 1] for r in data]
+    labels = {r[2]: r[3] for r in rows[header_index + 1 + len(students):] if r and len(r) > 3 and r[2]}
+    assert labels["نسبة النجاح"] == 1.0                   # الأربعة 22 من 25؛ رقم بتنسيق نسبة مئوية
+    ws_rows = list(ws.iter_rows())
+    rate_cell = next(r[3] for r in ws_rows if r[2].value == "نسبة النجاح")
+    assert "%" in rate_cell.number_format
     # بلا فروع: أعمدة أقل
     export_excel(reg, tmp_path / "s.xlsx", "الرابع العلمي", "أ", with_parts=False)
     short = list(load_workbook(tmp_path / "s.xlsx").active.iter_rows(values_only=True))[header_index]
@@ -112,3 +118,21 @@ def test_results_page(graded_exam, store, conn):
     page.parts_box.setChecked(False)
     assert page.table.columnCount() == 3 + 2 + 2
     assert "الغائبون: 1" in page.summary.text()
+    assert "نسبة النجاح: \u206650%\u2069" in page.summary.text()     # 22/25 ناجح و 4/25 راسب
+    assert page.table.horizontalHeaderItem(3).text().startswith("س1")
+    # عناوين الأعمدة لا تُقصّ: عرض كل عمود يتسع لأطول سطر في عنوانه بالخط العريض
+    from PySide6.QtGui import QFont, QFontMetrics
+    f = QFont(page.table.horizontalHeader().font())
+    f.setBold(True)
+    m = QFontMetrics(f)
+    for c in range(page.table.columnCount()):
+        if c == 2:
+            continue
+        text = page.table.horizontalHeaderItem(c).text()
+        assert page.table.columnWidth(c) >= max(m.horizontalAdvance(t) for t in text.split("\n")) + 20, text
+
+
+def test_pass_rate_edge_cases():
+    from musahhih.core.results_export import percent
+    assert percent(None) == "—"
+    assert percent(50.0) == "\u206650%\u2069" and percent(66.7) == "\u206666.7%\u2069"

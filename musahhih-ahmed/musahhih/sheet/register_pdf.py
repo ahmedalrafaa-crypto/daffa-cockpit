@@ -10,7 +10,7 @@ from PySide6.QtGui import QPageLayout, QPageSize, QPdfWriter, QTextDocument
 from ..core.errors import AppError
 from ..core.exams import format_marks, part_letter, question_title
 from ..core.results import Register
-from ..core.results_export import status_text
+from ..core.results_export import percent, status_text
 from ..core.roster import format_student_code
 from .render import display_date
 from .text import FONT_FAMILY, font
@@ -54,7 +54,8 @@ def register_html(register: Register, grade_name: str, section_name: str, with_p
 </table>
 <p>عدد الطلاب: {s['students']} · الغائبون: {s['absent']} · تصحيحهم ناقص: {s['incomplete']} ·
  المتوسط: {avg} · أعلى درجة: {_cell(s['highest'])} · أدنى درجة: {_cell(s['lowest'])} ·
- الناجحون (نصف الدرجة فأكثر): {s['passed']}</p>
+ الناجحون (نصف الدرجة فأكثر): {s['passed']} ·
+ <b>نسبة النجاح: {percent(s['pass_rate'])}</b></p>
 </body></html>"""
 
 

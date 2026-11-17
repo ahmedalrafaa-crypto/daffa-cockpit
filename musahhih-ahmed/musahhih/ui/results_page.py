@@ -2,7 +2,7 @@
 from __future__ import annotations
 
 from PySide6.QtCore import Qt, QUrl
-from PySide6.QtGui import QBrush, QColor, QDesktopServices, QFont
+from PySide6.QtGui import QBrush, QColor, QDesktopServices, QFont, QFontMetrics
 from PySide6.QtWidgets import (
     QAbstractItemView, QCheckBox, QComboBox, QFileDialog, QHBoxLayout, QHeaderView, QLabel, QLineEdit, QPushButton,
     QTableWidget, QTableWidgetItem, QVBoxLayout, QWidget,
@@ -12,7 +12,7 @@ from .. import paths
 from ..core import results
 from ..core.errors import AppError
 from ..core.exams import ExamStore, format_marks, part_letter, question_title
-from ..core.results_export import export_excel, status_text
+from ..core.results_export import export_excel, percent, status_text
 from ..core.roster import Roster, format_student_code, name_key
 from ..sheet.register_pdf import write_register_pdf
 from . import dialogs
@@ -166,18 +166,26 @@ class ResultsPage(QWidget):
             return
         exam, questions = self.register.exam, self.register.questions
         with_parts = self.parts_box.isChecked()
-        heads = ["ت", "الرقم", "اسم الطالب"]
+        # عناوين مختصرة في الجدول (س1، س1/أ) حتى يتسع الجدول؛ الكاملة في التلميح وفي Excel والطباعة
+        heads, tips = ["ت", "الرقم", "اسم الطالب"], ["", "", ""]
         for qi, q in enumerate(questions):
             if with_parts and len(q.parts) > 1:
-                heads += [f"{question_title(qi)}\n{part_letter(pi, exam.label_style)} (من {format_marks(p.max_marks)})"
-                          for pi, p in enumerate(q.parts)]
-            heads.append(f"{question_title(qi)}\n(من {format_marks(q.total)})")
-        heads += [f"الدرجة النهائية\n(من {format_marks(exam.total_marks)})", "الحالة"]
+                for pi, p in enumerate(q.parts):
+                    letter = part_letter(pi, exam.label_style)
+                    heads.append(f"س{qi + 1}/{letter}\n(من {format_marks(p.max_marks)})")
+                    tips.append(f"{question_title(qi)} — الفرع {letter}")
+            heads.append(f"س{qi + 1}\n(من {format_marks(q.total)})")
+            tips.append(f"{question_title(qi)} — المجموع")
+        heads += [f"النهائية\n(من {format_marks(exam.total_marks)})", "الحالة"]
+        tips += ["الدرجة النهائية", ""]
         rows = self._rows()
         self.table.setSortingEnabled(False)
         self.table.clear()
         self.table.setColumnCount(len(heads))
         self.table.setHorizontalHeaderLabels(heads)
+        for c, tip in enumerate(tips):
+            if tip:
+                self.table.horizontalHeaderItem(c).setToolTip(tip)
         self.table.setRowCount(len(rows))
         bold = QFont()
         bold.setBold(True)
@@ -205,6 +213,18 @@ class ResultsPage(QWidget):
         header = self.table.horizontalHeader()
         header.setSectionResizeMode(QHeaderView.ResizeMode.ResizeToContents)
         header.setSectionResizeMode(2, QHeaderView.ResizeMode.Stretch)
+        header.setMinimumSectionSize(48)
+        # العناوين بخط عريض: يُحسب عرضها بالخط العريض حتى لا تُقصّ («السؤال الأول (من 20)»)
+        bold_header = QFont(header.font())
+        bold_header.setBold(True)
+        metrics = QFontMetrics(bold_header)
+        for c, text in enumerate(heads):
+            if c == 2:
+                self.table.setColumnWidth(c, max(180, self.table.sizeHintForColumn(c) + 16))
+                continue
+            needed = max(metrics.horizontalAdvance(line) for line in text.split("\n")) + 24
+            header.setSectionResizeMode(c, QHeaderView.ResizeMode.Interactive)
+            self.table.setColumnWidth(c, max(needed, self.table.sizeHintForColumn(c) + 16))
         s = self.register.stats()
         avg = "—" if s["average"] is None else format_marks(round(s["average"], 2))
         note = f"   ·   يُحتسب أفضل {exam.answer_count} أسئلة (غير المحتسب باللون الرمادي)" if exam.answer_count else ""
@@ -212,7 +232,7 @@ class ResultsPage(QWidget):
             f"الطلاب: {s['students']}   ·   الغائبون: {s['absent']}   ·   تصحيحهم ناقص: {s['incomplete']}   ·   "
             f"المتوسط: {avg}   ·   الأعلى: {format_marks(s['highest']) if s['highest'] is not None else '—'}   ·   "
             f"الأدنى: {format_marks(s['lowest']) if s['lowest'] is not None else '—'}   ·   "
-            f"الناجحون: {s['passed']}{note}"
+            f"الناجحون: {s['passed']}   ·   <b>نسبة النجاح: {percent(s['pass_rate'])}</b>{note}"
         )
 
     # ---------- التصدير والطباعة ----------

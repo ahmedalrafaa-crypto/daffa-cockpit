@@ -47,6 +47,8 @@ class Register:
             "highest": max(finals) if finals else None,
             "lowest": min(finals) if finals else None,
             "passed": sum(f >= half for f in finals),
+            # نسبة النجاح من الطلاب المكتمل تصحيحهم فقط (الغائبون ومن تصحيحه ناقص خارج الحساب)
+            "pass_rate": round(100 * sum(f >= half for f in finals) / len(finals), 1) if finals else None,
         }
 
 
