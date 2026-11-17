@@ -19,6 +19,24 @@ COLORS = {"red": "#c00000", "black": "#000000", "blue": "#1f3fbf"}
 FRONT_X, FRONT_Y = "print_offset_x_mm", "print_offset_y_mm"
 BACK_X, BACK_Y = "print_offset_back_x_mm", "print_offset_back_y_mm"
 DUPLEX, COLOR = "print_duplex", "print_color"
+# اتجاه الورق في الطابعة، كما اكتشفه المستخدم بصفحة تحديد الاتجاه
+FACE, TOP, STACK = "print_paper_face", "print_paper_top", "print_paper_stack"
+
+
+def loading_instructions(face: str, top: str, stack: str) -> str:
+    """تعليمات وضع أوراق الطلاب في درج الطابعة. face: up/down، top: first/last، stack: top/bottom."""
+    if not (face and top and stack):
+        return ""
+    side = "إلى الأعلى" if face == "up" else "إلى الأسفل"
+    edge = ("وأعلى الورقة (جهة الترويسة ورمز QR) يدخل الطابعة أولاً" if top == "first"
+            else "وأسفل الورقة يدخل الطابعة أولاً (أعلاها جهتك)")
+    first = "فوق الرزمة" if stack == "top" else "في أسفل الرزمة"
+    return (f"ضع أوراق الطلاب ووجهها المكتوب (الصفحة الأولى) {side}، {edge}، "
+            f"وتكون أول ورقة في ملف الطباعة {first}.")
+
+
+def saved_instructions(settings: Settings) -> str:
+    return loading_instructions(settings.get(FACE), settings.get(TOP), settings.get(STACK))
 
 
 @dataclass(frozen=True)

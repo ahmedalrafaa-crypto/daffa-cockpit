@@ -165,6 +165,15 @@ def test_print_page_flow(graded_exam, store, conn, monkeypatch):
     dialog = PreviewDialog(page, conn, exam, ORDER_SCAN, "#c00000")
     assert dialog.list.count() == len(ScanStore(conn).pages(exam)) and dialog.view.scene().items()
 
+    # ضبط وضع الورق عبر المساعد (كما يفعل المستخدم بعد تجربة الورقتين)
+    from musahhih.ui.print_page import OrientationDialog
+    wizard = OrientationDialog(page, Settings(conn), exam)
+    for (key, box), value in zip(wizard.boxes, ("down", "first", "top")):
+        box.setCurrentIndex(box.findData(value))
+    assert "إلى الأسفل" in wizard.result.text()
+    wizard.accept()
+    page._show_loading()
+    assert "وضع الأوراق في طابعتك" in page.loading.text()
     page._print()                                             # الأول: بلا سؤال
     assert not asked and len(printing.jobs(conn, exam)) == 1 and opened[-1].endswith(".pdf")
     page._print()                                             # الثاني: يسأل، والجواب «لا»
@@ -174,3 +183,46 @@ def test_print_page_flow(graded_exam, store, conn, monkeypatch):
 
     page._alignment()
     assert opened[-1].endswith("alignment-test.pdf")
+
+
+def test_orientation_test_page_and_instructions(qapp, data_dir, conn, tmp_path, monkeypatch):
+    from musahhih.sheet.orientation import write_orientation_test
+    from musahhih.ui import dialogs
+    from musahhih.ui.print_page import OrientationDialog
+    path = tmp_path / "o.pdf"
+    write_orientation_test(path)
+    doc = pymupdf.open(path)
+    assert len(doc) == 2 and abs(doc[0].rect.width - 595.28) < 0.5
+    # الرقم الكبير مختلف في الصفحتين، والسهم في أعلى الصفحة (حبر في الربع العلوي)
+    tops = []
+    for page in doc:
+        ink = _gray(page) < 128
+        ys = np.nonzero(ink.any(axis=1))[0]
+        tops.append(ys.min() / K)
+    assert all(t < 25 for t in tops)
+    assert printing.loading_instructions("", "first", "top") == ""
+    text = printing.loading_instructions("up", "last", "bottom")
+    assert "إلى الأعلى" in text and "أسفل الورقة يدخل" in text and "في أسفل الرزمة" in text
+    settings = Settings(conn)
+    dialog = OrientationDialog(None, settings, None)
+    assert "أجب عن الأسئلة" in dialog.result.text()
+    dialog.reject()
+    assert printing.saved_instructions(settings) == ""
+
+
+def test_print_warns_when_orientation_not_set(graded_exam, store, conn, monkeypatch):
+    from PySide6.QtGui import QDesktopServices
+
+    from musahhih.ui import dialogs
+    from musahhih.ui.main_window import MainWindow
+    exam, grading, students = graded_exam
+    _grade_all(grading, store, exam)
+    asked = []
+    monkeypatch.setattr(QDesktopServices, "openUrl", lambda url: None)
+    monkeypatch.setattr(dialogs, "info", lambda *a, **k: None)
+    monkeypatch.setattr(dialogs, "confirm", lambda *a, **k: asked.append(a[1]) or False)
+    window = MainWindow(conn)
+    window.printing.select_exam(exam)
+    assert "لم يُضبط بعد" in window.printing.loading.text()
+    window.printing._print()
+    assert asked and "وضع الورق" in asked[0] and printing.jobs(conn, exam) == []    # رُفض: لا ملف

@@ -93,6 +93,108 @@ class PreviewDialog(QDialog):
         self.note.setText("" if aligned else "هذه الورقة لم تُقوَّم عند المسح؛ المعاينة تقريبية لكن الطباعة لا تتأثر.")
 
 
+class OrientationDialog(QDialog):
+    """مساعد اكتشاف طريقة سحب الطابعة للورق، بتجربة واحدة على ورقتين فارغتين."""
+
+    QUESTIONS = [
+        ("هل ظهرت الطباعة على الوجه نفسه الذي كتبتَ عليه علامتك X؟", printing.FACE, [("نعم", "up"), ("لا، على الوجه الآخر", "down")]),
+        ("هل يشير السهم «أعلى الصفحة» نحو الحافة التي كتبتَ قربها علامتك X؟", printing.TOP,
+         [("نعم", "first"), ("لا، نحو الحافة المقابلة", "last")]),
+        ("على أي ورقة ظهر الرقم الكبير 1؟", printing.STACK, [("على الورقة X1 (العليا)", "top"),
+                                                            ("على الورقة X2 (السفلى)", "bottom")]),
+    ]
+
+    def __init__(self, parent, settings: Settings, exam_id: int | None):
+        super().__init__(parent)
+        self.settings = settings
+        self.setWindowTitle("ضبط وضع الورق في الطابعة")
+        self.setFixedWidth(660)
+        layout = QVBoxLayout(self)
+        head = QLabel("<b>تجربة واحدة تكفي لكل طابعة:</b>")
+        layout.addWidget(head)
+        # كل خطوة في سطر مستقل: القوائم المرقمة في Qt يُقدَّر ارتفاعها بأقل من الحقيقي فتُقصّ
+        for number, text in enumerate((
+                "خذ ورقتين فارغتين. اكتب بالقلم علامة كبيرة <b>X1</b> على الأولى و<b>X2</b> على الثانية، "
+                "على <b>الوجه المتجه إلى الأعلى</b> وقرب <b>الحافة التي ستدخل الطابعة أولاً</b>.",
+                "ضع الورقتين في الدرج كما ستضع أوراق الامتحان، والورقة <b>X1 فوق X2</b>.",
+                "اضغط «طباعة صفحة الاختبار» واطبع الملف بحجم 100% (Actual size).",
+                "انظر إلى الورقتين وأجب عن الأسئلة الثلاثة."), start=1):
+            step = QLabel(f"{number}. {text}")
+            step.setWordWrap(True)
+            step.setTextFormat(Qt.TextFormat.RichText)
+            layout.addWidget(step)
+        open_test = QPushButton("طباعة صفحة الاختبار")
+        open_test.clicked.connect(lambda: self._open_test(exam_id))
+        layout.addWidget(open_test, alignment=Qt.AlignmentFlag.AlignRight)
+        self.boxes = []
+        for number, (question, key, options) in enumerate(self.QUESTIONS, start=1):
+            box = QComboBox()
+            box.addItem("— اختر —", "")
+            for text, value in options:
+                box.addItem(text, value)
+            box.setCurrentIndex(max(box.findData(settings.get(key)), 0))
+            box.currentIndexChanged.connect(lambda *_: self._update())
+            label = QLabel(f"<b>س{number}:</b> {question}")   # السؤال في سطر كامل فوق جوابه، فلا يُقصّ
+            label.setWordWrap(True)
+            layout.addWidget(label)
+            layout.addWidget(box)
+            self.boxes.append((key, box))
+        self.result = QLabel()
+        self.result.setWordWrap(True)
+        self.result.setObjectName("panelTitle")
+        layout.addWidget(self.result)
+        buttons = QHBoxLayout()
+        save = QPushButton("حفظ")
+        save.setObjectName("primary")
+        save.clicked.connect(self.accept)
+        cancel = QPushButton("إلغاء")
+        cancel.clicked.connect(self.reject)
+        buttons.addWidget(save)
+        buttons.addWidget(cancel)
+        buttons.addStretch()
+        layout.addLayout(buttons)
+        self._update()
+
+    def _fit(self) -> None:
+        """ارتفاع النافذة من عرضها الفعلي: الأسطر الملتفة تأخذ حاجتها كاملة فلا يُقصّ شيء."""
+        layout = self.layout()
+        layout.activate()
+        height = layout.totalHeightForWidth(self.width())
+        if height > 0:
+            self.setMinimumHeight(height)
+            self.resize(self.width(), height)
+
+    def showEvent(self, event) -> None:
+        super().showEvent(event)
+        self._fit()
+
+    def answers(self) -> dict[str, str]:
+        return {key: box.currentData() for key, box in self.boxes}
+
+    def _update(self) -> None:
+        a = self.answers()
+        text = printing.loading_instructions(a[printing.FACE], a[printing.TOP], a[printing.STACK])
+        self.result.setText(text or "أجب عن الأسئلة الثلاثة لتظهر طريقة وضع الأوراق.")
+        if self.isVisible():
+            self._fit()
+
+    def _open_test(self, exam_id) -> None:
+        from ..sheet.orientation import write_orientation_test
+        folder = paths.exam_dir(exam_id) if exam_id is not None else paths.data_dir()
+        path = folder / "paper-orientation-test.pdf"
+        try:
+            write_orientation_test(path)
+        except Exception:
+            dialogs.error(self, "تعذر إنشاء صفحة الاختبار. أغلق الملف إن كان مفتوحاً ثم أعد المحاولة.")
+            return
+        QDesktopServices.openUrl(QUrl.fromLocalFile(str(path)))
+
+    def accept(self) -> None:
+        for key, value in self.answers().items():
+            self.settings.set(key, value)
+        super().accept()
+
+
 class PrintPage(QWidget):
     def __init__(self, conn, store: ExamStore, settings: Settings):
         super().__init__()
@@ -176,6 +278,15 @@ class PrintPage(QWidget):
         steps.setWordWrap(True)
         steps.setObjectName("pageHint")
         root.addWidget(steps)
+        loading = QHBoxLayout()
+        self.loading = QLabel()
+        self.loading.setWordWrap(True)
+        self.loading.setTextFormat(Qt.TextFormat.RichText)
+        loading.addWidget(self.loading, 1)
+        self.orientation_button = QPushButton("ضبط وضع الورق في الطابعة")
+        self.orientation_button.clicked.connect(self._orientation)
+        loading.addWidget(self.orientation_button)
+        root.addLayout(loading)
 
         row = QHBoxLayout()
         self.alignment_button = QPushButton("ملف اختبار المحاذاة")
@@ -191,6 +302,7 @@ class PrintPage(QWidget):
         root.addLayout(row)
         root.addStretch()
         self._update_back()
+        self._show_loading()
 
     # ---------- تحميل ----------
     def refresh(self) -> None:
@@ -245,6 +357,18 @@ class PrintPage(QWidget):
         self._settings().save(self.settings)
         self._update_back()
 
+    def _show_loading(self) -> None:
+        text = printing.saved_instructions(self.settings)
+        if text:
+            self.loading.setText(f"<b>وضع الأوراق في طابعتك:</b> {text}")
+        else:
+            self.loading.setText("<span style='color:#b3392f'><b>لم يُضبط بعد وضع الورق في الطابعة.</b> "
+                                 "اضغط الزر وجرّب على ورقتين فارغتين قبل طباعة أوراق الطلاب.</span>")
+
+    def _orientation(self) -> None:
+        if OrientationDialog(self, self.settings, self.exam_box.currentData()).exec() == QDialog.DialogCode.Accepted:
+            self._show_loading()
+
     # ---------- الأفعال ----------
     @staticmethod
     def _open(path: Path) -> None:
@@ -286,12 +410,22 @@ class PrintPage(QWidget):
                                          "طباعة الدرجات مرتين على الأوراق نفسها تُفسدها. هل تريد إنشاء ملف جديد؟",
                                    yes="إنشاء ملف جديد", no="إلغاء"):
                 return
+        if not printing.saved_instructions(self.settings) and not dialogs.confirm(
+                self, "لم تضبط بعد وضع الورق في الطابعة، فقد تُطبع الدرجات على الوجه الخطأ أو مقلوبة.\n"
+                      "ننصح بتجربة «ضبط وضع الورق في الطابعة» على ورقتين فارغتين أولاً. هل تتابع؟",
+                yes="متابعة", no="إلغاء"):
+            return
         try:
             path, count = workflow.print_marks(self.conn, exam_id, self.order_box.currentData(), self._settings())
         except AppError as exc:
             dialogs.error(self, str(exc))
             return
         self._load()
+        first = printing.build_pages(self.conn, exam_id, self.order_box.currentData())[:3]
+        order = "\n".join(f"  {i}. {p.full_name} — صفحة {p.page}" for i, p in enumerate(first, start=1))
+        how = printing.saved_instructions(self.settings)
         dialogs.info(self, f"أُنشئ ملف طباعة الدرجات ({count} صفحة):\n{path}\n\n"
-                           "اطبعه بحجم 100% (Actual size)، والأوراق في الطابعة بالترتيب المختار وبالاتجاه نفسه.")
+                           + (f"{how}\n\n" if how else "")
+                           + f"أول الأوراق التي يجب أن تدخل الطابعة بالترتيب:\n{order}\n\n"
+                           "اطبع بحجم 100% (Actual size). جرّب أول ورقة وحدها قبل الرزمة كلها.")
         self._open(path)
