@@ -145,6 +145,18 @@ MIGRATIONS: list[str] = [
     """
     ALTER TABLE parts ADD COLUMN lines_fixed INTEGER NOT NULL DEFAULT 0;
     """,
+    # 9 — المرحلة السادسة: سجل ملفات طباعة الدرجات (لمنع الطباعة المكررة دون تأكيد)
+    """
+    CREATE TABLE print_jobs (
+        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_id    INTEGER NOT NULL REFERENCES exams(id) ON DELETE RESTRICT,
+        created_at TEXT    NOT NULL DEFAULT (datetime('now', 'localtime')),
+        pages      INTEGER NOT NULL,
+        file       TEXT    NOT NULL,
+        order_mode TEXT    NOT NULL,
+        marks_hash TEXT    NOT NULL
+    );
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

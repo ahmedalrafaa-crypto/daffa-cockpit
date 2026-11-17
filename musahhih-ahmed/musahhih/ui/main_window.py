@@ -18,13 +18,13 @@ from .exam_editor_page import ExamEditorPage
 from .exams_page import ExamsPage
 from .grading_page import GradingPage
 from .home_page import HomePage
+from .print_page import PrintPage
 from .results_page import ResultsPage
 from .scan_page import ScanPage
 from .students_page import StudentsPage
 
 # أقسام لم تُنفَّذ بعد: تظهر معطّلة مع رقم مرحلتها، حتى لا يوجد زر شكلي.
 UPCOMING = [
-    ("إعدادات الطباعة", 6),
     ("النسخ الاحتياطي", 7),
 ]
 
@@ -48,8 +48,9 @@ class MainWindow(QMainWindow):
         self.scan = ScanPage(self.store, ScanStore(conn))
         self.grading = GradingPage(self.store, ScanStore(conn), GradingStore(conn), self.settings)
         self.results = ResultsPage(conn, self.store, self.roster)
+        self.printing = PrintPage(conn, self.store, self.settings)
         self.pages = [self.home, self.classes, self.students, self.exams, self.editor, self.scan, self.grading,
-                      self.results]
+                      self.results, self.printing]
 
         central = QWidget()
         layout = QHBoxLayout(central)
@@ -71,7 +72,7 @@ class MainWindow(QMainWindow):
         side.addWidget(subtitle)
 
         self.nav = QButtonGroup(self)
-        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات", "استيراد الأوراق", "تصحيح الامتحانات", "سجل الدرجات")):
+        for index, text in enumerate(("الرئيسية", "الصفوف والشعب", "إدارة الطلاب", "الامتحانات", "استيراد الأوراق", "تصحيح الامتحانات", "سجل الدرجات", "طباعة الدرجات")):
             button = QPushButton(text)
             button.setCheckable(True)
             self.nav.addButton(button, index)
@@ -108,8 +109,8 @@ class MainWindow(QMainWindow):
         self.show_page(0)
 
     # زر الشريط ← رقم الصفحة (المحرّر صفحة داخلية بلا زر، ويُضاء زر «الامتحانات» عند فتحه)
-    NAV_PAGES = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6, 6: 7}
-    PAGE_NAV = {0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4, 6: 5, 7: 6}
+    NAV_PAGES = {0: 0, 1: 1, 2: 2, 3: 3, 4: 5, 5: 6, 6: 7, 7: 8}
+    PAGE_NAV = {0: 0, 1: 1, 2: 2, 3: 3, 4: 3, 5: 4, 6: 5, 7: 6, 8: 7}
 
     def show_page(self, index: int) -> None:
         self.nav.button(self.PAGE_NAV[index]).setChecked(True)

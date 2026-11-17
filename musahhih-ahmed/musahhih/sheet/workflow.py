@@ -100,10 +100,37 @@ def alignment_test(store: ExamStore, settings: Settings, exam_id: int) -> Path:
     exam = store.get_exam(exam_id)
     if not exam.approved:
         raise AppError("اعتمد الامتحان أولاً.")
+    from ..core.printing import PrintSettings
     pages = alignment_test_pages(store.layout(exam_id), store.questions(exam_id), exam.total_marks)
     final = paths.exam_dir(exam_id) / "alignment-test.pdf"
     tmp = final.with_suffix(".tmp")
-    write_overlay(tmp, pages, settings.get_float(OFFSET_X_KEY), settings.get_float(OFFSET_Y_KEY),
-                  guides=True, title="اختبار المحاذاة")
+    ps = PrintSettings.load(settings)
+    # على الوجهين: الصفحة الثانية من ورقة الطالب على الوجه الخلفي فتأخذ إزاحته
+    write_overlay(tmp, pages, guides=True, title="اختبار المحاذاة", color=ps.ink,
+                  offsets=[ps.offset(i) for i in range(len(pages))])
     _replace(tmp, final)
     return final
+
+
+def print_marks(conn, exam_id: int, order: str, print_settings) -> tuple[Path, int]:
+    """ينشئ ملف طباعة الدرجات (درجات فقط بلا خلفية) ويسجّله في سجل الطباعة. يعيد (المسار، عدد الصفحات)."""
+    from datetime import datetime
+
+    from ..core import printing
+    from .overlay import OverlayItem
+    pages = printing.build_pages(conn, exam_id, order)
+    if not pages:
+        raise AppError("لا توجد أوراق ممسوحة لهذا الامتحان.")
+    stamp = datetime.now().strftime("%Y%m%d-%H%M%S")
+    final = paths.exam_dir(exam_id) / f"marks-print-{stamp}.pdf"
+    tmp = final.with_suffix(".tmp")
+    try:
+        write_overlay(tmp, [[OverlayItem(b, t) for b, t in p.items] for p in pages],
+                      title="طباعة الدرجات", color=print_settings.ink,
+                      offsets=[print_settings.offset(i) for i in range(len(pages))])
+    except Exception:
+        tmp.unlink(missing_ok=True)
+        raise
+    _replace(tmp, final)
+    printing.record_job(conn, exam_id, len(pages), final.relative_to(paths.data_dir()).as_posix(), order)
+    return final, len(pages)

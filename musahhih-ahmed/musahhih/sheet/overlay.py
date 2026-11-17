@@ -20,17 +20,21 @@ class OverlayItem:
 
 
 def write_overlay(path: Path | str, pages: list[list[OverlayItem]], dx_mm: float = 0.0, dy_mm: float = 0.0,
-                  guides: bool = False, title: str = "طبقة الدرجات") -> None:
+                  guides: bool = False, title: str = "طبقة الدرجات", color: str = "#000000",
+                  offsets: list[tuple[float, float]] | None = None) -> None:
     """يكتب صفحة PDF لكل قائمة عناصر. dx/dy إزاحة معايرة الطابعة (يمين/أسفل موجب).
 
+    offsets: إزاحة خاصة لكل صفحة (مثلاً للوجه الخلفي في الطباعة على الوجهين)؛ إن غابت تُستعمل dx/dy للجميع.
     guides=True يرسم إطاراً رفيعاً داخل كل خانة وحول علامات الزوايا لاختبار المحاذاة.
     """
     writer, painter = open_pdf(path, title)
     try:
-        ink = QColor(0, 0, 0)
+        ink = QColor(color)
         for index, items in enumerate(pages):
             if index:
                 writer.newPage()
+            if offsets is not None:
+                dx_mm, dy_mm = offsets[index]
             if guides:
                 painter.setBrush(Qt.BrushStyle.NoBrush)
                 painter.setPen(_pen(0.2, ink))
