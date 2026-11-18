@@ -8,7 +8,7 @@ import sqlite3
 from dataclasses import dataclass
 
 from .errors import AppError
-from .exams import ExamStore, ExamStudent, Question, format_marks, question_title
+from .exams import ExamStore, ExamStudent, Question, format_marks, is_whole, question_title
 from .scans import ScanStore
 
 GRADED, SKIPPED = "graded", "skipped"
@@ -77,6 +77,8 @@ class GradingStore:
                 raise AppError("الفرع ليس من هذا الامتحان.")
             if value is None or value < 0:
                 raise AppError("الدرجة لا يمكن أن تكون سالبة أو فارغة.")
+            if not is_whole(value):
+                raise AppError("الدرجة يجب أن تكون عدداً صحيحاً بلا كسور (مثل 4 لا 4.5).")
             if value > limits[part_id] + 1e-9:
                 raise AppError(f"الدرجة {format_marks(value)} أكبر من الدرجة القصوى {format_marks(limits[part_id])}.")
         with self.conn:

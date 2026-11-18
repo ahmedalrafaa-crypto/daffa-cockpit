@@ -37,9 +37,13 @@ def test_reorder_and_edit(store, exam):
     store.move_part(b.id, -1)
     store.move_part(b.id, -1)  # في القمة: لا تغيير
     assert [p.id for p in store.questions(exam)[1].parts] == [b.id, a.id]
-    store.update_part(a.id, "نص جديد", 2.5, 3, b"img")
+    store.update_part(a.id, "نص جديد", 3, 3, b"img")
     part = store.questions(exam)[1].parts[1]
-    assert (part.text, part.max_marks, part.answer_lines, part.image) == ("نص جديد", 2.5, 3, b"img")
+    assert (part.text, part.max_marks, part.answer_lines, part.image) == ("نص جديد", 3, 3, b"img")
+    with pytest.raises(AppError, match="صحيحاً"):                       # الدرجات أعداد صحيحة فقط
+        store.update_part(a.id, "x", 2.5, 3, None)
+    with pytest.raises(AppError, match="صحيحاً"):
+        store.update_exam(exam, "x", "م", store.get_exam(exam).section_id, "2026-01-01", 24.5, 0, "")
     with pytest.raises(AppError):
         store.update_part(a.id, "x", 0, 3, None)
     with pytest.raises(AppError):

@@ -20,6 +20,11 @@ MAX_QUESTIONS_PER_PAGE = 3
 MAX_ANSWER_LINES = 25
 
 
+def is_whole(value: float) -> bool:
+    """الدرجات أعداد صحيحة فقط (اختيار المدرّس): 5 مقبولة، و 4.5 مرفوضة."""
+    return abs(value - round(value)) < 1e-9
+
+
 def question_title(index: int) -> str:
     return f"السؤال {ORDINALS[index]}" if index < len(ORDINALS) else f"السؤال {index + 1}"
 
@@ -130,6 +135,8 @@ class ExamStore:
             raise AppError("نمط ترقيم الفروع غير معروف.")
         if not 0 <= target_pages <= MAX_TARGET_PAGES:
             raise AppError(f"عدد صفحات الورقة يجب أن يكون بين 0 و {MAX_TARGET_PAGES}.")
+        if not is_whole(total_marks):
+            raise AppError("الدرجة الكلية يجب أن تكون عدداً صحيحاً بلا كسور.")
         if answer_count < 0:
             raise AppError("عدد الأسئلة المطلوب الإجابة عنها لا يمكن أن يكون سالباً.")
         name, subject = clean_name(name), clean_name(subject)
@@ -279,6 +286,8 @@ class ExamStore:
     def _validate_part(max_marks: float, answer_lines: int) -> None:
         if max_marks <= 0:
             raise AppError("درجة الفرع يجب أن تكون أكبر من صفر.")
+        if not is_whole(max_marks):
+            raise AppError("درجة الفرع يجب أن تكون عدداً صحيحاً بلا كسور.")
         if not 0 <= answer_lines <= MAX_ANSWER_LINES:
             raise AppError(f"عدد أسطر الإجابة يجب أن يكون بين 0 و {MAX_ANSWER_LINES}.")
 

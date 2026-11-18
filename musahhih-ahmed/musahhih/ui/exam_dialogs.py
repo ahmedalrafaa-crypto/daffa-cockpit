@@ -90,7 +90,7 @@ class ExamDialog(QDialog):
         self.date.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
         self.total = MarksSpin()
         self.total.setRange(1, 1000)
-        self.total.setDecimals(1)
+        self.total.setDecimals(0)          # الدرجات أعداد صحيحة فقط
         self.total.setValue(exam.total_marks if exam else defaults.get("total_marks", 100))
         self.duration = CountSpin()
         self.duration.setRange(0, 600)
@@ -226,8 +226,8 @@ class PartDialog(QDialog):
         row.addWidget(QLabel("الدرجة:"))
         self.marks = MarksSpin()
         self.marks.setRange(0.5, 1000)
-        self.marks.setDecimals(1)
-        self.marks.setSingleStep(0.5)
+        self.marks.setDecimals(0)          # الدرجات أعداد صحيحة فقط
+        self.marks.setSingleStep(1)
         self.marks.setValue(part.max_marks if part else default_marks)
         row.addWidget(self.marks)
         row.addSpacing(24)

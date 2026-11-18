@@ -11,7 +11,7 @@ from PySide6.QtWidgets import (
 
 from ..core.annotations import AnnotationStore
 from ..core.errors import AppError
-from ..core.exams import ExamStore, format_marks, part_letter, question_title
+from ..core.exams import ExamStore, format_marks, is_whole, part_letter, question_title
 from ..core.grading import GRADED, GradingStore
 from ..core.roster import format_student_code
 from ..core.scans import ScanStore
@@ -562,7 +562,7 @@ class GradingPage(QWidget):
     @staticmethod
     def _validate_edit(edit: QLineEdit, maximum: float) -> bool:
         value = parse_mark(edit.text())
-        ok = edit.text().strip() == "" or (value is not None and 0 <= value <= maximum + 1e-9)
+        ok = edit.text().strip() == "" or (value is not None and 0 <= value <= maximum + 1e-9 and is_whole(value))
         edit.setStyleSheet(MARK_STYLE + ("" if ok else " border: 2px solid #b3392f;"))
         return ok
 
@@ -589,6 +589,10 @@ class GradingPage(QWidget):
             if value < 0 or value > maximum + 1e-9:
                 edit.setFocus()
                 dialogs.error(self, f"الدرجة يجب أن تكون بين 0 و {format_marks(maximum)}.")
+                return
+            if not is_whole(value):
+                edit.setFocus()
+                dialogs.error(self, "الدرجة يجب أن تكون عدداً صحيحاً بلا كسور (مثل 4 لا 4.5).")
                 return
             values[part_id] = value
         try:

@@ -57,16 +57,18 @@ def test_save_validates_and_never_duplicates(graded_exam, store):
     a, b = q1.parts
     sid = students[0].student_id
     with pytest.raises(AppError, match="أكبر"):
-        grading.save(exam, sid, {a.id: 5.5, b.id: 1})
+        grading.save(exam, sid, {a.id: 6, b.id: 1})                     # أكبر من القصوى (5)
     with pytest.raises(AppError, match="سالبة"):
         grading.save(exam, sid, {a.id: -1})
     with pytest.raises(AppError, match="ليس له ورقة"):
         grading.save(exam, students[1].student_id, {a.id: 1})
     assert grading.marks(exam) == {}                                    # لا حفظ جزئي عند الخطأ
     grading.save(exam, sid, {a.id: 5, b.id: 4})
-    grading.save(exam, sid, {a.id: 4.5, b.id: 4})                       # تعديل لاحق يستبدل ولا يكرر
+    with pytest.raises(AppError, match="صحيحاً"):                       # لا كسور
+        grading.save(exam, sid, {a.id: 4.5, b.id: 4})
+    grading.save(exam, sid, {a.id: 3, b.id: 4})                         # تعديل لاحق يستبدل ولا يكرر
     marks = grading.marks(exam)
-    assert len(marks) == 2 and marks[(sid, a.id)].value == 4.5
+    assert len(marks) == 2 and marks[(sid, a.id)].value == 3
     assert grading.question_progress(exam, q1) == (1, 4)
 
 
@@ -106,10 +108,10 @@ def test_marks_survive_closing_the_program(tmp_path, monkeypatch):
     part = store.add_part(store.add_question(exam), "س", 10)
     grading = GradingStore(conn)
     monkeypatch.setattr(grading, "students", lambda exam_id: [ExamStudent(sid, "طالبة")])
-    grading.save(exam, sid, {part: 7.5})
+    grading.save(exam, sid, {part: 7})
     conn.close()                                                       # كإغلاق البرنامج فجأة بعد الاعتماد
     reopened = open_db(path)
-    assert GradingStore(reopened).marks(exam)[(sid, part)].value == 7.5
+    assert GradingStore(reopened).marks(exam)[(sid, part)].value == 7
     reopened.close()
 
 
@@ -155,18 +157,22 @@ def test_grading_screen_flow(graded_exam, store, conn, monkeypatch):
     page.edits[1][1].setText("4")
     page.approve_next()
     assert errors and page.si == 0 and grading.marks(exam) == {}
-    # أرقام عربية وفاصلة عشرية
+    # درجة بكسر تُرفض (الدرجات أعداد صحيحة)، والأرقام العربية مقبولة
     page.edits[0][1].setText("٤٫٥")
+    errors.clear()
+    page.approve_next()
+    assert errors and "صحيحاً" in errors[-1] and page.si == 0 and grading.marks(exam) == {}
+    page.edits[0][1].setText("٤")
     page.approve_next()
     first = page.students[0].student_id
-    assert page.si == 1 and grading.student_marks(exam, first)[q1.parts[0].id].value == 4.5
+    assert page.si == 1 and grading.student_marks(exam, first)[q1.parts[0].id].value == 4
 
     page.skip()                                                          # الطالب الثاني متخطّى
     assert page.si == 2
     page.previous()
     assert page.si == 1 and "متخطّى" in page.status.text()
     page.previous()
-    assert page.edits[0][1].text() == "4.5" and "مصحَّح" in page.status.text()   # تعديل درجة سابقة ممكن
+    assert page.edits[0][1].text() == "4" and "مصحَّح" in page.status.text()   # تعديل درجة سابقة ممكن
 
     # إغلاق وإعادة فتح: يستكمل من الموضع نفسه
     page.si = 2
