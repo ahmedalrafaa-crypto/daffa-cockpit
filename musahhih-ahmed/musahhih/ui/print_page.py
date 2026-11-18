@@ -18,7 +18,7 @@ from ..core.printing import ORDER_SCAN, ORDER_STUDENT, PrintSettings
 from ..core.scans import ScanStore
 from ..core.settings import Settings
 from ..scan import align, importer
-from ..sheet import workflow
+from ..sheet import ticks, workflow
 from . import dialogs
 from .grading_page import ZoomView, to_pixmap
 
@@ -35,7 +35,7 @@ def _spin(value: float) -> QDoubleSpinBox:
     return spin
 
 
-def preview_pixmap(scan, page: printing.PrintPage, ink: str) -> tuple[QPixmap, bool]:
+def preview_pixmap(scan, page: printing.PrintPage, ink: str, tick_position: str = "off") -> tuple[QPixmap, bool]:
     """صورة الورقة الممسوحة وفوقها الدرجات في مواضعها كما ستُطبع. يعيد (الصورة، هل الورقة مقوَّمة)."""
     image = importer.read_image(scan.path) if scan else None
     if image is None:
@@ -52,6 +52,11 @@ def preview_pixmap(scan, page: printing.PrintPage, ink: str) -> tuple[QPixmap, b
         painter.setFont(f)
         painter.drawText(round(box.x * k), round(box.y * k), round(box.w * k), round(box.h * k),
                          int(Qt.AlignmentFlag.AlignCenter), text)
+    if tick_position in (ticks.GUTTER, ticks.OVER_ANSWER):
+        for box, answer, kind in page.ticks:
+            cx, cy = ticks.gutter_center(box) if tick_position == ticks.GUTTER else ticks.answer_center(answer)
+            size = ticks.GUTTER_SIZE if tick_position == ticks.GUTTER else ticks.ANSWER_SIZE
+            ticks.draw_tick(painter, kind, cx, cy, size, ink, k)
     painter.end()
     return pixmap, scan.aligned
 
@@ -59,12 +64,13 @@ def preview_pixmap(scan, page: printing.PrintPage, ink: str) -> tuple[QPixmap, b
 class PreviewDialog(QDialog):
     """معاينة الدرجات فوق صور الأوراق الممسوحة، صفحةً صفحة، بترتيب ملف الطباعة نفسه."""
 
-    def __init__(self, parent, conn, exam_id: int, order: str, ink: str):
+    def __init__(self, parent, conn, exam_id: int, order: str, ink: str, tick_position: str = "off"):
         super().__init__(parent)
         self.setWindowTitle("معاينة الدرجات فوق الأوراق")
         self.resize(1100, 760)
         self.scans = ScanStore(conn)
         self.ink = ink
+        self.tick_position = tick_position
         self.pages = printing.build_pages(conn, exam_id, order)
         layout = QHBoxLayout(self)
         self.list = QListWidget()
@@ -88,7 +94,7 @@ class PreviewDialog(QDialog):
         if row < 0:
             return
         page = self.pages[row]
-        pixmap, aligned = preview_pixmap(self.scans.get(page.scan_id), page, self.ink)
+        pixmap, aligned = preview_pixmap(self.scans.get(page.scan_id), page, self.ink, self.tick_position)
         self.view.show_pixmaps([pixmap] if not pixmap.isNull() else [])
         self.note.setText("" if aligned else "هذه الورقة لم تُقوَّم عند المسح؛ المعاينة تقريبية لكن الطباعة لا تتأثر.")
 
@@ -239,6 +245,11 @@ class PrintPage(QWidget):
         for key, name in COLOR_NAMES.items():
             self.color_box.addItem(name, key)
         form.addRow("لون الدرجات:", self.color_box)
+        self.ticks_box = QComboBox()
+        for key, name in ticks.POSITIONS.items():
+            self.ticks_box.addItem(name, key)
+        self.ticks_box.setToolTip("✓ للدرجة الكاملة، ✗ للصفر، ونصف صح لما بينهما — من درجتك أنت لكل فرع")
+        form.addRow("علامات التصحيح:", self.ticks_box)
         cards.addWidget(how, 1)
         # --- المعايرة ---
         cal = QFrame()
@@ -265,6 +276,8 @@ class PrintPage(QWidget):
 
         self.duplex.setChecked(ps.duplex)
         self.color_box.setCurrentIndex(max(self.color_box.findData(ps.color), 0))
+        self.ticks_box.setCurrentIndex(max(self.ticks_box.findData(ps.ticks), 0))
+        self.ticks_box.currentIndexChanged.connect(lambda *_: self._save_settings())
         for w in (self.front_x, self.front_y, self.back_x, self.back_y):
             w.valueChanged.connect(lambda *_: self._save_settings())
         self.duplex.toggled.connect(lambda *_: self._save_settings())
@@ -351,7 +364,7 @@ class PrintPage(QWidget):
 
     def _settings(self) -> PrintSettings:
         return PrintSettings((self.front_x.value(), self.front_y.value()), (self.back_x.value(), self.back_y.value()),
-                             self.duplex.isChecked(), self.color_box.currentData())
+                             self.duplex.isChecked(), self.color_box.currentData(), self.ticks_box.currentData())
 
     def _save_settings(self) -> None:
         self._settings().save(self.settings)
@@ -384,8 +397,9 @@ class PrintPage(QWidget):
 
     def _preview(self) -> None:
         try:
+            ps = self._settings()
             dialog = PreviewDialog(self, self.conn, self.exam_box.currentData(), self.order_box.currentData(),
-                                   self._settings().ink)
+                                   ps.ink, ps.ticks)
         except AppError as exc:
             dialogs.error(self, str(exc))
             return

@@ -19,6 +19,19 @@ COLORS = {"red": "#c00000", "black": "#000000", "blue": "#1f3fbf"}
 FRONT_X, FRONT_Y = "print_offset_x_mm", "print_offset_y_mm"
 BACK_X, BACK_Y = "print_offset_back_x_mm", "print_offset_back_y_mm"
 DUPLEX, COLOR = "print_duplex", "print_color"
+TICKS = "print_ticks"          # موضع علامات التصحيح: gutter / answer / off
+RIGHT, WRONG, HALF = "right", "wrong", "half"
+
+
+def kind_for(value: float | None, maximum: float) -> str | None:
+    """علامة التصحيح من درجة المدرّس: الكاملة ✓، والصفر ✗، وما بينهما «نصف صح»؛ غير المصحح بلا علامة."""
+    if value is None:
+        return None
+    if value >= maximum - 1e-9:
+        return RIGHT
+    if value <= 1e-9:
+        return WRONG
+    return HALF
 # اتجاه الورق في الطابعة، كما اكتشفه المستخدم بصفحة تحديد الاتجاه
 FACE, TOP, STACK = "print_paper_face", "print_paper_top", "print_paper_stack"
 
@@ -45,13 +58,16 @@ class PrintSettings:
     back: tuple[float, float]
     duplex: bool
     color: str          # مفتاح من COLORS
+    ticks: str = "gutter"   # موضع علامات التصحيح ✓ ✗ ½
 
     @classmethod
     def load(cls, settings: Settings) -> "PrintSettings":
         color = settings.get(COLOR, "red")
+        ticks = settings.get(TICKS, "gutter")
         return cls((settings.get_float(FRONT_X), settings.get_float(FRONT_Y)),
                    (settings.get_float(BACK_X), settings.get_float(BACK_Y)),
-                   settings.get(DUPLEX, "0") == "1", color if color in COLORS else "red")
+                   settings.get(DUPLEX, "0") == "1", color if color in COLORS else "red",
+                   ticks if ticks in ("gutter", "answer", "off") else "gutter")
 
     def save(self, settings: Settings) -> None:
         settings.set(FRONT_X, self.front[0])
@@ -60,6 +76,7 @@ class PrintSettings:
         settings.set(BACK_Y, self.back[1])
         settings.set(DUPLEX, "1" if self.duplex else "0")
         settings.set(COLOR, self.color)
+        settings.set(TICKS, self.ticks)
 
     def offset(self, index: int) -> tuple[float, float]:
         """إزاحة الصفحة رقم index (من الصفر) في ملف الطباعة: الفردية خلفية عند الطباعة على الوجهين."""
@@ -77,6 +94,7 @@ class PrintPage:
     page: int
     scan_id: int | None
     items: list[tuple[LayoutBox, str]]   # (الخانة، النص المطبوع فيها)
+    ticks: list[tuple[LayoutBox, LayoutBox, str]] = ()   # (خانة الدرجة، مساحة الإجابة، right/wrong/half)
 
 
 @dataclass(frozen=True)
@@ -112,9 +130,14 @@ def build_pages(conn: sqlite3.Connection, exam_id: int, order: str = ORDER_SCAN)
     register = build(conn, exam_id)
     results = {r.student_id: r for r in register.results}
     question_index = {q.id: i for i, q in enumerate(register.questions)}
+    part_max = {p.id: p.max_marks for q in register.questions for p in q.parts}
+    single_part = {q.id: q.parts[0] for q in register.questions if len(q.parts) == 1}
     boxes_by_page: dict[int, list[LayoutBox]] = {}
+    answers: dict[int, LayoutBox] = {}
     for b in store.layout(exam_id):
-        if b.kind != "answer":
+        if b.kind == "answer":
+            answers[b.part_id] = b
+        else:
             boxes_by_page.setdefault(b.page, []).append(b)
 
     scans = ScanStore(conn).pages(exam_id, MATCHED)
@@ -126,8 +149,18 @@ def build_pages(conn: sqlite3.Connection, exam_id: int, order: str = ORDER_SCAN)
         r = results.get(scan.student_id)
         if r is None:
             continue
-        items = []
+        items, ticks = [], []
         for b in boxes_by_page.get(scan.page, []):
+            # علامة التصحيح لكل فرع (أو للسؤال ذي الفرع الواحد) مشتقة من درجة المدرّس
+            part = None
+            if b.kind == "part_mark":
+                part = b.part_id
+            elif b.kind == "question_mark" and b.question_id in single_part:
+                part = single_part[b.question_id].id
+            if part is not None and part in answers:
+                kind = kind_for(r.parts.get(part), part_max[part])
+                if kind:
+                    ticks.append((b, answers[part], kind))
             if b.kind == "part_mark":
                 value = r.parts.get(b.part_id)
             elif b.kind == "question_mark":
@@ -136,7 +169,7 @@ def build_pages(conn: sqlite3.Connection, exam_id: int, order: str = ORDER_SCAN)
                 value = r.final
             if value is not None:
                 items.append((b, format_marks(value)))
-        pages.append(PrintPage(r.student_id, r.full_name, scan.page, scan.id, items))
+        pages.append(PrintPage(r.student_id, r.full_name, scan.page, scan.id, items, ticks))
     return pages
 
 

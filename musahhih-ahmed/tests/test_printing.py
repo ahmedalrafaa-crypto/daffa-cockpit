@@ -62,7 +62,7 @@ def test_student_order(graded_exam, store, conn):
 def test_print_file_inside_boxes_and_not_on_the_printed_lines(graded_exam, store, conn):
     exam, grading, students = graded_exam
     _grade_all(grading, store, exam)
-    ps = PrintSettings((0.0, 0.0), (0.0, 0.0), False, "black")
+    ps = PrintSettings((0.0, 0.0), (0.0, 0.0), False, "black", ticks="off")     # الأرقام وحدها
     path, count = workflow.print_marks(conn, exam, ORDER_STUDENT, ps)
     doc = pymupdf.open(path)
     assert len(doc) == count == len(ScanStore(conn).pages(exam))
@@ -94,8 +94,8 @@ def test_duplex_back_offset_applies_to_every_second_page(graded_exam, store, con
         ys, xs = np.nonzero(_gray(pymupdf.open(path)[index]) < 128)
         return xs.min() / K, ys.min() / K
 
-    plain = PrintSettings((1.0, 0.5), (1.0, 0.5), False, "black")
-    duplex = PrintSettings((1.0, 0.5), (3.0, -1.5), True, "black")
+    plain = PrintSettings((1.0, 0.5), (1.0, 0.5), False, "black", ticks="off")
+    duplex = PrintSettings((1.0, 0.5), (3.0, -1.5), True, "black", ticks="off")
     for index, expected in ((0, (0.0, 0.0)), (1, (2.0, -2.0))):
         a, b = ink_corner(plain, index), ink_corner(duplex, index)
         assert abs((b[0] - a[0]) - expected[0]) < 0.15 and abs((b[1] - a[1]) - expected[1]) < 0.15
@@ -226,3 +226,77 @@ def test_print_warns_when_orientation_not_set(graded_exam, store, conn, monkeypa
     assert "لم يُضبط بعد" in window.printing.loading.text()
     window.printing._print()
     assert asked and "وضع الورق" in asked[0] and printing.jobs(conn, exam) == []    # رُفض: لا ملف
+
+
+
+def test_tick_kind_follows_the_teachers_mark():
+    assert printing.kind_for(4, 4) == printing.RIGHT
+    assert printing.kind_for(0, 4) == printing.WRONG
+    assert printing.kind_for(2.5, 4) == printing.HALF
+    assert printing.kind_for(None, 4) is None
+
+
+def _tick_exam(graded_exam, store, grading):
+    """الفرع أ كامل ✓، والفرع ب صفر ✗، وفرعا السؤال الثاني نصف صح."""
+    exam, _, _ = graded_exam
+    _grade_all(grading, store, exam, values=(5, 0, 4, 2))
+    return exam
+
+
+def test_ticks_built_per_part(graded_exam, store, conn):
+    exam, grading, students = graded_exam
+    _tick_exam(graded_exam, store, grading)
+    q1, q2 = store.questions(exam)
+    kinds = {}
+    for p in printing.build_pages(conn, exam, ORDER_STUDENT):
+        for box, answer, kind in p.ticks:
+            assert answer.kind == "answer" and answer.part_id == box.part_id
+            kinds[box.part_id] = kind
+    assert kinds[q1.parts[0].id] == "right" and kinds[q1.parts[1].id] == "wrong"
+    assert kinds[q2.parts[0].id] == "half" and kinds[q2.parts[1].id] == "half"
+
+
+def _ink_regions(conn, store, exam, position):
+    from musahhih.sheet import ticks as t
+    ps = PrintSettings((0, 0), (0, 0), False, "black", ticks=position)
+    path, _ = workflow.print_marks(conn, exam, ORDER_STUDENT, ps)
+    return pymupdf.open(path), printing.build_pages(conn, exam, ORDER_STUDENT), t
+
+
+def test_gutter_ticks_sit_in_the_blank_strip_left_of_the_boxes(graded_exam, store, conn):
+    exam, grading, students = graded_exam
+    _tick_exam(graded_exam, store, grading)
+    doc, pages, t = _ink_regions(conn, store, exam, "gutter")
+    sheets = pymupdf.open(workflow.sheets_path(store, exam))
+    per = sheets.page_count // len(students)
+    for page, info in zip(doc, pages):
+        ink = _gray(page) < 128
+        allowed = np.zeros_like(ink)
+        for b in store.layout(exam):                                  # الأرقام داخل الخانات
+            if b.page == info.page and b.kind != "answer":
+                allowed[round(b.y * K):round((b.y + b.h) * K), round(b.x * K):round((b.x + b.w) * K)] = True
+        for box, _, _ in info.ticks:                                  # والعلامات في الشريط يسار الخانة
+            cx, cy = t.gutter_center(box)
+            r = t.GUTTER_SIZE * 0.62
+            allowed[round((cy - r) * K):round((cy + r) * K), round((cx - r) * K):round((cx + r) * K)] = True
+        assert not (ink & ~allowed).any()
+        student_index = [s.student_id for s in students].index(info.student_id)
+        original = _gray(sheets[student_index * per + info.page - 1]) < 128
+        assert not (ink & original).any()                             # لا تلمس شيئاً مطبوعاً على الورقة
+        assert len(info.ticks) == sum(1 for b in store.layout(exam) if b.page == info.page and b.kind == "part_mark")
+
+
+def test_answer_ticks_are_large_and_inside_the_answer_area(graded_exam, store, conn):
+    exam, grading, students = graded_exam
+    _tick_exam(graded_exam, store, grading)
+    doc, pages, t = _ink_regions(conn, store, exam, "answer")
+    for page, info in zip(doc, pages):
+        ink = _gray(page) < 128
+        for _, answer, _ in info.ticks:
+            region = ink[round(answer.y * K):round((answer.y + answer.h) * K),
+                         round(answer.x * K):round((answer.x + answer.w) * K)]
+            ys, xs = np.nonzero(region)
+            assert len(xs) and (xs.max() - xs.min()) / K > 8                   # علامة كبيرة (أكثر من 8 ملم)
+    none_doc, _, _ = _ink_regions(conn, store, exam, "off")
+    with_doc, _, _ = _ink_regions(conn, store, exam, "gutter")
+    assert (_gray(with_doc[0]) < 128).sum() > (_gray(none_doc[0]) < 128).sum()     # «بدون» لا يرسم علامات

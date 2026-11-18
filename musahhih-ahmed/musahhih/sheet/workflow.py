@@ -127,7 +127,8 @@ def print_marks(conn, exam_id: int, order: str, print_settings) -> tuple[Path, i
     try:
         write_overlay(tmp, [[OverlayItem(b, t) for b, t in p.items] for p in pages],
                       title="طباعة الدرجات", color=print_settings.ink,
-                      offsets=[print_settings.offset(i) for i in range(len(pages))])
+                      offsets=[print_settings.offset(i) for i in range(len(pages))],
+                      ticks=[list(p.ticks) for p in pages], tick_position=print_settings.ticks)
     except Exception:
         tmp.unlink(missing_ok=True)
         raise
