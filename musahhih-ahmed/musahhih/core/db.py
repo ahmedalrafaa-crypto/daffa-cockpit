@@ -157,6 +157,19 @@ MIGRATIONS: list[str] = [
         marks_hash TEXT    NOT NULL
     );
     """,
+    # 10 — علامات يرسمها المدرّس على الإجابة (دائرة أو خط تحت الخطأ) بالمليمتر على الورقة
+    """
+    CREATE TABLE annotations (
+        id         INTEGER PRIMARY KEY AUTOINCREMENT,
+        exam_id    INTEGER NOT NULL REFERENCES exams(id) ON DELETE RESTRICT,
+        student_id INTEGER NOT NULL REFERENCES students(id) ON DELETE RESTRICT,
+        page       INTEGER NOT NULL,
+        kind       TEXT    NOT NULL CHECK (kind IN ('circle', 'underline')),
+        x1 REAL NOT NULL, y1 REAL NOT NULL, x2 REAL NOT NULL, y2 REAL NOT NULL,
+        created_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
+    CREATE INDEX idx_annotations ON annotations(exam_id, student_id, page);
+    """,
 ]
 
 SCHEMA_VERSION = len(MIGRATIONS)

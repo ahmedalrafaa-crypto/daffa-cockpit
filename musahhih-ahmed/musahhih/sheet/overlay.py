@@ -11,7 +11,9 @@ from ..core.exams import LayoutBox, Question, format_marks
 from . import geometry as g
 from .render import _pen, open_pdf
 from .text import CENTER, draw_text, font, rect
-from .ticks import ANSWER_SIZE, GUTTER, GUTTER_SIZE, OVER_ANSWER, answer_center, draw_tick, gutter_center
+from .ticks import (
+    ANSWER_SIZE, GUTTER, GUTTER_SIZE, OVER_ANSWER, answer_center, draw_annotation, draw_tick, gutter_center,
+)
 
 
 @dataclass(frozen=True)
@@ -23,7 +25,8 @@ class OverlayItem:
 def write_overlay(path: Path | str, pages: list[list[OverlayItem]], dx_mm: float = 0.0, dy_mm: float = 0.0,
                   guides: bool = False, title: str = "طبقة الدرجات", color: str = "#000000",
                   offsets: list[tuple[float, float]] | None = None,
-                  ticks: list[list[tuple]] | None = None, tick_position: str = "off") -> None:
+                  ticks: list[list[tuple]] | None = None, tick_position: str = "off",
+                  annotations: list[list] | None = None) -> None:
     """يكتب صفحة PDF لكل قائمة عناصر. dx/dy إزاحة معايرة الطابعة (يمين/أسفل موجب).
 
     offsets: إزاحة خاصة لكل صفحة (مثلاً للوجه الخلفي في الطباعة على الوجهين)؛ إن غابت تُستعمل dx/dy للجميع.
@@ -59,6 +62,8 @@ def write_overlay(path: Path | str, pages: list[list[OverlayItem]], dx_mm: float
                     cx, cy = gutter_center(box) if tick_position == GUTTER else answer_center(answer)
                     size = GUTTER_SIZE if tick_position == GUTTER else ANSWER_SIZE
                     draw_tick(painter, kind, cx + dx_mm, cy + dy_mm, size, color, g.PX_PER_MM)
+            for a in (annotations[index] if annotations else ()):
+                draw_annotation(painter, a, color, g.PX_PER_MM, dx_mm, dy_mm)
     finally:
         painter.end()
 

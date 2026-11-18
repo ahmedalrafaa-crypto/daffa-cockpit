@@ -10,6 +10,7 @@ from .exams import ExamStore, LayoutBox, format_marks
 from .grading import GradingStore
 from .results import build
 from .scans import MATCHED, ScanStore
+from .annotations import AnnotationStore
 from .settings import Settings
 
 ORDER_SCAN, ORDER_STUDENT = "scan", "student"
@@ -95,6 +96,7 @@ class PrintPage:
     scan_id: int | None
     items: list[tuple[LayoutBox, str]]   # (الخانة، النص المطبوع فيها)
     ticks: list[tuple[LayoutBox, LayoutBox, str]] = ()   # (خانة الدرجة، مساحة الإجابة، right/wrong/half)
+    annotations: list = ()   # دوائر وخطوط رسمها المدرّس على هذه الصفحة (core.annotations.Annotation)
 
 
 @dataclass(frozen=True)
@@ -169,7 +171,8 @@ def build_pages(conn: sqlite3.Connection, exam_id: int, order: str = ORDER_SCAN)
                 value = r.final
             if value is not None:
                 items.append((b, format_marks(value)))
-        pages.append(PrintPage(r.student_id, r.full_name, scan.page, scan.id, items, ticks))
+        drawn = AnnotationStore(conn).for_page(exam_id, r.student_id, scan.page)
+        pages.append(PrintPage(r.student_id, r.full_name, scan.page, scan.id, items, ticks, drawn))
     return pages
 
 

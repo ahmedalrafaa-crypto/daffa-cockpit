@@ -4,7 +4,7 @@
 """
 from __future__ import annotations
 
-from PySide6.QtCore import QPointF, Qt
+from PySide6.QtCore import QPointF, QRectF, Qt
 from PySide6.QtGui import QColor, QPainter, QPainterPath, QPen
 
 from ..core.printing import HALF, RIGHT, WRONG, kind_for  # noqa: F401  (القاعدة في المنطق، والرسم هنا)
@@ -28,6 +28,22 @@ def answer_center(answer_box) -> tuple[float, float]:
     """مركز العلامة الكبيرة: أسفل يسار مساحة الإجابة، أي في أسطر الكتابة لا فوق نص السؤال المطبوع،
     وفي الطرف الأيسر حيث تنتهي الأسطر العربية غالباً."""
     return g.CONTENT_X + ANSWER_SIZE * 0.8, answer_box.y + answer_box.h - ANSWER_SIZE * 0.75
+
+
+def draw_annotation(painter: QPainter, a, color: str, px_per_mm: float, dx_mm: float = 0.0,
+                    dy_mm: float = 0.0) -> None:
+    """دائرة حول الخطأ أو خط تحته، كما رسمها المدرّس، بخط بعرض قلم أحمر عادي (0.5 ملم)."""
+    k = px_per_mm
+    pen = QPen(QColor(color))
+    pen.setWidthF(0.5 * k)
+    pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+    painter.setPen(pen)
+    painter.setBrush(Qt.BrushStyle.NoBrush)
+    x1, y1, x2, y2 = (a.x1 + dx_mm) * k, (a.y1 + dy_mm) * k, (a.x2 + dx_mm) * k, (a.y2 + dy_mm) * k
+    if a.kind == "circle":
+        painter.drawEllipse(QRectF(QPointF(x1, y1), QPointF(x2, y2)))
+    else:
+        painter.drawLine(QPointF(x1, y1), QPointF(x2, y2))
 
 
 def draw_tick(painter: QPainter, kind: str, cx_mm: float, cy_mm: float, size_mm: float, color: str,

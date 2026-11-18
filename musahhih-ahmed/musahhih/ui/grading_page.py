@@ -2,20 +2,21 @@
 from __future__ import annotations
 
 import numpy as np
-from PySide6.QtCore import Qt, QTimer
-from PySide6.QtGui import QImage, QPainter, QPixmap
+from PySide6.QtCore import QLineF, QPointF, QRectF, Qt, QTimer, Signal
+from PySide6.QtGui import QColor, QImage, QPainter, QPen, QPixmap
 from PySide6.QtWidgets import (
     QComboBox, QDialog, QFrame, QGraphicsPixmapItem, QGraphicsScene, QGraphicsView, QGridLayout, QHBoxLayout,
     QLabel, QLineEdit, QListWidget, QListWidgetItem, QProgressBar, QPushButton, QScrollArea, QVBoxLayout, QWidget,
 )
 
+from ..core.annotations import AnnotationStore
 from ..core.errors import AppError
 from ..core.exams import ExamStore, format_marks, part_letter, question_title
 from ..core.grading import GRADED, GradingStore
 from ..core.roster import format_student_code
 from ..core.scans import ScanStore
 from ..core.settings import Settings
-from ..scan import crops, importer
+from ..scan import align, crops, importer
 from . import dialogs
 
 _DIGITS = str.maketrans("٠١٢٣٤٥٦٧٨٩٫،,", "0123456789...")
@@ -39,30 +40,132 @@ def to_pixmap(image: np.ndarray) -> QPixmap:
 
 
 class ZoomView(QGraphicsView):
-    """عرض الصورة مع التكبير (Ctrl + العجلة أو الأزرار) والتحريك بالسحب."""
+    """عرض الصورة مع التكبير (Ctrl + العجلة أو الأزرار) والتحريك بالسحب.
+
+    إن فُعّلت أداة رسم (دائرة أو خط) يرسم المدرّس بالسحب على صورة الإجابة، فتُرسل الإشارة drawn
+    بالمليمتر على الورقة: كل صورة معروضة معها (رقم الصفحة، موضع زاويتها العليا اليسرى على الورقة بالمليمتر).
+    """
+
+    drawn = Signal(str, int, float, float, float, float)
 
     def __init__(self):
         super().__init__()
         self.setScene(QGraphicsScene(self))
         self.setDragMode(QGraphicsView.DragMode.ScrollHandDrag)
         self.setRenderHint(QPainter.RenderHint.SmoothPixmapTransform)
+        self.setRenderHint(QPainter.RenderHint.Antialiasing)
         self.setTransformationAnchor(QGraphicsView.ViewportAnchor.AnchorUnderMouse)
         self.setBackgroundBrush(Qt.GlobalColor.lightGray)
         self.setLayoutDirection(Qt.LayoutDirection.LeftToRight)
+        self.tool: str | None = None
+        self._items: list[tuple[QGraphicsPixmapItem, tuple | None]] = []
+        self._marks: list = []
+        self._start = None
+        self._target = None
+        self._temp = None
 
-    def show_pixmaps(self, pixmaps: list[QPixmap]) -> None:
+    def show_pixmaps(self, pixmaps: list[QPixmap], meta: list | None = None) -> None:
         scene = self.scene()
         scene.clear()
+        self._items, self._marks, self._temp = [], [], None
         y = 0
-        for pixmap in pixmaps:
+        for i, pixmap in enumerate(pixmaps):
             item = QGraphicsPixmapItem(pixmap)
             item.setTransformationMode(Qt.TransformationMode.SmoothTransformation)
             item.setPos(0, y)
             scene.addItem(item)
+            self._items.append((item, meta[i] if meta else None))
             y += pixmap.height() + 12
         scene.setSceneRect(scene.itemsBoundingRect())
         self.fit_width()
 
+    # ---------- الرسم ----------
+    def set_tool(self, tool: str | None) -> None:
+        self.tool = tool
+        self.setDragMode(QGraphicsView.DragMode.NoDrag if tool else QGraphicsView.DragMode.ScrollHandDrag)
+        self.viewport().setCursor(Qt.CursorShape.CrossCursor if tool else Qt.CursorShape.OpenHandCursor)
+
+    def can_draw(self) -> bool:
+        return any(m is not None for _, m in self._items)
+
+    def _hit(self, point):
+        for item, m in self._items:
+            if m is not None and item.sceneBoundingRect().contains(point):
+                return item, m
+        return None
+
+    def to_mm(self, item, meta, point) -> tuple[float, float]:
+        k = align.PX_PER_MM
+        _, ox, oy = meta
+        return ox + (point.x() - item.x()) / k, oy + (point.y() - item.y()) / k
+
+    def draw_annotations(self, annotations) -> None:
+        """يعرض فوق الصور الدوائر والخطوط المحفوظة لهذا الطالب (ما يقع منها داخل الصور المعروضة)."""
+        for mark in self._marks:
+            self.scene().removeItem(mark)
+        self._marks = []
+        k = align.PX_PER_MM
+        pen = QPen(QColor("#c00000"))
+        pen.setWidthF(0.5 * k)
+        pen.setCapStyle(Qt.PenCapStyle.RoundCap)
+        for item, m in self._items:
+            if m is None:
+                continue
+            page, ox, oy = m
+            bounds = item.sceneBoundingRect()
+            for a in annotations:
+                if a.page != page:
+                    continue
+                p1 = QPointF(item.x() + (a.x1 - ox) * k, item.y() + (a.y1 - oy) * k)
+                p2 = QPointF(item.x() + (a.x2 - ox) * k, item.y() + (a.y2 - oy) * k)
+                if not bounds.intersects(QRectF(p1, p2).normalized().adjusted(-1, -1, 1, 1)):
+                    continue
+                if a.kind == "circle":
+                    mark = self.scene().addEllipse(QRectF(p1, p2).normalized(), pen)
+                else:
+                    mark = self.scene().addLine(QLineF(p1, p2), pen)
+                self._marks.append(mark)
+
+    def mousePressEvent(self, event) -> None:
+        if self.tool and event.button() == Qt.MouseButton.LeftButton:
+            point = self.mapToScene(event.position().toPoint())
+            hit = self._hit(point)
+            if hit:
+                self._start, self._target = point, hit
+                pen = QPen(QColor("#c00000"))
+                pen.setWidthF(0.5 * align.PX_PER_MM)
+                self._temp = (self.scene().addEllipse(QRectF(point, point), pen) if self.tool == "circle"
+                              else self.scene().addLine(QLineF(point, point), pen))
+                event.accept()
+                return
+        super().mousePressEvent(event)
+
+    def mouseMoveEvent(self, event) -> None:
+        if self._start is not None and self._temp is not None:
+            point = self.mapToScene(event.position().toPoint())
+            if self.tool == "circle":
+                self._temp.setRect(QRectF(self._start, point).normalized())
+            else:
+                self._temp.setLine(QLineF(self._start, point))
+            event.accept()
+            return
+        super().mouseMoveEvent(event)
+
+    def mouseReleaseEvent(self, event) -> None:
+        if self._start is not None:
+            point = self.mapToScene(event.position().toPoint())
+            item, meta = self._target
+            x1, y1 = self.to_mm(item, meta, self._start)
+            x2, y2 = self.to_mm(item, meta, point)
+            if self._temp is not None:
+                self.scene().removeItem(self._temp)
+            self._start = self._target = self._temp = None
+            self.drawn.emit(self.tool, meta[0], x1, y1, x2, y2)
+            event.accept()
+            return
+        super().mouseReleaseEvent(event)
+
+    # ---------- التكبير ----------
     def fit_width(self) -> None:
         rect = self.scene().sceneRect()
         if rect.width() <= 0:
@@ -223,7 +326,7 @@ class GradingPage(QWidget):
         viewer = QVBoxLayout()
         tools = QHBoxLayout()
         for text, slot in (("تكبير +", lambda: self.view.zoom(1.25)), ("تصغير −", lambda: self.view.zoom(0.8)),
-                           ("ملاءمة العرض", lambda: self.view.fit_width())):
+                           ("ملاءمة", lambda: self.view.fit_width())):
             b = QPushButton(text)
             b.clicked.connect(slot)
             tools.addWidget(b)
@@ -236,7 +339,25 @@ class GradingPage(QWidget):
         self.image_note.setStyleSheet("color: #b3392f;")
         tools.addWidget(self.image_note)
         viewer.addLayout(tools)
+        # صف مستقل لأدوات الرسم على الإجابة: تُطبع لاحقاً في موضعها على ورقة الطالب
+        tools = QHBoxLayout()
+        drawing = QLabel("علامات على الإجابة:")
+        drawing.setObjectName("pageHint")
+        tools.addWidget(drawing)
+        self.circle_tool = QPushButton("دائرة حول الخطأ")
+        self.line_tool = QPushButton("خط تحت الخطأ")
+        for button, kind in ((self.circle_tool, "circle"), (self.line_tool, "underline")):
+            button.setCheckable(True)
+            button.setToolTip("فعّلها ثم اسحب بالفأرة على صورة الإجابة؛ تُطبع مع الدرجات في الموضع نفسه")
+            button.toggled.connect(lambda on, k=kind: self._tool_toggled(k, on))
+            tools.addWidget(button)
+        self.undo_tool = QPushButton("تراجع عن آخر علامة")
+        self.undo_tool.clicked.connect(self._undo_annotation)
+        tools.addWidget(self.undo_tool)
+        tools.addStretch()
+        viewer.addLayout(tools)
         self.view = ZoomView()
+        self.view.drawn.connect(self._on_drawn)
         viewer.addWidget(self.view, 1)
         body.addLayout(viewer, 1)
         self._set_enabled(False)
@@ -331,12 +452,13 @@ class GradingPage(QWidget):
                 w.deleteLater()
         self.edits = []
 
-    def _images(self, si: int, qi: int, full: bool) -> tuple[list[QPixmap], bool]:
+    def _images(self, si: int, qi: int, full: bool) -> tuple[list[QPixmap], bool, list]:
+        """(الصور، هل كلها مقصوصة بدقة، لكل صورة: (الصفحة، x، y بالمليمتر) أو None إن لم تكن مقوَّمة)."""
         key = (si, qi, full)
         if key not in self._cache:
             student = self.students[si]
             question = self.questions[qi]
-            pixmaps, exact = [], True
+            pixmaps, exact, meta = [], True, []
             if full:
                 pages = sorted({r.page for r in crops.question_regions(self.boxes, question.id)})
                 for page in pages:
@@ -344,16 +466,18 @@ class GradingPage(QWidget):
                     image = importer.read_image(scan.path) if scan else None
                     if image is not None:
                         pixmaps.append(to_pixmap(image))
+                        meta.append((page, 0.0, 0.0) if scan.aligned else None)
                     exact = exact and scan is not None
             else:
                 for region, image, ok in crops.question_images(self.scans, self.exam_id, student.student_id,
                                                                self.boxes, question.id):
                     if image is not None:
                         pixmaps.append(to_pixmap(image))
+                        meta.append((region.page, region.x, region.y) if ok else None)
                     exact = exact and ok
             if len(self._cache) >= CACHE_SIZE:
                 self._cache.pop(next(iter(self._cache)))
-            self._cache[key] = (pixmaps, exact)
+            self._cache[key] = (pixmaps, exact, meta)
         return self._cache[key]
 
     def _show(self) -> None:
@@ -365,8 +489,9 @@ class GradingPage(QWidget):
         self.student_name.setText(student.full_name)
         self.student_info.setText(
             f"الرقم: {format_student_code(student.student_id)}   ·   الطالب {self.si + 1} من {len(self.students)}")
-        pixmaps, exact = self._images(self.si, self.qi, self.full_page)
-        self.view.show_pixmaps(pixmaps)
+        pixmaps, exact, meta = self._images(self.si, self.qi, self.full_page)
+        self.view.show_pixmaps(pixmaps, meta)
+        self._draw_annotations()
         if not pixmaps:
             self.image_note.setText("لا توجد صفحة ممسوحة لهذا السؤال عند الطالب")
         elif not exact and not self.full_page:
@@ -515,6 +640,41 @@ class GradingPage(QWidget):
         nxt = self.grading.next_pending(self.exam_id, self.questions[index], len(self.students) - 1)
         self.si = nxt if nxt is not None else 0
         self._show()
+
+    # ---------- علامات الرسم ----------
+    def _annotations(self) -> AnnotationStore:
+        return AnnotationStore(self.grading.conn)
+
+    def _draw_annotations(self) -> None:
+        if self.exam_id is None or not self.students:
+            return
+        self.view.draw_annotations(self._annotations().for_student(self.exam_id, self.students[self.si].student_id))
+
+    def _tool_toggled(self, kind: str, on: bool) -> None:
+        other = self.line_tool if kind == "circle" else self.circle_tool
+        if on:
+            other.blockSignals(True)
+            other.setChecked(False)
+            other.blockSignals(False)
+            self.view.set_tool(kind)
+            if not self.view.can_draw():
+                self.image_note.setText("هذه الورقة لم تُقوَّم عند المسح، فلا يمكن الرسم عليها بدقة")
+        elif not other.isChecked():
+            self.view.set_tool(None)
+
+    def _on_drawn(self, kind: str, page: int, x1: float, y1: float, x2: float, y2: float) -> None:
+        try:
+            self._annotations().add(self.exam_id, self.students[self.si].student_id, page, kind, x1, y1, x2, y2)
+        except AppError as exc:
+            dialogs.error(self, str(exc))
+        self._draw_annotations()
+
+    def _undo_annotation(self) -> None:
+        if self.exam_id is None or not self.students:
+            return
+        pages = {m[0] for _, m in self.view._items if m}
+        self._annotations().undo_last(self.exam_id, self.students[self.si].student_id, pages or None)
+        self._draw_annotations()
 
     def _toggle_page(self, on: bool) -> None:
         self.full_page = on

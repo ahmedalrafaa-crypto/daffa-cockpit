@@ -57,6 +57,8 @@ def preview_pixmap(scan, page: printing.PrintPage, ink: str, tick_position: str 
             cx, cy = ticks.gutter_center(box) if tick_position == ticks.GUTTER else ticks.answer_center(answer)
             size = ticks.GUTTER_SIZE if tick_position == ticks.GUTTER else ticks.ANSWER_SIZE
             ticks.draw_tick(painter, kind, cx, cy, size, ink, k)
+    for a in page.annotations:
+        ticks.draw_annotation(painter, a, ink, k)
     painter.end()
     return pixmap, scan.aligned
 
