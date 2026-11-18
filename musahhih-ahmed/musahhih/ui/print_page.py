@@ -4,7 +4,7 @@ from __future__ import annotations
 from pathlib import Path
 
 from PySide6.QtCore import Qt, QUrl
-from PySide6.QtGui import QColor, QDesktopServices, QFont, QPainter, QPixmap
+from PySide6.QtGui import QColor, QDesktopServices, QFont, QFontMetrics, QPainter, QPixmap
 from PySide6.QtWidgets import (
     QCheckBox, QComboBox, QDialog, QDoubleSpinBox, QFormLayout, QFrame, QGridLayout, QHBoxLayout, QLabel,
     QListWidget, QListWidgetItem, QPushButton, QVBoxLayout, QWidget,
@@ -48,7 +48,11 @@ def preview_pixmap(scan, page: printing.PrintPage, ink: str, tick_position: str 
     for box, text in page.items:
         f = QFont()
         f.setBold(True)
-        f.setPixelSize(round(min(5.5, box.h * 0.62) * k))
+        size = round(min(5.5, box.h * 0.62) * k)
+        f.setPixelSize(size)
+        while size > 8 and QFontMetrics(f).horizontalAdvance(text) > (box.w - 1) * k:   # كما في الطباعة
+            size -= 2
+            f.setPixelSize(size)
         painter.setFont(f)
         painter.drawText(round(box.x * k), round(box.y * k), round(box.w * k), round(box.h * k),
                          int(Qt.AlignmentFlag.AlignCenter), text)

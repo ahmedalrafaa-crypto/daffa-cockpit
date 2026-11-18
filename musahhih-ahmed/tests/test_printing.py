@@ -78,6 +78,9 @@ def test_print_file_inside_boxes_and_not_on_the_printed_lines(graded_exam, store
         for b in boxes:
             if b.page == info.page and b.kind != "answer":
                 allowed[round(b.y * K):round((b.y + b.h) * K), round(b.x * K):round((b.x + b.w) * K)] = True
+        if info.page == 1:                                                   # النهائية كتابةً تحت خانتها
+            x, y, w, h = g.FINAL_WORDS_BOX
+            allowed[round(y * K):round((y + h) * K), round(x * K):round((x + w) * K)] = True
         assert ink.any() and not (ink & ~allowed).any()
         # فوق الورقة الأصلية نفسها: حبر الدرجات لا يلامس حدود الخانات المطبوعة
         student_index = [s.student_id for s in students].index(info.student_id)
@@ -275,6 +278,9 @@ def test_gutter_ticks_sit_in_the_blank_strip_left_of_the_boxes(graded_exam, stor
         for b in store.layout(exam):                                  # الأرقام داخل الخانات
             if b.page == info.page and b.kind != "answer":
                 allowed[round(b.y * K):round((b.y + b.h) * K), round(b.x * K):round((b.x + b.w) * K)] = True
+        if info.page == 1:
+            x, y, w, h = g.FINAL_WORDS_BOX
+            allowed[round(y * K):round((y + h) * K), round(x * K):round((x + w) * K)] = True
         for box, _, _ in info.ticks:                                  # والعلامات في الشريط يسار الخانة
             cx, cy = t.gutter_center(box)
             r = t.GUTTER_SIZE * 0.62
@@ -300,3 +306,19 @@ def test_answer_ticks_are_large_and_inside_the_answer_area(graded_exam, store, c
     none_doc, _, _ = _ink_regions(conn, store, exam, "off")
     with_doc, _, _ = _ink_regions(conn, store, exam, "gutter")
     assert (_gray(with_doc[0]) < 128).sum() > (_gray(none_doc[0]) < 128).sum()     # «بدون» لا يرسم علامات
+
+
+
+def test_final_mark_printed_in_words_under_its_box(graded_exam, store, conn):
+    exam, grading, students = graded_exam
+    _grade_all(grading, store, exam)                                         # 22 لكل طالب
+    pages = printing.build_pages(conn, exam, ORDER_STUDENT)
+    first = next(p for p in pages if p.page == 1)
+    texts = {b.kind: t for b, t in first.items}
+    assert texts["final_mark"] == "22" and texts["final_words"] == "اثنان وعشرون"
+    path, _ = workflow.print_marks(conn, exam, ORDER_STUDENT, PrintSettings((0, 0), (0, 0), False, "black", "off"))
+    ink = _gray(pymupdf.open(path)[pages.index(first)]) < 128
+    x, y, w, h = g.FINAL_WORDS_BOX
+    words = ink[round(y * K):round((y + h) * K), round(x * K):round((x + w) * K)]
+    ys, xs = np.nonzero(words)
+    assert len(xs) and (xs.max() - xs.min()) / K > 12                       # كلمات لا رقم: عرض أكبر من 12 ملم

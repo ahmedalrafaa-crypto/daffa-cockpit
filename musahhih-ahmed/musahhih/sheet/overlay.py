@@ -10,7 +10,7 @@ from PySide6.QtGui import QColor, QPainter
 from ..core.exams import LayoutBox, Question, format_marks
 from . import geometry as g
 from .render import _pen, open_pdf
-from .text import CENTER, draw_text, font, rect
+from .text import CENTER, draw_text, fitted_font, font, rect
 from .ticks import (
     ANSWER_SIZE, GUTTER, GUTTER_SIZE, OVER_ANSWER, answer_center, draw_annotation, draw_tick, gutter_center,
 )
@@ -55,8 +55,9 @@ def write_overlay(path: Path | str, pages: list[list[OverlayItem]], dx_mm: float
                     painter.drawRect(rect(x + 1.2, y + 1.2, b.w - 2.4, b.h - 2.4))
                 painter.setPen(ink)
                 size = min(5.5, b.h * 0.62)
-                draw_text(painter, item.text, font(size, True), x, y, b.w, b.h, CENTER,
-                          Qt.AlignmentFlag.AlignVCenter, wrap=False)
+                # يُصغَّر الخط عند الحاجة حتى يتسع النص (الدرجة كتابةً أطول من الرقم)
+                draw_text(painter, item.text, fitted_font(painter, item.text, size, b.w - 1, True, min_mm=2.2),
+                          x, y, b.w, b.h, CENTER, Qt.AlignmentFlag.AlignVCenter, wrap=False)
             if ticks and tick_position in (GUTTER, OVER_ANSWER):
                 for box, answer, kind in ticks[index]:
                     cx, cy = gutter_center(box) if tick_position == GUTTER else answer_center(answer)

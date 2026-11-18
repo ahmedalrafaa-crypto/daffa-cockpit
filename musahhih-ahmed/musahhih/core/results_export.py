@@ -9,6 +9,7 @@ from openpyxl.utils import get_column_letter
 
 from .errors import AppError
 from .exams import format_marks, part_letter, question_title
+from .numwords import in_words
 from .results import Register
 from .roster import format_student_code
 
@@ -45,7 +46,8 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
             header += [f"{question_title(qi)} / {part_letter(pi, exam.label_style)} (من {format_marks(p.max_marks)})"
                        for pi, p in enumerate(q.parts)]
         header.append(f"{question_title(qi)} (من {format_marks(q.total)})")
-    header += [f"الدرجة النهائية (من {format_marks(exam.total_marks)})", "الحالة", "تاريخ الامتحان"]
+    header += [f"الدرجة النهائية (من {format_marks(exam.total_marks)})", "النهائية كتابةً", "الحالة",
+               "تاريخ الامتحان"]
     ws.append(header)
     header_row = ws.max_row
     for cell in ws[header_row]:
@@ -57,7 +59,7 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
             if with_parts and len(q.parts) > 1:
                 row += [r.parts.get(p.id) for p in q.parts]
             row.append(r.questions[qi])
-        row += [r.final, status_text(r), _dmy(exam.exam_date)]
+        row += [r.final, in_words(r.final) if r.final is not None else None, status_text(r), _dmy(exam.exam_date)]
         ws.append(row)
         for cell in ws[ws.max_row]:
             cell.border = border
@@ -69,7 +71,7 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
             if not r.counted[qi] and r.complete:
                 ws.cell(ws.max_row, col).font = Font(italic=True, color="888888")
             col += 1
-        ws.cell(ws.max_row, len(header) - 2).font = bold
+        ws.cell(ws.max_row, len(header) - 3).font = bold
 
     stats = register.stats()
     ws.append([])
@@ -83,7 +85,7 @@ def export_excel(register: Register, path: Path | str, grade_name: str, section_
         if label == "نسبة النجاح" and value is not None:
             ws.cell(ws.max_row, 4).number_format = "0.#%"     # رقم بتنسيق نسبة مئوية: يُحسب عليه في Excel
 
-    widths = {1: 5, 2: 14, 3: 30, 4: 16, 5: 8}
+    widths = {1: 5, 2: 14, 3: 30, 4: 16, 5: 8, len(header) - 2: 26}
     for c in range(1, len(header) + 1):
         ws.column_dimensions[get_column_letter(c)].width = widths.get(c, 14)
     ws.row_dimensions[header_row].height = 45

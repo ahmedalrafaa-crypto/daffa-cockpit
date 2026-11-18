@@ -74,7 +74,8 @@ def test_excel_and_pdf_exports(graded_exam, store, conn, tmp_path):
     final_col = next(i for i, h in enumerate(header) if h and str(h).startswith("الدرجة النهائية"))
     data = rows[header_index + 1: header_index + 1 + len(students)]
     assert [r[final_col] for r in data].count(22) == 4
-    assert "غائب" in [r[final_col + 1] for r in data]
+    assert [r[final_col + 1] for r in data].count("اثنان وعشرون") == 4      # النهائية كتابةً
+    assert "غائب" in [r[final_col + 2] for r in data]
     labels = {r[2]: r[3] for r in rows[header_index + 1 + len(students):] if r and len(r) > 3 and r[2]}
     assert labels["نسبة النجاح"] == 1.0                   # الأربعة 22 من 25؛ رقم بتنسيق نسبة مئوية
     ws_rows = list(ws.iter_rows())

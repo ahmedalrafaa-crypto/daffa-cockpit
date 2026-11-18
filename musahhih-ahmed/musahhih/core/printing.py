@@ -10,7 +10,9 @@ from .exams import ExamStore, LayoutBox, format_marks
 from .grading import GradingStore
 from .results import build
 from .scans import MATCHED, ScanStore
+from ..sheet import geometry as g
 from .annotations import AnnotationStore
+from .numwords import in_words
 from .settings import Settings
 
 ORDER_SCAN, ORDER_STUDENT = "scan", "student"
@@ -171,6 +173,9 @@ def build_pages(conn: sqlite3.Connection, exam_id: int, order: str = ORDER_SCAN)
                 value = r.final
             if value is not None:
                 items.append((b, format_marks(value)))
+                if b.kind == "final_mark":   # النهائية رقماً في خانتها، وكتابةً تحتها
+                    words_box = LayoutBox(b.page, "final_words", None, None, *g.FINAL_WORDS_BOX)
+                    items.append((words_box, in_words(value)))
         drawn = AnnotationStore(conn).for_page(exam_id, r.student_id, scan.page)
         pages.append(PrintPage(r.student_id, r.full_name, scan.page, scan.id, items, ticks, drawn))
     return pages

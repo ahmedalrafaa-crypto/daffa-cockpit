@@ -11,6 +11,7 @@ from ..core.errors import AppError
 from ..core.exams import format_marks, part_letter, question_title
 from ..core.results import Register
 from ..core.results_export import percent, status_text
+from ..core.numwords import in_words
 from ..core.roster import format_student_code
 from .render import display_date
 from .text import FONT_FAMILY, font
@@ -28,7 +29,7 @@ def register_html(register: Register, grade_name: str, section_name: str, with_p
             heads += [f"{question_title(qi)}<br>{part_letter(pi, exam.label_style)} ({format_marks(p.max_marks)})"
                       for pi, p in enumerate(q.parts)]
         heads.append(f"{question_title(qi)}<br>({format_marks(q.total)})")
-    heads += [f"النهائية<br>({format_marks(exam.total_marks)})", "الحالة"]
+    heads += [f"النهائية<br>({format_marks(exam.total_marks)})", "كتابةً", "الحالة"]
     rows = []
     for i, r in enumerate(register.results, start=1):
         cells = [str(i), format_student_code(r.student_id), escape(r.full_name)]
@@ -37,7 +38,7 @@ def register_html(register: Register, grade_name: str, section_name: str, with_p
                 cells += [_cell(r.parts.get(p.id)) for p in q.parts]
             value = _cell(r.questions[qi])
             cells.append(value if r.counted[qi] or not r.complete else f"<i style='color:#888'>{value}</i>")
-        cells += [f"<b>{_cell(r.final)}</b>", status_text(r)]
+        cells += [f"<b>{_cell(r.final)}</b>", in_words(r.final) if r.final is not None else "—", status_text(r)]
         shade = " style='background:#f4f6f8'" if i % 2 == 0 else ""
         rows.append(f"<tr{shade}>" + "".join(f"<td>{c}</td>" for c in cells) + "</tr>")
     s = register.stats()
