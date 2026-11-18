@@ -81,10 +81,15 @@ def test_corner_marks_and_empty_mark_boxes(approved, store):
     image = _gray(doc[0])
     for x, y in g.corner_marks():
         assert _mm(image, x + 0.5, y + 0.5, g.CORNER_SIZE - 1, g.CORNER_SIZE - 1).max() < 60
-    # داخل كل خانة درجة أبيض تماماً (محجوزة للطباعة اللاحقة)
+    # داخل كل خانة درجة فارغ (محجوز للطباعة اللاحقة): خانات الفروع والنهائية بيضاء،
+    # وخانة مجموع السؤال رمادية فاتحة متجانسة لتتميز عنها
     for box in store.layout(exam):
-        if box.kind != "answer":
-            inside = _mm(_gray(doc[box.page - 1]), box.x + 1, box.y + 1, box.w - 2, box.h - 2)
+        if box.kind == "answer":
+            continue
+        inside = _mm(_gray(doc[box.page - 1]), box.x + 1.2, box.y + 1.2, box.w - 2.4, box.h - 2.4)
+        if box.kind == "question_mark":
+            assert 200 < inside.min() and inside.max() < 245, box
+        else:
             assert inside.min() > 240, box
 
 
@@ -202,3 +207,17 @@ def test_long_titles_are_shrunk_not_clipped(qapp, data_dir, store, conn, section
                   and s["bbox"][2] > 66 * 72 / 25.4]       # يُستثنى نص خانة الدرجة النهائية (عند 40–64 ملم)
         left_limit = 68 * 72 / 25.4 - 1          # منطقة نص الترويسة تبدأ عند 68 ملم (يمين رمز QR وخانة الدرجة)
         assert header and all(s["bbox"][0] >= left_limit for s in header), [s["text"] for s in header]
+
+
+def test_question_total_box_is_labelled_and_distinct(approved, store):
+    """تحت مربع مجموع كل سؤال عبارة «مجموع السؤال ...»، ولا تتداخل مع مربع الفرع الأول."""
+    exam, path = approved
+    doc = pymupdf.open(path)
+    boxes = store.layout(exam)
+    for q in store.questions(exam):
+        total = next(b for b in boxes if b.kind == "question_mark" and b.question_id == q.id)
+        first_part = min((b for b in boxes if b.kind == "part_mark" and b.question_id == q.id), key=lambda b: b.y)
+        assert first_part.y - (total.y + total.h) >= g.QUESTION_GAP - 0.01      # مكان العبارة بين المربعين
+        # العبارة مطبوعة فعلاً في تلك المسافة (حبر داكن بين المربعين داخل عمود الدرجات)
+        gap = _mm(_gray(doc[total.page - 1]), g.GUTTER_X, total.y + total.h + 0.5, g.GUTTER_W, g.QUESTION_GAP - 1)
+        assert gap.min() < 128

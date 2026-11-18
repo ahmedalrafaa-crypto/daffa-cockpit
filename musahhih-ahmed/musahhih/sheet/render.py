@@ -65,6 +65,16 @@ def draw_mark_box(painter: QPainter, x: float, y: float, w: float, h: float) -> 
     painter.drawRect(rect(x, y, w, h))
 
 
+TOTAL_FILL = QColor(232, 232, 232)
+
+
+def draw_total_box(painter: QPainter, x: float, y: float, w: float, h: float) -> None:
+    """مربع مجموع السؤال: إطار سميك وخلفية رمادية فاتحة، ليتميز عن مربعات الفروع الرفيعة البيضاء."""
+    painter.setPen(_pen(0.8))
+    painter.setBrush(TOTAL_FILL)
+    painter.drawRect(rect(x, y, w, h))
+
+
 def display_date(iso: str) -> str:
     """2026-11-15 ← 15/11/2026 معزولاً حتى لا يقلب النص العربي ترتيب أجزائه."""
     parts = iso.split("-")
@@ -142,7 +152,8 @@ class SheetRenderer:
                     self._group_spare[i] = share
             intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
             blocks = [self._measure_part(painter, part, body, single) for part in question.parts]
-            head_h = g.QUESTION_BAND_H + 2 + intro_h
+            gap = g.QUESTION_GAP
+            head_h = g.QUESTION_BAND_H + gap + intro_h
             if per_page:
                 blocks = self._stretch(blocks, self._group_spare[qi % per_page])
             self._ensure(head_h + (blocks[0].height if blocks else 0))
@@ -151,9 +162,9 @@ class SheetRenderer:
             y = self._y
             title = question_title(qi)
             total = f"({format_marks(question.total)} {marks_word(question.total)})"
-            self._add(lambda p, y=y, title=title, total=total: self._draw_band(p, y, title, total))
+            self._add(lambda p, y=y, title=title, total=total: self._draw_band(p, y, title, total, title))
             self._box("question_mark", question.id, None, box_x, y, g.MARK_BOX_W, g.QUESTION_BAND_H)
-            self._y += g.QUESTION_BAND_H + 2
+            self._y += g.QUESTION_BAND_H + gap
             if question.intro:
                 y = self._y
                 self._add(lambda p, y=y, t=question.intro, h=intro_h: draw_text(p, t, body, g.CONTENT_X, y, g.CONTENT_W, h))
@@ -165,7 +176,8 @@ class SheetRenderer:
                 label = "" if single else f"{part_letter(pi, self.exam.label_style)})"
                 self._add(lambda p, top=top, label=label, b=b: self._draw_part_text(p, top, label, b.before, b.before_h, body))
                 if not single:
-                    caption = f"من {format_marks(part.max_marks)}"
+                    # حرف الفرع مع درجته تحت مربعه («أ من 4»)؛ RLM يُبقي الترتيب صحيحاً مع A B C
+                    caption = f"\u200f{part_letter(pi, self.exam.label_style)} من {format_marks(part.max_marks)}"
                     self._add(lambda p, top=top, caption=caption: self._draw_part_box(p, box_x, top, caption))
                     self._box("part_mark", question.id, part.id, box_x, top, g.MARK_BOX_W, g.MARK_BOX_H)
                 y = top + b.before_h + 1
@@ -235,7 +247,7 @@ class SheetRenderer:
         intro_h = text_height(painter, question.intro, body, g.CONTENT_W) + 2 if question.intro else 0
         blocks = [self._measure_part(painter, p, body, single) for p in question.parts]
         parts = sum(b.height if b.pinned else b.fixed for b in blocks)   # الأسطر الثابتة جزء من الارتفاع المحجوز
-        return g.QUESTION_BAND_H + 2 + intro_h + parts + 3
+        return g.QUESTION_BAND_H + g.QUESTION_GAP + intro_h + parts + 3
 
     def _stretch(self, blocks: list[_Block], spare: float) -> list[_Block]:
         """يوزّع مساحة الكتابة المتاحة للسؤال على فروعه غير الثابتة: الأول ربعها والباقي لما بعده."""
@@ -258,7 +270,7 @@ class SheetRenderer:
 
     # ---------- رسم العناصر ----------
     @staticmethod
-    def _draw_band(p: QPainter, y: float, title: str, total: str) -> None:
+    def _draw_band(p: QPainter, y: float, title: str, total: str, caption: str = "") -> None:
         p.setPen(Qt.PenStyle.NoPen)
         p.setBrush(LIGHT)
         p.drawRect(rect(g.CONTENT_X, y, g.CONTENT_W, g.QUESTION_BAND_H))
@@ -266,7 +278,16 @@ class SheetRenderer:
         center = Qt.AlignmentFlag.AlignVCenter
         draw_text(p, title, font(4.6, True), g.CONTENT_X + 2, y, g.CONTENT_W - 4, g.QUESTION_BAND_H, RIGHT, center, False)
         draw_text(p, total, font(3.8), g.CONTENT_X + 2, y, g.CONTENT_W - 4, g.QUESTION_BAND_H, LEFT, center, False)
-        draw_mark_box(p, g.GUTTER_X + (g.GUTTER_W - g.MARK_BOX_W) / 2, y, g.MARK_BOX_W, g.QUESTION_BAND_H)
+        box_x = g.GUTTER_X + (g.GUTTER_W - g.MARK_BOX_W) / 2
+        draw_total_box(p, box_x, y, g.MARK_BOX_W, g.QUESTION_BAND_H)
+        if caption:   # «مجموع / السؤال الأول» تحت مربعه: يفصله بوضوح عن مربع الفرع الأول
+            p.setPen(BLACK)
+            width = g.GUTTER_W + 2
+            x0 = g.GUTTER_X - 1
+            top = y + g.QUESTION_BAND_H + 0.3
+            draw_text(p, "مجموع", fitted_font(p, "مجموع", 2.7, width, True), x0, top, width, 3.8, CENTER, wrap=False)
+            draw_text(p, caption, fitted_font(p, caption, 2.7, width, True, min_mm=1.9), x0, top + 3.8, width, 3.8,
+                      CENTER, wrap=False)
 
     @staticmethod
     def _draw_part_text(p: QPainter, top: float, label: str, text: str, text_h: float, body) -> None:
